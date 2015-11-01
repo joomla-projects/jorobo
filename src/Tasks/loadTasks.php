@@ -8,7 +8,7 @@
 
 namespace JBuild\Tasks;
 
-use JBuild\Tasks\Metrics\metricsTasks;
+use JBuild\Tasks\Metrics\loadTasks as metricsTasks;
 
 trait loadTasks
 {
