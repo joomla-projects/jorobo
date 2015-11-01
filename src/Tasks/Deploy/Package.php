@@ -47,7 +47,6 @@ class Package extends Base implements TaskInterface
 		$this->target = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
 
 		$this->current = JPATH_BASE . "/dist/current";
-
 	}
 
 	/**
@@ -105,6 +104,7 @@ class Package extends Base implements TaskInterface
 			}
 
 			$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
+			$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "/script.php");
 
 			// Close the zip archive
 			$comZip->close();
