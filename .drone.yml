@@ -1,0 +1,7 @@
+image: php5.5
+script:
+  - echo todo
+notify:
+  email:
+    recipients:
+      - yves@compojoom.com
