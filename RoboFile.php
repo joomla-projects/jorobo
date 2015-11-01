@@ -40,7 +40,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function map($target)
 	{
-		(new Tasks\Map($target))->run();
+		(new \JBuild\Tasks\Map($target))->run();
 	}
 
 	/**
@@ -52,7 +52,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function build($params = ['dev' => false])
 	{
-		(new Tasks\Build($params))->run();
+		(new \JBuild\Tasks\Build($params))->run();
 	}
 
 	/**
@@ -64,6 +64,6 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function generate($extensions)
 	{
-		(new Tasks\Generate($extensions))->run();
+		(new \JBuild\Tasks\Generate($extensions))->run();
 	}
 }
