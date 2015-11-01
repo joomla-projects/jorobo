@@ -10,6 +10,8 @@
 
 namespace JBuild\Tasks\Metrics;
 
+use Robo\Exception\TaskException;
+
 trait loadTasks
 {
     /**
@@ -17,6 +19,7 @@ trait loadTasks
      *
      * @param $subCommand
      * @return CodeStyle
+     * @throws TaskException
      */
     protected function taskMetrics($subCommand)
     {
@@ -26,7 +29,7 @@ trait loadTasks
                 return new CodeStyle;
 
             default:
-                throw new \InvalidArgumentException("Unknown metric $subCommand");
+                throw new TaskException(__CLASS__, "Unknown metric $subCommand");
         }
     }
 
