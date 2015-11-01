@@ -31,4 +31,14 @@ trait deployTasks
 	{
 		return new Package();
 	}
+
+	/**
+	 * Build extension
+	 *
+	 * @return  Release
+	 */
+	protected function deployRelease()
+	{
+		return new Release();
+	}
 }
