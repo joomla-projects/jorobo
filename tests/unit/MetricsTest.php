@@ -28,4 +28,13 @@ class MetricsTest extends \Codeception\TestCase\Test
         $this->assertArrayHasKey('standard', $options);
         $this->assertEquals('psr-1', $options['standard']);
     }
+
+    public function testIndividualOptionsCanBeAdded()
+    {
+        $command = $this->taskMetrics('codestyle')
+            ->option('anyOption', 'anyValue')
+            ->getCommand();
+
+        $this->assertStringStartsWith('./vendor/bin/phpcs --anyOption=anyValue', $command);
+    }
 }

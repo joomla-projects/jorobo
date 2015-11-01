@@ -39,10 +39,9 @@ trait loadTasks
      */
     public function metricsCodestyle($style = 'Joomla')
     {
-        $task = $this->taskMetrics('CodeStyle')
-            ->standard($style);
-        $this->say(print_r($task->getOptions(), true));
-        $task->run();
+        $this->taskMetrics('CodeStyle')
+            ->standard($style)
+            ->run();
     }
 
 }
