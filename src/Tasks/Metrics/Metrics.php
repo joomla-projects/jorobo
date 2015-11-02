@@ -1,67 +1,61 @@
 <?php
 /**
- * @package    JBuild
- * @author     Yves Hoppe <yves@compojoom.com>
- * @date       03.10.15
+ * @package     Jorobo
  *
- * @copyright  Copyright (C) 2008 - 2015 Yves Hoppe - compojoom.com . All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks\Metrics;
-use Robo\Common\IO;
+namespace JBuild\Tasks;
+
+use Robo\Result;
+use Robo\Task\BaseTask;
+use Robo\Contract\TaskInterface;
+use Robo\Exception\TaskException;
 
 /**
- * Metrics class for extensions
+ * Class Metrics
  *
- * @package  JBuild\Tasks
+ * @package JBuild\Tasks
  */
-class Metrics
+class Metrics extends JTask
 {
-    use IO;
-    use loadTasks;
+	private $command = 'vendor/bin/phpqa';
+	private $options = [];
 
-    /**
-     * Calculate all available metrics - not implemented yet
-     */
-    public function metrics($params)
-    {
-    }
+	use \Robo\Task\Base\loadTasks;
 
-    /**
-     * Measure the mess - not implemented yet
-     */
-    public function metricsMessdetect()
-    {
-        $this->taskMetrics([])->messdetect(false);
-    }
+	public function __construct($options = [])
+	{
+		parent::__construct();
 
-    /**
-     * Perform all available checks - not implemented yet
-     */
-    public function check()
-    {
-        $this->checkCodestyle();
-        $this->checkMessdetect();
-    }
+		$this->options = $options;
+	}
 
-    /**
-     * Check the codestyle - not implemented yet
-     */
-    public function checkCodestyle($style = 'Joomla')
-    {
-        $params = [
-            'standard' => $style
-        ];
+	/**
+	 * @return \Robo\Result
+	 */
+	public function run()
+	{
+		$task = $this->taskExec($this->command);
 
-        $this->taskMetrics($params)->codestyle(true);
-    }
+		if ($this->options['verbose'])
+		{
+			$task->option('verbose');
+		}
 
-    /**
-     * Check the mess - not implemented yet
-     */
-    public function checkMessdetect()
-    {
-        $this->taskMetrics([])->messdetect(true);
-    }
+		$task->option('analyzedDir', $this->getSourceFolder());
+		$task->option('buildDir', './build');
+
+		if ($this->options['quiet'])
+		{
+			ob_start();
+			$task->run();
+			ob_end_clean();
+		}
+		else
+		{
+			$task->run();
+		}
+	}
 }

@@ -10,38 +10,22 @@
 
 namespace JBuild\Tasks\Metrics;
 
-use Robo\Exception\TaskException;
+use JBuild\Tasks\Metrics;
 
 trait loadTasks
 {
     /**
      * The metrics task
      *
-     * @param $subCommand
-     * @return CodeStyle
-     * @throws TaskException
+     * @return Metrics
      */
-    protected function taskMetrics($subCommand)
+    protected function taskMetrics($options = [])
     {
-        switch (strtolower($subCommand))
-        {
-            case 'codestyle':
-                return new CodeStyle;
-
-            default:
-                throw new TaskException(__CLASS__, "Unknown metric $subCommand");
-        }
+        return new Metrics($options);
     }
 
-    /**
-     * Check the codestyle - not implemented yet
-     * @param string $style
-     */
-    public function metricsCodestyle($style = 'Joomla')
+    public function metrics($options = [])
     {
-        $this->taskMetrics('CodeStyle')
-            ->standard($style)
-            ->run();
+        $this->taskMetrics($options)->run();
     }
-
 }

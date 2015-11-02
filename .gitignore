@@ -46,3 +46,4 @@ selenium.log
 /dist
 /jbuild.ini
 /source
+/build
