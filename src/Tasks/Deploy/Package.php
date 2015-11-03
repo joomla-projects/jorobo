@@ -109,7 +109,7 @@ class Package extends Base implements TaskInterface
 	{
 		// Check if we have component, module, plugin etc.
 		if (!file_exists($this->current . "/administrator/components/com_" . $this->getExtensionName())
-			&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
+				&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
 		)
 		{
 			$this->say("Extension has no component");
@@ -151,7 +151,7 @@ class Package extends Base implements TaskInterface
 	 *
 	 * @return  void
 	 */
-	private function addFiles($subfolder, $zip, $path = null)
+	private function addFiles($zip, $path = null)
 	{
 		if (!$path)
 		{
@@ -163,12 +163,17 @@ class Package extends Base implements TaskInterface
 		if (is_dir($source) === true)
 		{
 			$files = new \RecursiveIteratorIterator(
-				new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
+					new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
 			);
 
 			foreach ($files as $file)
 			{
-				$file = str_replace('\\', '/', $file);
+				$file = str_replace('\\', '/', realpath($file));
+
+				if (substr($file, 0, 1) == ".")
+				{
+					continue;
+				}
 
 				// Ignore "." and ".." folders
 				if (in_array(substr($file, strrpos($file, '/') + 1), array('.', '..')))
@@ -176,7 +181,7 @@ class Package extends Base implements TaskInterface
 					continue;
 				}
 
-				$file = realpath($file);
+				$file = str_replace('\\', '/', realpath($file));
 
 				if (is_dir($file) === true)
 				{
@@ -220,14 +225,10 @@ class Package extends Base implements TaskInterface
 		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 
 		// Process the files to zip
-		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(JPATH_BASE . '/dist/tmp/cbuild'), \RecursiveIteratorIterator::SELF_FIRST)
-		         as $subfolder)
-		{
-			$this->addFiles($subfolder, $comZip, JPATH_BASE . '/dist/tmp/cbuild');
-		}
+		$this->addFiles($comZip, JPATH_BASE . '/dist/tmp/cbuild');
 
 		$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
-		$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "/script.php");
+		$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "script.php");
 
 		// Close the zip archive
 		$comZip->close();
@@ -267,11 +268,7 @@ class Package extends Base implements TaskInterface
 				$this->say("Module " . $p);
 
 				// Process the files to zip
-				foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($p), \RecursiveIteratorIterator::SELF_FIRST)
-				         as $subfolder)
-				{
-					$this->addFiles($subfolder, $zip, $p);
-				}
+				$this->addFiles($zip, $p);
 
 				// Close the zip archive
 				$zip->close();
@@ -332,11 +329,7 @@ class Package extends Base implements TaskInterface
 						$zip->open(JPATH_BASE . '/dist/zips/' . $plg . '.zip', \ZipArchive::CREATE);
 
 						// Process the files to zip
-						foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($p2), \RecursiveIteratorIterator::SELF_FIRST)
-						         as $subfolder)
-						{
-							$this->addFiles($subfolder, $zip, $p2);
-						}
+						$this->addFiles($zip, $p2);
 
 						// Close the zip archive
 						$zip->close();
@@ -384,11 +377,7 @@ class Package extends Base implements TaskInterface
 				$this->say("Template " . $p);
 
 				// Process the files to zip
-				foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($p), \RecursiveIteratorIterator::SELF_FIRST)
-				         as $subfolder)
-				{
-					$this->addFiles($subfolder, $zip, $p);
-				}
+				$this->addFiles($zip, $p);
 
 				// Close the zip archive
 				$zip->close();
@@ -411,11 +400,7 @@ class Package extends Base implements TaskInterface
 		$zip->open($this->target, \ZipArchive::CREATE);
 
 		// Process the files to zip
-		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(JPATH_BASE . '/dist/zips'), \RecursiveIteratorIterator::SELF_FIRST)
-		         as $subfolder)
-		{
-			$this->addFiles($subfolder, $zip, JPATH_BASE . '/dist/zips');
-		}
+		$this->addFiles($zip, JPATH_BASE . '/dist/zips/');
 
 		$zip->addFile($this->getSourceFolder() . "/pkg_" . $this->getExtensionName() . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
 
