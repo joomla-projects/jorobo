@@ -168,7 +168,7 @@ class Package extends Base implements TaskInterface
 
 			foreach ($files as $file)
 			{
-				$file = str_replace('\\', '/', realpath($file));
+				$file = str_replace('\\', '/', $file);
 
 				if (substr($file, 0, 1) == ".")
 				{
@@ -181,7 +181,7 @@ class Package extends Base implements TaskInterface
 					continue;
 				}
 
-				$file = str_replace('\\', '/', realpath($file));
+				$file = str_replace('\\', '/', $file);
 
 				if (is_dir($file) === true)
 				{
