@@ -23,6 +23,11 @@ class Package extends Base implements TaskInterface
 	use \Robo\Task\Development\loadTasks;
 	use \Robo\Common\TaskIO;
 
+	/**
+	 * The target Zip file of the package
+	 *
+	 * @var    string
+	 */
 	protected $target = null;
 
 	private $hasComponent = true;
@@ -45,7 +50,6 @@ class Package extends Base implements TaskInterface
 		parent::__construct();
 
 		$this->target = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
-
 		$this->current = JPATH_BASE . "/dist/current";
 	}
 
@@ -60,226 +64,36 @@ class Package extends Base implements TaskInterface
 		$this->say('Creating package ' . $this->getConfig()->extension . " " . $this->getConfig()->version);
 
 		// Start getting single archives
-		if (file_exists(JPATH_BASE . '/dist/tmp'))
+		if (file_exists(JPATH_BASE . '/dist/zips'))
 		{
-			$this->_deleteDir(JPATH_BASE . '/dist/tmp');
+			$this->_deleteDir(JPATH_BASE . '/dist/zips');
 		}
 
-		$this->_mkdir(JPATH_BASE . '/dist/tmp/zips');
+		$this->_mkdir(JPATH_BASE . '/dist/zips');
 
 		$this->analyze();
 
 		if ($this->hasComponent)
 		{
-			$comZip = new \ZipArchive(JPATH_BASE . "/dist/tmp", \ZipArchive::CREATE);
-
-			$comZip->open(JPATH_BASE . '/dist/tmp/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
-
-			// Process the files to zip
-			foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->current . "/components"), \RecursiveIteratorIterator::SELF_FIRST)
-			         as $subfolder)
-			{
-				$this->addFiles($subfolder, $comZip);
-			}
-
-			// Admin component
-			foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->current . "/administrator/components"), \RecursiveIteratorIterator::SELF_FIRST)
-			         as $subfolder)
-			{
-				$this->addFiles($subfolder, $comZip);
-			}
-
-			// Admin language
-			foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->current . "/administrator/language"), \RecursiveIteratorIterator::SELF_FIRST)
-			         as $subfolder)
-			{
-				$this->addFiles($subfolder, $comZip);
-			}
-
-			// Language
-			foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->current . "/language"), \RecursiveIteratorIterator::SELF_FIRST)
-			         as $subfolder)
-			{
-				$this->addFiles($subfolder, $comZip);
-			}
-
-			$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
-			$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "/script.php");
-
-			// Close the zip archive
-			$comZip->close();
+			$this->createComponentZip();
 		}
 
 		if ($this->hasModules)
 		{
-			$path = $this->current . "/modules";
-
-			// Get every module
-			$hdl = opendir($path);
-
-			while ($entry = readdir($hdl))
-			{
-				// Only folders
-				$p = $path . "/" . $entry;
-
-				if (substr($entry, 0, 1) == '.')
-				{
-					continue;
-				}
-
-				if (!is_file($p))
-				{
-					$this->say("Packaging Module " . $entry);
-
-					// Package file
-					$zip = new \ZipArchive(JPATH_BASE . "/dist/tmp", \ZipArchive::CREATE);
-
-					$zip->open(JPATH_BASE . '/dist/tmp/zips/' . $entry . '.zip', \ZipArchive::CREATE);
-
-					$this->say("Module " . $p);
-
-					// Process the files to zip
-					foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($p), \RecursiveIteratorIterator::SELF_FIRST)
-					         as $subfolder)
-					{
-						$this->addFiles($subfolder, $zip, $p);
-					}
-
-					// Close the zip archive
-					$zip->close();
-				}
-			}
-
-			closedir($hdl);
+			$this->createModuleZips();
 		}
 
 		if ($this->hasPlugins)
 		{
-			$path = $this->current . "/plugins";
-
-			// Get every plugin
-			$hdl = opendir($path);
-
-			while ($entry = readdir($hdl))
-			{
-				// Only folders
-				$p = $path . "/" . $entry;
-
-				if (substr($entry, 0, 1) == '.')
-				{
-					continue;
-				}
-
-				if (!is_file($p))
-				{
-					// Plugin type folder
-					$type = $entry;
-
-					$hdl2 = opendir($p);
-
-					while ($plugin = readdir($hdl2))
-					{
-						if (substr($plugin, 0, 1) == '.')
-						{
-							continue;
-						}
-
-						// Only folders
-						$p2 = $path . "/" . $type . "/" . $plugin;
-
-						$this->say("P " . $p2);
-
-						if (!is_file($p2))
-						{
-							$plg = "plg_" . $type . "_" . $plugin;
-
-							$this->say("Packaging Plugin " . $plg);
-
-							// Package file
-							$zip = new \ZipArchive(JPATH_BASE . "/dist/tmp", \ZipArchive::CREATE);
-
-							$zip->open(JPATH_BASE . '/dist/tmp/zips/' . $plg . '.zip', \ZipArchive::CREATE);
-
-							$this->say("Plugin " . $p2);
-
-							// Process the files to zip
-							foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($p2), \RecursiveIteratorIterator::SELF_FIRST)
-							         as $subfolder)
-							{
-								$this->addFiles($subfolder, $zip, $p2);
-							}
-
-							// Close the zip archive
-							$zip->close();
-						}
-					}
-
-					closedir($hdl2);
-				}
-			}
-
-			closedir($hdl);
+			$this->createPluginZips();
 		}
 
 		if ($this->hasTemplates)
 		{
-			$path = $this->current . "/templates";
-
-			// Get every module
-			$hdl = opendir($path);
-
-			while ($entry = readdir($hdl))
-			{
-				// Only folders
-				$p = $path . "/" . $entry;
-
-				if (substr($entry, 0, 1) == '.')
-				{
-					continue;
-				}
-
-				if (!is_file($p))
-				{
-					$this->say("Packaging Template " . $entry);
-
-					// Package file
-					$zip = new \ZipArchive(JPATH_BASE . "/dist/tmp", \ZipArchive::CREATE);
-
-					$zip->open(JPATH_BASE . '/dist/tmp/zips/tpl_' . $entry . '.zip', \ZipArchive::CREATE);
-
-					$this->say("Template " . $p);
-
-					// Process the files to zip
-					foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($p), \RecursiveIteratorIterator::SELF_FIRST)
-					         as $subfolder)
-					{
-						$this->addFiles($subfolder, $zip, $p);
-					}
-
-					// Close the zip archive
-					$zip->close();
-				}
-			}
-
-			closedir($hdl);
+			$this->createTemplateZips();
 		}
 
-		$this->zip = new \ZipArchive($this->target, \ZipArchive::CREATE);
-
-		// Instantiate the zip archive
-		$this->zip->open($this->target, \ZipArchive::CREATE);
-
-		// Process the files to zip
-		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(JPATH_BASE . '/dist/tmp/zips'), \RecursiveIteratorIterator::SELF_FIRST)
-		         as $subfolder)
-		{
-			$this->addFiles($subfolder, $this->zip, JPATH_BASE . '/dist/tmp/zips');
-		}
-
-		$this->zip->addFile($this->getSourceFolder() . "/pkg_" . $this->getExtensionName() . ".xml",  "pkg_" . $this->getExtensionName() . ".xml");
-
-		// Close the zip archive
-		$this->zip->close();
+		$this->createPackageZip();
 
 		$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
 
@@ -295,7 +109,7 @@ class Package extends Base implements TaskInterface
 	{
 		// Check if we have component, module, plugin etc.
 		if (!file_exists($this->current . "/administrator/components/com_" . $this->getExtensionName())
-			&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
+				&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
 		)
 		{
 			$this->say("Extension has no component");
@@ -337,37 +151,260 @@ class Package extends Base implements TaskInterface
 	 *
 	 * @return  void
 	 */
-	private function addFiles($subfolder, $zip, $path = null)
+	private function addFiles($zip, $path = null)
 	{
 		if (!$path)
 		{
 			$path = $this->current;
 		}
 
-		if ($subfolder->isFile())
+		$source = str_replace('\\', '/', realpath($path));
+
+		if (is_dir($source) === true)
 		{
-			// Set all separators to forward slashes for comparison
-			$usefolder = str_replace('\\', '/', $subfolder->getPath());
+			$files = new \RecursiveIteratorIterator(
+					new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
+			);
 
-			// Drop the folder part as we don't want them added to archive
-			$addpath = str_ireplace($path, '', $usefolder);
-
-			// Remove preceding slash
-			$findfirst = strpos($addpath, '/');
-
-			if ($findfirst == 0 && $findfirst !== false)
+			foreach ($files as $file)
 			{
-				$addpath = substr($addpath, 1);
+				$file = str_replace('\\', '/', $file);
+
+				if (substr($file, 0, 1) == ".")
+				{
+					continue;
+				}
+
+				// Ignore "." and ".." folders
+				if (in_array(substr($file, strrpos($file, '/') + 1), array('.', '..')))
+				{
+					continue;
+				}
+
+				$file = str_replace('\\', '/', $file);
+
+				if (is_dir($file) === true)
+				{
+					$zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
+				}
+				else if (is_file($file) === true)
+				{
+					$zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
+				}
 			}
-
-			if (strlen($addpath) > 0 || empty($addpath))
-			{
-				$addpath .= '/';
-			}
-
-			$options = array('add_path' => $addpath, 'remove_all_path' => true);
-
-			$zip->addGlob($usefolder . '/*.*', GLOB_BRACE, $options);
 		}
+		else if (is_file($source) === true)
+		{
+			$zip->addFromString(basename($source), file_get_contents($source));
+		}
+	}
+
+	/**
+	 * Create a installable zip file for a component
+	 *
+	 * @TODO implement possibility for multiple components (without duplicate content)
+	 *
+	 * @return  void
+	 */
+	public function createComponentZip()
+	{
+		$comZip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+
+		if (file_exists(JPATH_BASE . '/dist/tmp/cbuild'))
+		{
+			$this->_deleteDir(JPATH_BASE . '/dist/tmp/cbuild');
+		}
+
+		// Improve, should been a whitelist instead of a hardcoded copy
+		$this->_mkdir(JPATH_BASE . '/dist/tmp/cbuild');
+
+		$this->_copyDir($this->current . '/administrator', JPATH_BASE . '/dist/tmp/cbuild/administrator');
+		$this->_copyDir($this->current . '/language', JPATH_BASE . '/dist/tmp/cbuild/language');
+		$this->_copyDir($this->current . '/components', JPATH_BASE . '/dist/tmp/cbuild/components');
+
+		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
+
+		// Process the files to zip
+		$this->addFiles($comZip, JPATH_BASE . '/dist/tmp/cbuild');
+
+		$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
+		$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "script.php");
+
+		// Close the zip archive
+		$comZip->close();
+	}
+
+	/**
+	 * Create zips for modules
+	 *
+	 * @return  void
+	 */
+	public function createModuleZips()
+	{
+		$path = $this->current . "/modules";
+
+		// Get every module
+		$hdl = opendir($path);
+
+		while ($entry = readdir($hdl))
+		{
+			// Only folders
+			$p = $path . "/" . $entry;
+
+			if (substr($entry, 0, 1) == '.')
+			{
+				continue;
+			}
+
+			if (!is_file($p))
+			{
+				$this->say("Packaging Module " . $entry);
+
+				// Package file
+				$zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+
+				$zip->open(JPATH_BASE . '/dist/zips/' . $entry . '.zip', \ZipArchive::CREATE);
+
+				$this->say("Module " . $p);
+
+				// Process the files to zip
+				$this->addFiles($zip, $p);
+
+				// Close the zip archive
+				$zip->close();
+			}
+		}
+
+		closedir($hdl);
+	}
+
+	/**
+	 * Create zips for plugins
+	 *
+	 * @return  void
+	 */
+	public function createPluginZips()
+	{
+		$path = $this->current . "/plugins";
+
+		// Get every plugin
+		$hdl = opendir($path);
+
+		while ($entry = readdir($hdl))
+		{
+			// Only folders
+			$p = $path . "/" . $entry;
+
+			if (substr($entry, 0, 1) == '.')
+			{
+				continue;
+			}
+
+			if (!is_file($p))
+			{
+				// Plugin type folder
+				$type = $entry;
+
+				$hdl2 = opendir($p);
+
+				while ($plugin = readdir($hdl2))
+				{
+					if (substr($plugin, 0, 1) == '.')
+					{
+						continue;
+					}
+
+					// Only folders
+					$p2 = $path . "/" . $type . "/" . $plugin;
+
+					if (!is_file($p2))
+					{
+						$plg = "plg_" . $type . "_" . $plugin;
+
+						$this->say("Packaging Plugin " . $plg);
+
+						// Package file
+						$zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+
+						$zip->open(JPATH_BASE . '/dist/zips/' . $plg . '.zip', \ZipArchive::CREATE);
+
+						// Process the files to zip
+						$this->addFiles($zip, $p2);
+
+						// Close the zip archive
+						$zip->close();
+					}
+				}
+
+				closedir($hdl2);
+			}
+		}
+
+		closedir($hdl);
+	}
+
+	/**
+	 * Create zips for templates
+	 *
+	 * @return  void
+	 */
+	public function createTemplateZips()
+	{
+		$path = $this->current . "/templates";
+
+		// Get every module
+		$hdl = opendir($path);
+
+		while ($entry = readdir($hdl))
+		{
+			// Only folders
+			$p = $path . "/" . $entry;
+
+			if (substr($entry, 0, 1) == '.')
+			{
+				continue;
+			}
+
+			if (!is_file($p))
+			{
+				$this->say("Packaging Template " . $entry);
+
+				// Package file
+				$zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+
+				$zip->open(JPATH_BASE . '/dist/zips/tpl_' . $entry . '.zip', \ZipArchive::CREATE);
+
+				$this->say("Template " . $p);
+
+				// Process the files to zip
+				$this->addFiles($zip, $p);
+
+				// Close the zip archive
+				$zip->close();
+			}
+		}
+
+		closedir($hdl);
+	}
+
+	/**
+	 * Create package zip (called latest)
+	 *
+	 * @return  void
+	 */
+	public function createPackageZip()
+	{
+		$zip = new \ZipArchive($this->target, \ZipArchive::CREATE);
+
+		// Instantiate the zip archive
+		$zip->open($this->target, \ZipArchive::CREATE);
+
+		// Process the files to zip
+		$this->addFiles($zip, JPATH_BASE . '/dist/zips/');
+
+		$zip->addFile($this->getSourceFolder() . "/pkg_" . $this->getExtensionName() . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
+
+		// Close the zip archive
+		$zip->close();
 	}
 }
