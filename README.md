@@ -1,5 +1,7 @@
 # jorobo (Robo.li tasks for Joomla! extensions)
 
+[![Join the chat at https://gitter.im/joomla-projects/jorobo](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/joomla-projects/jorobo?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Latest Stable Version](https://poser.pugx.org/joomla-projects/jorobo/v/stable)](https://packagist.org/packages/joomla-projects/jorobo) [![Total Downloads](https://poser.pugx.org/joomla-projects/jorobo/downloads)](https://packagist.org/packages/joomla-projects/jorobo) [![Latest Unstable Version](https://poser.pugx.org/joomla-projects/jorobo/v/unstable)](https://packagist.org/packages/joomla-projects/jorobo) [![License](https://poser.pugx.org/yvesh/jbuild/license)](https://packagist.org/packages/joomla-projects/jorobo)
 
 #### Warning: Currently in alpha stage!
