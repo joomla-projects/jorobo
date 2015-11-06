@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks\Generate;
+namespace joomla_projects\jorobo\Tasks\Generate;
 
 trait generateTasks
 {

@@ -1,15 +1,15 @@
-# jorobo (Robo.li tasks for Joomla! extensions)
+# JoRobo (Robo.li tasks for Joomla!)
 
 [![Latest Stable Version](https://poser.pugx.org/joomla-projects/jorobo/v/stable)](https://packagist.org/packages/joomla-projects/jorobo) [![Total Downloads](https://poser.pugx.org/joomla-projects/jorobo/downloads)](https://packagist.org/packages/joomla-projects/jorobo) [![Latest Unstable Version](https://poser.pugx.org/joomla-projects/jorobo/v/unstable)](https://packagist.org/packages/joomla-projects/jorobo) [![License](https://poser.pugx.org/yvesh/jbuild/license)](https://packagist.org/packages/joomla-projects/jorobo)
 
 #### Warning: Currently in alpha stage!
 
-Tool and Task based on Robo.li to manage Joomla Extension Development and Releases
+Tools and Tasks based on Robo.li for Joomla Extension Development and Releases
 
 ## Installation (Standalone):
 
   * composer install
-  * configure jbuild.ini
+  * configure jorobo.ini
   * vendor/bin/robo
   
 
@@ -17,7 +17,6 @@ Tool and Task based on Robo.li to manage Joomla Extension Development and Releas
 
   * vendor/bin/robo map destination - Symlinks an extension into an Joomla installation (WIP @rdeutz working solution)
   * vendor/bin/robo build - Builds your extension into an installable Joomla package or zip file including replacements
-  * vendor/bin/robo generate [--mod_xy --com_xy --plg_system_xy] (not integrated yet)
   
   
 ## How-to use in your own extension
@@ -32,7 +31,7 @@ require 'vendor/autoload.php';
 
 class RoboFile extends \Robo\Tasks
 {
-	use \JBuild\Tasks\loadTasks;
+	use \joomla_projects\jorobo\Tasks\loadTasks;
 	..
 ```
 
@@ -44,7 +43,7 @@ or
 
 `$this->taskBuild($params)->run()`
 
-Look at the RoboFile.php in the library root for a sample file
+Look at the RoboFile.php in the library root for a sample file.
 
 ## Usage in your own extension
 

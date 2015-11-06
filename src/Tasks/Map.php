@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks;
+namespace joomla_projects\jorobo\Tasks;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
@@ -16,7 +16,7 @@ use Robo\Exception\TaskException;
 /**
  * Map extension into an Joomla installation
  *
- * @package  JBuild\Tasks\Component
+ * @package  joomla_projects\jorobo\Tasks\Component
  */
 class Map extends JTask implements TaskInterface
 {

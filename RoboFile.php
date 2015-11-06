@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-use JBuild\Tasks\loadTasks;
+use joomla_projects\jorobo\Tasks\loadTasks;
 
 if (!defined('JPATH_BASE'))
 {
@@ -40,7 +40,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function map($target)
 	{
-		(new \JBuild\Tasks\Map($target))->run();
+		(new \joomla_projects\jorobo\Tasks\Map($target))->run();
 	}
 
 	/**
@@ -52,7 +52,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function build($params = ['dev' => false])
 	{
-		(new \JBuild\Tasks\Build($params))->run();
+		(new \joomla_projects\jorobo\Tasks\Build($params))->run();
 	}
 
 	/**
@@ -64,6 +64,6 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function generate($extensions)
 	{
-		(new \JBuild\Tasks\Generate($extensions))->run();
+		(new \joomla_projects\jorobo\Tasks\Generate($extensions))->run();
 	}
 }

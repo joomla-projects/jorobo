@@ -6,19 +6,19 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks\Generate;
+namespace joomla_projects\jorobo\Tasks\Generate;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
 
-use JBuild\Tasks\JTask;
+use joomla_projects\jorobo\Tasks\JTask;
 
 /**
  * Generate base class - contains methods / data used in multiple generateion tasks
  *
- * @package  JBuild\Generate\Base
+ * @package  joomla_projects\jorobo\Generate\Base
  */
 class Base extends JTask implements TaskInterface
 {

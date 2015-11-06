@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks;
+namespace joomla_projects\jorobo\Tasks;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
@@ -16,7 +16,7 @@ use Robo\Exception\TaskException;
 /**
  * Class Build
  *
- * @package  JBuild\Tasks
+ * @package  joomla_projects\jorobo\Tasks
  */
 class Build extends JTask implements TaskInterface
 {

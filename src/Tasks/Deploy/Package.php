@@ -6,14 +6,14 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks\Deploy;
+namespace joomla_projects\jorobo\Tasks\Deploy;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
 
-use JBuild\Tasks\JTask;
+use joomla_projects\jorobo\Tasks\JTask;
 
 /**
  * Deploy project as Package file
