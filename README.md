@@ -1,6 +1,6 @@
 # JoRobo (Robo.li tasks for Joomla!)
 
-[![Latest Stable Version](https://poser.pugx.org/joomla-projects/jorobo/v/stable)](https://packagist.org/packages/joomla-projects/jorobo) [![Total Downloads](https://poser.pugx.org/joomla-projects/jorobo/downloads)](https://packagist.org/packages/joomla-projects/jorobo) [![Latest Unstable Version](https://poser.pugx.org/joomla-projects/jorobo/v/unstable)](https://packagist.org/packages/joomla-projects/jorobo) [![License](https://poser.pugx.org/yvesh/jbuild/license)](https://packagist.org/packages/joomla-projects/jorobo)
+[![Latest Stable Version](https://poser.pugx.org/joomla-projects/jorobo/v/stable)](https://packagist.org/packages/joomla-projects/jorobo) [![Total Downloads](https://poser.pugx.org/joomla-projects/jorobo/downloads)](https://packagist.org/packages/joomla-projects/jorobo) [![Latest Unstable Version](https://poser.pugx.org/joomla-projects/jorobo/v/unstable)](https://packagist.org/packages/joomla-projects/jorobo) [![License](https://poser.pugx.org/joomla-projects/jorobo/license)](https://packagist.org/packages/joomla-projects/jorobo)
 
 #### Warning: Currently in alpha stage!
 

@@ -42,8 +42,9 @@ selenium-server-standalone.jar
 codecept.phar
 selenium.log
 
-# JBuild related files
+# JoRobo related files
 /dist
 /jbuild.ini
+/jorobo.ini
 /source
 /build

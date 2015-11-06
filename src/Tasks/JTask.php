@@ -157,8 +157,9 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Load config
 	 *
-	 * @param $params
-	 * @return bool
+	 * @param   array  $params  Optional Params
+	 *
+	 * @return  bool
 	 */
 	private function loadConfiguration($params)
 	{
@@ -172,9 +173,9 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 
 		if (!$config)
 		{
-			$this->say('Error: Config file jbuild.ini not available');
+			$this->say('Error: Config file jorobo.ini not available');
 
-			throw new FileNotFoundException('Config file jbuild.ini not available');
+			throw new FileNotFoundException('Config file jorobo.ini not available');
 		}
 
 		// Are we building a git / dev release?
