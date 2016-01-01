@@ -5,19 +5,19 @@
  * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-namespace joomla_projects\jorobo\Tasks\Build;
+namespace Joomla\Jorobo\Tasks\Build;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
 
-use joomla_projects\jorobo\Tasks\JTask;
+use Joomla\Jorobo\Tasks\JTask;
 
 /**
  * Class Language
  *
- * @package  joomla_projects\jorobo\Tasks\Build
+ * @package  Joomla\Jorobo\Tasks\Build
  */
 class Language extends Base implements TaskInterface
 {

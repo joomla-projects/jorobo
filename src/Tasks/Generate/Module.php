@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace joomla_projects\jorobo\Tasks\Generate;
+namespace Joomla\Jorobo\Tasks\Generate;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
@@ -16,7 +16,7 @@ use Robo\Exception\TaskException;
 /**
  * Generate a module skeleton
  *
- * @package  joomla_projects\jorobo\Tasks\Generate
+ * @package  Joomla\Jorobo\Tasks\Generate
  */
 class Module extends Base implements TaskInterface
 {

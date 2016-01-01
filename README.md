@@ -12,12 +12,9 @@ Tools and Tasks based on Robo.li for Joomla Extension Development and Releases
   * configure jorobo.ini
   * vendor/bin/robo
   
-
 ## Function overview:
 
-  * vendor/bin/robo map destination - Symlinks an extension into an Joomla installation (WIP @rdeutz working solution)
   * vendor/bin/robo build - Builds your extension into an installable Joomla package or zip file including replacements
-  
   
 ## How-to use in your own extension
 
@@ -31,7 +28,7 @@ require 'vendor/autoload.php';
 
 class RoboFile extends \Robo\Tasks
 {
-	use \joomla_projects\jorobo\Tasks\loadTasks;
+	use \Joomla\Jorobo\Tasks\loadTasks;
 	..
 ```
 
@@ -49,7 +46,7 @@ Look at the RoboFile.php in the library root for a sample file.
 
 ### Directory setup
 
-In order to use Jorobo you should use the following directory structure (it's like the "common" joomla one)
+In order to use JoRobo you should use the following directory structure (it's like the "common" joomla one)
 
 ####Components
 

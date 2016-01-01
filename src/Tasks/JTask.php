@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace joomla_projects\jorobo\Tasks;
+namespace Joomla\Jorobo\Tasks;
 
 use Robo\Contract\TaskInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -14,7 +14,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 /**
  * Class JTask - Base class for our tasks
  *
- * @package  joomla_projects\jorobo\Tasks
+ * @package  Joomla\Jorobo\Tasks
  */
 abstract class JTask extends \Robo\Tasks implements TaskInterface
 {

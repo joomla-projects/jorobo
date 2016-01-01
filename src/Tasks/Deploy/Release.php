@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace joomla_projects\jorobo\Tasks\Deploy;
+namespace Joomla\Jorobo\Tasks\Deploy;
 
 use Joomla\Registry\Registry;
 use Joomla\Github\Github;
@@ -16,7 +16,7 @@ use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
 
-use joomla_projects\jorobo\Tasks\JTask;
+use Joomla\Jorobo\Tasks\JTask;
 
 
 /**

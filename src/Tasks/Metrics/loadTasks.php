@@ -8,9 +8,9 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace joomla_projects\jorobo\Tasks\Metrics;
+namespace Joomla\Jorobo\Tasks\Metrics;
 
-use joomla_projects\jorobo\Tasks\Metrics;
+use Joomla\Jorobo\Tasks\Metrics;
 
 trait loadTasks
 {
