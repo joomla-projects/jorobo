@@ -1,11 +1,9 @@
 <?php
 /**
- * @package    JBuild
- * @author     Yves Hoppe <yves@compojoom.com>
- * @date       20.09.15
+ * @package     Jorobo
  *
- * @copyright  Copyright (C) 2008 - 2015 Yves Hoppe - compojoom.com . All rights reserved.
- * @license    GNU General Public License version 2 or later; see LICENSE
+ * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Metrics;
