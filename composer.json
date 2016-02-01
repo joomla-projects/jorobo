@@ -1,6 +1,6 @@
 {
   "name": "joomla-projects/jorobo",
-  "description": "Tool and Task based on Robo.li to manage Joomla Extension Development and Releases",
+  "description": "Tools and Tasks based on Robo.li for Joomla Extension Development and Releases",
   "license": "GPL-2.0+",
   "authors": [
     {
@@ -17,7 +17,7 @@
     }
   ],
   "autoload": {
-    "psr-4": {"JBuild\\": "src"}
+    "psr-4": {"Joomla\\Jorobo\\": "src"}
   },
   "require"    : {
     "php": ">=5.4.0",

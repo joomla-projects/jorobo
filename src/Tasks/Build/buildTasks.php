@@ -6,10 +6,10 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks\Build;
+namespace Joomla\Jorobo\Tasks\Build;
 
-use JBuild\Tasks\Build\Component;
-use JBuild\Tasks\Build\Media;
+use Joomla\Jorobo\Tasks\Build\Component;
+use Joomla\Jorobo\Tasks\Build\Media;
 
 trait buildTasks
 {

@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks;
+namespace Joomla\Jorobo\Tasks;
 
 use Robo\Contract\TaskInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -14,7 +14,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 /**
  * Class JTask - Base class for our tasks
  *
- * @package  JBuild\Tasks
+ * @package  Joomla\Jorobo\Tasks
  */
 abstract class JTask extends \Robo\Tasks implements TaskInterface
 {
@@ -50,7 +50,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Construct
 	 *
-	 * @param   Array  $params  Opt params
+	 * @param   array  $params  Opt params
 	 */
 	public function __construct($params = array())
 	{
@@ -62,7 +62,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Function to check if folders are existing / writable (Code Base etc.)
 	 *
-	 * @return bool
+	 * @return  bool
 	 */
 	public function checkFolders()
 	{
@@ -128,20 +128,28 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 		return $this->getConfig()->buildFolder;
 	}
 
+	/**
+	 * Sets the source folder
+	 */
 	private function determineSourceFolder()
 	{
 		$this->sourceFolder = JPATH_BASE . "/" . $this->getConfig()->source;
 
-		if (!is_dir($this->sourceFolder)) {
+		if (!is_dir($this->sourceFolder))
+		{
 			$this->say('Warning - Directory: ' . $this->sourceFolder . ' is not available');
 		}
 	}
 
+	/**
+	 * Sets the operating system
+	 */
 	private function determineOperatingSystem()
 	{
 		$this->os = strtoupper(substr(PHP_OS, 0, 3));
 
-		if ($this->os === 'WIN') {
+		if ($this->os === 'WIN')
+		{
 			$this->fileExtension = '.exe';
 		}
 	}
@@ -149,31 +157,36 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Load config
 	 *
-	 * @param $params
-	 * @return bool
+	 * @param   array  $params  Optional Params
+	 *
+	 * @return  bool
 	 */
 	private function loadConfiguration($params)
 	{
-		if (!is_null(self::$config)) {
+		if (!is_null(self::$config))
+		{
 			return true;
 		}
 
 		// Load config as object
-		$config = json_decode(json_encode(parse_ini_file(JPATH_BASE . '/jbuild.ini', true)), false);
+		$config = json_decode(json_encode(parse_ini_file(JPATH_BASE . '/jorobo.ini', true)), false);
 
-		if (!$config) {
-			$this->say('Error: Config file jbuild.ini not available');
+		if (!$config)
+		{
+			$this->say('Error: Config file jorobo.ini not available');
 
-			throw new FileNotFoundException('Config file jbuild.ini not available');
+			throw new FileNotFoundException('Config file jorobo.ini not available');
 		}
 
 		// Are we building a git / dev release?
-		if ($this->isDevelopmentVersion($params)) {
+		if ($this->isDevelopmentVersion($params))
+		{
 			$res = $this->_exec('git rev-parse --short HEAD');
 
 			$version = trim($res->getMessage());
 
-			if ($version) {
+			if ($version)
+			{
 				$this->say("Changing version to development version " . $version);
 				$config->version = $version;
 			}
@@ -209,10 +222,13 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 		}
 
 		$target = "/dist/" . $config->extension;
-		if (!empty($config->version)) {
+
+		if (!empty($config->version))
+		{
 			$target = "/dist/" . $config->extension . "-" . $config->version;
 			return $target;
 		}
+
 		return $target;
 	}
 }

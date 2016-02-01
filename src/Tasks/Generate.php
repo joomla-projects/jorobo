@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace JBuild\Tasks;
+namespace Joomla\Jorobo\Tasks;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
@@ -16,7 +16,7 @@ use Robo\Exception\TaskException;
 /**
  * Building class for extensions
  *
- * @package  JBuild\Tasks
+ * @package  Joomla\Jorobo\Tasks
  */
 class Generate extends JTask implements TaskInterface
 {

@@ -5,10 +5,10 @@
  * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
-namespace JBuild\Tasks\Deploy;
+namespace Joomla\Jorobo\Tasks\Deploy;
 
-use JBuild\Tasks\Build\Component;
-use JBuild\Tasks\Build\Media;
+use Joomla\Jorobo\Tasks\Build\Component;
+use Joomla\Jorobo\Tasks\Build\Media;
 
 trait deployTasks
 {
