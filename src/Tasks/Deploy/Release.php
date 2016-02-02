@@ -16,8 +16,6 @@ use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
 
-use Joomla\Jorobo\Tasks\JTask;
-
 
 /**
  * Release project to github
@@ -62,11 +60,14 @@ class Release extends Base implements TaskInterface
 			->tag($version)
 			->push($remote, $version)
 			->run();
+
 		$this->say("Tag created: $version and published at $owner/$repository");
 
 		$this->say("Creating the release at: https://github.com/$owner/$repository/releases/tag/$version");
+
 		$github = $this->getGithub();
 		$changesInRelease = "# Changelog: \n\n" . implode("\n* ", $changes);
+
 		$response = $github->repositories->releases->create(
 			$owner,
 			$repository,
@@ -82,6 +83,14 @@ class Release extends Base implements TaskInterface
 	}
 
 
+	/**
+	 * Get the Changes
+	 *
+	 * @param   bool   $latest_release  - Latest release
+	 * @param   array  $pulls           - Pulls
+	 *
+	 * @return array
+	 */
 	private function getChanges($latest_release = false, $pulls)
 	{
 		$changes = array();
@@ -94,11 +103,9 @@ class Release extends Base implements TaskInterface
 				{
 					$changes[] = $pull->title;
 				}
-				else
-				{
-					$message = explode(PHP_EOL, $pull->commit->message);
-					$changes[] = $message[0];
-				}
+
+				$message = explode(PHP_EOL, $pull->commit->message);
+				$changes[] = $message[0];
 			}
 		}
 
@@ -106,8 +113,7 @@ class Release extends Base implements TaskInterface
 	}
 
 	/**
-	 *
-	 *
+	 * Get the latest release
 	 *
 	 * @return  false|array
 	 */
@@ -137,6 +143,18 @@ class Release extends Base implements TaskInterface
 		return $latest_release;
 	}
 
+	/**
+	 * Get all repository pulls for the changelog
+	 *
+	 * @param   string     $state   - The state of the PR (default closed)
+	 * @param   string     $sha     - The sha sum (opt)
+	 * @param   string     $path    - The path (opt)
+	 * @param   string     $author  - The author (opt)
+	 * @param   Date|null  $since   - Changes since (opt)
+	 * @param   Date|null  $until   - Changes until (opt)
+	 *
+	 * @return  mixed
+	 */
 	private function getAllRepoPulls($state = 'closed', $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
 	{
 		$github = $this->getGithub();
@@ -183,11 +201,9 @@ class Release extends Base implements TaskInterface
 	}
 
 	/**
-	 * Upload build Zipfile to GitHub
+	 * Get Github
 	 *
-	 * @param $version
-	 * @param $githubToken
-	 * @param $upload_url
+	 * @return  Github
 	 */
 	private function getGithub()
 	{
@@ -212,7 +228,7 @@ class Release extends Base implements TaskInterface
 
 		$this->say("Uploading the Extension package to the Github release: $version");
 
-		$uploadUrl = str_replace("{?name,label}", "?access_token=$githubToken&name=" . $zipfile . "&size=" . $filesize, $upload_url);
+		$uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
 
 		$this->say(print_r($uploadUrl, true));
 

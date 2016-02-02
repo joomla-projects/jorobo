@@ -202,8 +202,11 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	}
 
 	/**
-	 * @param $params
-	 * @return mixed
+	 * Check if we are building a dev release
+	 *
+	 * @param   array  $params  - Robo.li Params
+	 *
+	 * @return  mixed
 	 */
 	private function isDevelopmentVersion($params)
 	{
@@ -211,8 +214,11 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	}
 
 	/**
-	 * @param $config
-	 * @return string
+	 * Get target
+	 *
+	 * @param   object  $config  - The JoRobo config
+	 *
+	 * @return  string
 	 */
 	private function determineTarget($config)
 	{
@@ -226,6 +232,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 		if (!empty($config->version))
 		{
 			$target = "/dist/" . $config->extension . "-" . $config->version;
+
 			return $target;
 		}
 
