@@ -49,4 +49,16 @@ trait loadTasks
     {
         return new Generate($params);
     }
+
+    /**
+     * The CopyrightHeader task
+     *
+     * @param   array  $params  - Opt params
+     *
+     * @return  CopyrightHeader
+     */
+    protected function taskCopyrightHeaders($params)
+    {
+        return new CopyrightHeader($params);
+    }
 }

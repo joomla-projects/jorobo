@@ -26,7 +26,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	protected static $config = null;
 
 	/**
-	 * Operating sytem
+	 * Operating system
 	 *
 	 * @var    string
 	 */
