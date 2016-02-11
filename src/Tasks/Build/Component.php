@@ -174,30 +174,15 @@ class Component extends Base implements TaskInterface
 
 		$adminFolder = $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName();
 		$xmlFile     = $adminFolder . "/" . $this->getExtensionName() . ".xml";
+        $configFile  = $adminFolder . "/config.xml";
 		$scriptFile  = $adminFolder . "/script.php";
 		$helperFile  = $adminFolder . "/helpers/defines.php";
 
 		// Version & Date Replace
-		$this->taskReplaceInFile($xmlFile)
-			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
-			->run();
-
-		if (file_exists($scriptFile))
-		{
-			$this->taskReplaceInFile($scriptFile)
-				->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-				->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
-				->run();
-		}
-
-		if (file_exists($helperFile))
-		{
-			$this->taskReplaceInFile($helperFile)
-				->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-				->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
-				->run();
-		}
+		$this->replaceInFile($xmlFile);
+		$this->replaceInFile($scriptFile);
+		$this->replaceInFile($configFile);
+		$this->replaceInFile($helperFile);
 
 		// Files and folders
 		if ($this->hasAdmin)
