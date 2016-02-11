@@ -11,7 +11,7 @@ namespace Joomla\Jorobo\Tasks;
 use Robo\Contract\TaskInterface;
 
 /**
- * Building class for extensions
+ * Generate / Update copyright headers in project files
  *
  * @package  Joomla\Jorobo\Tasks
  */
