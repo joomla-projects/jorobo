@@ -1,8 +1,8 @@
 <?php
 /**
- * @package     Jorobo
+ * @package     JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -47,11 +47,12 @@ class CopyrightHeader extends JTask implements TaskInterface
 	{
 		$this->say("Updating / adding copyright headers");
 		$text = $this->replaceInText(trim($this->getConfig()->header->text));
+		$exclude = explode(",", trim($this->getConfig()->header->exclude));
 
 		$path = realpath($this->getConfig()->source);
 		$fileTypes = explode(",", trim($this->getConfig()->header->files));
 
-		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename)
+		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $dir => $filename)
 		{
 			if (substr($filename, 0, 1) == '.')
 			{
@@ -60,15 +61,19 @@ class CopyrightHeader extends JTask implements TaskInterface
 
 			$file = new \SplFileInfo($filename);
 
+			// Skip directories in exclude list
+			if ($exclude && in_array($file->getPath(), $exclude))
+			{
+				continue;
+			}
+
 			if (!in_array($file->getExtension(), $fileTypes))
 			{
 				continue;
 			}
 
-			$this->say($filename);
-
 			// Remove previous / any doctype headers at the beginning of the file
-			// Todo: needs check for class headers (as long as namespace / use is there this is no issue)
+			// Todo: needs check for class headers (as long as namespace / use is there, this is no issue)
 			$this->removeHeader($file);
 			$this->addHeader($file, $text);
 		}
@@ -87,6 +92,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	protected function replaceInText($text)
 	{
 		$text = str_replace("##YEAR##", date('Y'), $text);
+		$text = str_replace("##DATE##", date('Y-m-d'), $text);
 
 		return $text;
 	}
