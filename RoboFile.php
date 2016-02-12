@@ -68,9 +68,7 @@ class RoboFile extends \Robo\Tasks
 	}
 
 	/**
-	 * Update copyright headers for this project. (Set them up in the jorobo.ini)
-	 *
-	 * @param   array  $params  Additional params
+	 * Update copyright headers for this project. (Set the text up in the jorobo.ini)
 	 *
 	 * @return  void
 	 */
