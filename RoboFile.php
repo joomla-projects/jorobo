@@ -74,8 +74,8 @@ class RoboFile extends \Robo\Tasks
 	 *
 	 * @return  void
 	 */
-	public function headers($params = ['dev' => false])
+	public function headers()
 	{
-		(new \Joomla\Jorobo\Tasks\CopyrightHeader($params))->run();
+		(new \Joomla\Jorobo\Tasks\CopyrightHeader())->run();
 	}
 }

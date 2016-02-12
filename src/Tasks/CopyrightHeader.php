@@ -22,20 +22,11 @@ class CopyrightHeader extends JTask implements TaskInterface
 	use Generate\generateTasks;
 
 	/**
-	 * @var array|null
-	 */
-	protected $params = null;
-
-	/**
 	 * Initialize Build Task
-	 *
-	 * @param   array  $params  Additional params
 	 */
-	public function __construct($params)
+	public function __construct()
 	{
 		parent::__construct();
-
-		$this->params = $params;
 	}
 
 	/**
@@ -52,7 +43,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 		$path = realpath($this->getConfig()->source);
 		$fileTypes = explode(",", trim($this->getConfig()->header->files));
 
-		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $dir => $filename)
+		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename)
 		{
 			if (substr($filename, 0, 1) == '.')
 			{
@@ -61,19 +52,30 @@ class CopyrightHeader extends JTask implements TaskInterface
 
 			$file = new \SplFileInfo($filename);
 
-			// Skip directories in exclude list
-			if ($exclude && in_array($file->getPath(), $exclude))
-			{
-				continue;
-			}
 
 			if (!in_array($file->getExtension(), $fileTypes))
 			{
 				continue;
 			}
 
+			// Skip directories in exclude list
+			if (isset($exclude) && count($exclude))
+			{
+				$relative = str_replace(realpath($path), "", $file->getPath());
+
+				// It is possible to have multiple exclude directories
+				foreach ($exclude as $e)
+				{
+					if (stripos($relative, $e) !== false)
+					{
+						$this->say("Excluding " . $filename);
+						continue 2;
+					}
+				}
+			}
+
 			// Remove previous / any doctype headers at the beginning of the file
-			// Todo: needs check for class headers (as long as namespace / use is there, this is no issue)
+			// Todo: needs check for class headers (as long as namespace / use / defined _jexec is there, this is no issue)
 			$this->removeHeader($file);
 			$this->addHeader($file, $text);
 		}
@@ -82,10 +84,10 @@ class CopyrightHeader extends JTask implements TaskInterface
 	}
 
 	/**
-	 * Replace placeholders in the copyright header
-	 * Todo separate and make configurable and extentable
+	 * Replaces placeholders in the copyright header
+	 * Todo separate and make configurable and extensible
 	 *
-	 * @param   $text  -
+	 * @param   $text  - The header text with placeholders
 	 *
 	 * @return  mixed
 	 */
