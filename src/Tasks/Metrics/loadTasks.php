@@ -19,7 +19,7 @@ trait loadTasks
 	 */
 	protected function taskMetrics($options = [])
 	{
-		return new Metrics($options);
+		return new \Joomla\Jorobo\Tasks\Metrics\Metrics($options);
 	}
 
 	public function metrics($options = [])

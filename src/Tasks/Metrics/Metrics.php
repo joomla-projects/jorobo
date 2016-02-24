@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-namespace Joomla\Jorobo\Tasks;
+namespace Joomla\Jorobo\Tasks\Metrics;
 
 use Robo\Result;
 use Robo\Task\BaseTask;
@@ -18,9 +18,10 @@ use Robo\Exception\TaskException;
  *
  * @package Joomla\Jorobo\Tasks
  */
-class Metrics extends JTask
+class Metrics extends \Joomla\Jorobo\Tasks\JTask
 {
 	private $command = 'vendor/bin/phpqa';
+
 	private $options = [];
 
 	use \Robo\Task\Base\loadTasks;
@@ -45,7 +46,9 @@ class Metrics extends JTask
 		}
 
 		$task->option('analyzedDir', $this->getSourceFolder());
-		$task->option('buildDir', './build');
+		$task->option('buildDir', './docs/phpqa');
+		$task->option('ignoredDirs', 'plugins/payment,administrator/components/com_matukio/includes');
+		$task->option('report');
 
 		if ($this->options['quiet'])
 		{
