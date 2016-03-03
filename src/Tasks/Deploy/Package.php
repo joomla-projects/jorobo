@@ -145,7 +145,6 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Add files
 	 *
-	 * @param    string       $subfolder  The subfolder
 	 * @param    \ZipArchive  $zip        The zip object
 	 * @param    string       $path       Optional path
 	 *
@@ -219,6 +218,7 @@ class Package extends Base implements TaskInterface
 		$this->_mkdir(JPATH_BASE . '/dist/tmp/cbuild');
 
 		$this->_copyDir($this->current . '/administrator', JPATH_BASE . '/dist/tmp/cbuild/administrator');
+		$this->_remove(JPATH_BASE . '/dist/tmp/cbuild/administrator/manifests');
 		$this->_copyDir($this->current . '/language', JPATH_BASE . '/dist/tmp/cbuild/language');
 		$this->_copyDir($this->current . '/components', JPATH_BASE . '/dist/tmp/cbuild/components');
 
@@ -402,7 +402,18 @@ class Package extends Base implements TaskInterface
 		// Process the files to zip
 		$this->addFiles($zip, JPATH_BASE . '/dist/zips/');
 
-		$zip->addFile($this->getSourceFolder() . "/pkg_" . $this->getExtensionName() . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
+		$zip->addFile($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
+
+		// If the package has language files, add those
+		if (is_file($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".ini"))
+		{
+			$zip->addFile($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".ini", "language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".ini");
+		}
+
+		if (is_file($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".sys.ini"))
+		{
+			$zip->addFile($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".sys.ini", "language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".sys.ini");
+		}
 
 		// Close the zip archive
 		$zip->close();
