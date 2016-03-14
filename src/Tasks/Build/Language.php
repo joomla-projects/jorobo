@@ -83,20 +83,24 @@ class Language extends Base implements TaskInterface
 
 		if ($this->type == "mod")
 		{
-			$dest = $this->getBuildFolder() . "/modules/" . $this->ext;
+			$dest .= "/modules/" . $this->ext;
 		}
 		elseif ($this->type == "plg")
 		{
 			$a = explode("_", $this->ext);
 
-			$dest = $this->getBuildFolder() . "/plugins/" . $a[1] . "/" . $a[2];
+			$dest .= "/plugins/" . $a[1] . "/" . $a[2];
+		}
+		elseif ($this->type == "pkg")
+		{
+			$dest .= "/administrator/manifests/packages/" . $this->ext;
 		}
 		elseif ($this->type == "lib")
 		{
 			// Remove lib before - ugly hack
 			$ex = str_replace("lib_", "" , $this->ext);
 
-			$dest = $this->getBuildFolder() . "/libraries/" . $ex;
+			$dest .= "/libraries/" . $ex;
 		}
 		elseif ($this->type == "plu")
 		{
@@ -106,7 +110,7 @@ class Language extends Base implements TaskInterface
 
 			$this->say("/components/com_comprofiler/plugin/" . $a[1] . "/plug_" . $a[3]);
 
-			$dest = $this->getBuildFolder() . "/components/com_comprofiler/plugin/" . $a[1] . "/plug_" . $a[3];
+			$dest .= "/components/com_comprofiler/plugin/" . $a[1] . "/plug_" . $a[3];
 
 			$this->ext = "plg_plug_" . $a[3];
 
@@ -116,7 +120,7 @@ class Language extends Base implements TaskInterface
 		{
 			$a = explode("_", $this->ext);
 
-			$dest = $this->getBuildFolder() . "/templates/" . $a[1];
+			$dest .= "/templates/" . $a[1];
 		}
 
 		if ($this->hasAdminLang)
@@ -135,19 +139,19 @@ class Language extends Base implements TaskInterface
 	}
 
 	/**
-	 * Analyze the component structure
+	 * Analyze the extension structure
 	 *
 	 * @return  void
 	 */
 	private function analyze()
 	{
 		// Just check for english here
-		if (!file_exists($this->adminLangPath . "/en-GB/en-GB." . $this->ext . ".ini"))
+		if (!file_exists($this->adminLangPath . "/en-GB/en-GB." . $this->ext . ".ini") && !file_exists($this->adminLangPath . "/en-GB/en-GB." . $this->ext . ".sys.ini"))
 		{
 			$this->hasAdminLang = false;
 		}
 
-		if (!file_exists($this->frontLangPath . "/en-GB/en-GB." . $this->ext . ".ini"))
+		if (!file_exists($this->frontLangPath . "/en-GB/en-GB." . $this->ext . ".ini") && !file_exists($this->frontLangPath . "/en-GB/en-GB." . $this->ext . ".sys.ini"))
 		{
 			$this->hasFrontLang = false;
 		}

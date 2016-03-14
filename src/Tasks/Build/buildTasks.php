@@ -51,9 +51,9 @@ trait buildTasks
 	}
 
 	/**
-	 * Build media folder
+	 * Build language folder
 	 *
-	 * @param   string  $extension  - The extension (not the whoe, but mod_xy or plg_)
+	 * @param   string  $extension  - The extension (not the whole, but mod_xy or plg_)
 	 *
 	 * @return  Language
 	 */
@@ -100,6 +100,18 @@ trait buildTasks
 	}
 
 	/**
+	 * Build package
+	 *
+	 * @param   array  $params  - Opt params
+	 *
+	 * @return  Package
+	 */
+	protected function buildPackage($params)
+	{
+		return new Package($params);
+	}
+
+	/**
 	 * Build a Plugin
 	 *
 	 * @param   String  $type    Type of the plugin
@@ -120,7 +132,7 @@ trait buildTasks
 	 * @param   String  $name    Name of the plugin
 	 * @param   array   $params  Opt params
 	 *
-	 * @return  Plugin
+	 * @return  CBPlugin
 	 */
 	protected function buildCBPlugin($type, $name, $params)
 	{
@@ -133,7 +145,7 @@ trait buildTasks
 	 * @param   String  $templateName  Name of the template
 	 * @param   array   $params   Opt params
 	 *
-	 * @return  Module
+	 * @return  Template
 	 */
 	protected function buildTemplate($templateName, $params)
 	{

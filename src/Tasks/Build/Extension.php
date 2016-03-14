@@ -35,6 +35,8 @@ class Extension extends Base implements TaskInterface
 
 	private $hasModules = true;
 
+	private $hasPackage = true;
+
 	private $hasPlugins = true;
 
 	private $hasLibraries = true;
@@ -268,6 +270,12 @@ class Extension extends Base implements TaskInterface
 			closedir($hdl);
 		}
 
+		// Build component
+		if ($this->hasPackage)
+		{
+			$this->buildPackage($this->params)->run();
+		}
+
 		return true;
 	}
 
@@ -304,6 +312,11 @@ class Extension extends Base implements TaskInterface
 		if (!file_exists($this->getSourceFolder() . "/libraries"))
 		{
 			$this->hasLibraries = false;
+		}
+
+		if (!file_exists($this->getSourceFolder() . "/administrator/manifests/packages"))
+		{
+			$this->hasPackage = false;
 		}
 
 		if (!file_exists($this->getSourceFolder() . "/components/com_comprofiler"))
