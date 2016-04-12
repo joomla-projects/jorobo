@@ -85,41 +85,6 @@ class Map extends JTask implements TaskInterface
 
 		closedir($dirHandle);
 
-		// Get lib_compojoom (TODO move into separate file)
-		$libDir = dirname(dirname($this->getSourceFolder())) . "/lib_compojoom/source";
-
-		$libHandle = opendir($libDir);
-
-		if ($libHandle === false)
-		{
-			$this->printTaskError('Can not open ' . $libDir . ' for parsing');
-
-			return false;
-		}
-
-		$this->say("Syncing library " . $libDir);
-
-		while (false !== ($element = readdir($libHandle)))
-		{
-			if  (substr($element, 0, 1) == '.')
-			{
-				continue;
-			}
-
-			$method = 'process' . ucfirst($element);
-
-			if (method_exists($this, $method))
-			{
-				$this->$method($libDir . "/" . $element, $this->target);
-			}
-			else
-			{
-				$this->say('Missing method: ' . $method);
-			}
-		}
-
-		closedir($libHandle);
-
 		$this->say("Finished symlinking into Joomla!");
 
 		return true;
@@ -179,7 +144,7 @@ class Map extends JTask implements TaskInterface
 
 			while (false !== ($element = readdir($dirHandle)))
 			{
-				if (substr($element, 0, 1) == '.')
+				if (substr($element, 0, 1) != '.')
 				{
 					if (is_dir($src . "/" . $element))
 					{
@@ -196,6 +161,7 @@ class Map extends JTask implements TaskInterface
 					}
 				}
 			}
+
 		}
 	}
 
@@ -206,9 +172,9 @@ class Map extends JTask implements TaskInterface
 	 *
 	 * @return  void
 	 */
-	private function processLibraries($toDir)
+	private function processLibraries($src, $toDir)
 	{
-		$this->mapDir('libraries', $this->getSourceFolder(), $toDir);
+		$this->linkSubdirectories($src, $toDir . "/libraries");
 	}
 
 	/**
@@ -218,10 +184,38 @@ class Map extends JTask implements TaskInterface
 	 *
 	 * @return  void
 	 */
-	private function processMedia($toDir)
+	private function processMedia($src, $toDir)
 	{
-		$this->mapDir('media', $this->getSourceFolder(), $toDir);
+		$this->linkSubdirectories($src, $toDir . "/media");
 	}
+
+	/**
+	 * Link subdirectories into folder
+	 *
+	 * @param   string  $src  The source
+	 * @param   string  $to   The target
+	 *
+	 * @return  void
+	 */
+	private function linkSubdirectories($src, $to)
+	{
+		if (is_dir($src))
+		{
+			$dirHandle = opendir($src);
+
+			while (false !== ($element = readdir($dirHandle)))
+			{
+				if (substr($element, 0, 1) != '.')
+				{
+					if (is_dir($src . "/" . $element))
+					{
+						$this->symlink($src . "/" . $element, $to . '/' . $element);
+					}
+				}
+			}
+		}
+	}
+
 
 	/**
 	 * Process Cli
@@ -230,9 +224,9 @@ class Map extends JTask implements TaskInterface
 	 *
 	 * @return  void
 	 */
-	private function processCli($toDir)
+	private function processCli($src, $toDir)
 	{
-		$this->mapDir('cli', $this->getSourceFolder(), $toDir);
+		$this->linkSubdirectories($src, $toDir . "/cli");
 	}
 
 	/**
@@ -244,7 +238,7 @@ class Map extends JTask implements TaskInterface
 	 */
 	private function processModules($src, $toDir)
 	{
-		$this->mapDir('modules', $src, $toDir);
+		$this->linkSubdirectories($src, $toDir . "/modules");
 	}
 
 	/**
@@ -256,29 +250,18 @@ class Map extends JTask implements TaskInterface
 	 */
 	private function processPlugins($src, $toDir)
 	{
-		if (is_dir($this->getSourceFolder()))
+		// Plugin folder /plugins
+		if (is_dir($src))
 		{
-			$dirHandle = opendir($this->getSourceFolder());
+			$dirHandle = opendir($src);
 
-			// Plugin folder
-			while (false !== ($element = readdir($dirHandle)))
+			while (false !== ($type = readdir($dirHandle)))
 			{
-				if (substr($element, 0, 1) != '.')
+				if (substr($type, 0, 1) != '.')
 				{
-					$plgDirHandle = opendir($this->getSourceFolder() . "/" . $element);
-
-					while (false !== ($plugin = readdir($plgDirHandle)))
+					if (is_dir($src . "/" . $type))
 					{
-						if  (substr($element, 0, 1) != '.')
-						{
-							if (is_dir($this->getSourceFolder() . "/" . $element . "/" . $plugin))
-							{
-								$this->symlink(
-									$this->getSourceFolder() . '/' . $element . "/" . $plugin,
-									$toDir . '/plugins/' . $element . '/' . $plugin
-								);
-							}
-						}
+						$this->linkSubdirectories($src . "/" . $type, $toDir . '/plugins/' . $type);
 					}
 				}
 			}
@@ -320,12 +303,10 @@ class Map extends JTask implements TaskInterface
 	 */
 	private function symlink($source, $target)
 	{
-		$this->say('Source: ' . $source);
-		$this->say('Target: ' . $target);
+		// Result $this->say("ln -s " . $source . "  >>>>>  " . $target);
 
 		if (file_exists($target))
 		{
-			$this->say("DELETING TARGET: " . $target);
 			$this->_deleteDir($target);
 		}
 
@@ -337,7 +318,7 @@ class Map extends JTask implements TaskInterface
 		}
 		catch (Exception $e)
 		{
-			$this->say('ERROR: ' . $e->message());
+			$this->say('Error symlinking: ' . $e->message());
 		}
 	}
 }
