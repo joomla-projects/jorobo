@@ -12,18 +12,18 @@ use Joomla\Jorobo\Tasks\Metrics;
 
 trait loadTasks
 {
-    /**
-     * The metrics task
-     *
-     * @return Metrics
-     */
-    protected function taskMetrics($options = [])
-    {
-        return new Metrics($options);
-    }
+	/**
+	 * The metrics task
+	 *
+	 * @return  Metrics
+	 */
+	protected function taskMetrics($options = [])
+	{
+		return new \Joomla\Jorobo\Tasks\Metrics\Metrics($options);
+	}
 
-    public function metrics($options = [])
-    {
-        $this->taskMetrics($options)->run();
-    }
+	public function metrics($options = [])
+	{
+		$this->taskMetrics($options)->run();
+	}
 }

@@ -8,12 +8,7 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
-use Joomla\Jorobo\Tasks\JTask;
 
 /**
  * Deploy project as Zip

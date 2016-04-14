@@ -104,9 +104,6 @@ class CBPlugin extends Base implements TaskInterface
 		$xmlFile = $this->target . "/" . str_replace('plug_', '', $this->plgName) . ".xml";
 
 		// Version & Date Replace
-		$this->taskReplaceInFile($xmlFile)
-			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
-			->run();
+		$this->replaceInFile($xmlFile);
 	}
 }

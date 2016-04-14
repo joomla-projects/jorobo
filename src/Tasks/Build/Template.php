@@ -106,10 +106,7 @@ class Template extends Base implements TaskInterface
 		$xmlFile = $this->target . "/templateDetails.xml";
 
 		// Version & Date Replace
-		$this->taskReplaceInFile($xmlFile)
-			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
-			->run();
+		$this->replaceInFile($xmlFile);
 
 		// Files and folders
 		$f = $this->generateFileList($files);

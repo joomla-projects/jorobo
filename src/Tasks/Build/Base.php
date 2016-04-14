@@ -376,4 +376,25 @@ class Base extends JTask implements TaskInterface
 		self::$frontendLanguageFiles = array();
 		self::$mediaFiles = array();
 	}
+
+
+	/**
+	 * Replace Basic placeholders in file (Date, year, version)
+	 *
+	 * @param   string  $file  - Path to file
+	 *
+	 * @return  void
+	 */
+	protected function replaceInFile($file)
+	{
+		if (!file_exists($file))
+		{
+			return;
+		}
+
+		$this->taskReplaceInFile($file)
+			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
+			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
+			->run();
+	}
 }

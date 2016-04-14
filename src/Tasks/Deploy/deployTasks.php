@@ -7,9 +7,6 @@
  */
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Joomla\Jorobo\Tasks\Build\Component;
-use Joomla\Jorobo\Tasks\Build\Media;
-
 trait deployTasks
 {
 	/**
@@ -40,5 +37,17 @@ trait deployTasks
 	protected function deployRelease()
 	{
 		return new Release();
+	}
+
+	/**
+	 * Deploy to FTP
+	 * (Depends on package or zip deploy task)
+	 *
+	 * @since   0.3
+	 * @return  Release
+	 */
+	protected function deployFtp()
+	{
+		return new FtpUpload();
 	}
 }
