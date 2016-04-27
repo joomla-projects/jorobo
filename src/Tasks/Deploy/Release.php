@@ -18,7 +18,7 @@ use Robo\Exception\TaskException;
 
 
 /**
- * Release project to github
+ * Release built to github
  *
  * @since  0.5.0
  */
@@ -28,7 +28,7 @@ class Release extends Base implements TaskInterface
 	use \Robo\Common\TaskIO;
 
 	/**
-	 * Release the project on GitHub
+	 * Release the built on GitHub
 	 *
 	 * @return  bool
 	 */
@@ -222,28 +222,28 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Upload built Zip- or Packagefile to GitHub
 	 *
-	 * @param  string  $version      The release version
-	 * @param  string  $githubToken  The github access token
-	 * @param  string  $upload_url   The upload URL
+	 * @param   string  $version      The release version
+	 * @param   string  $githubToken  The github access token
+	 * @param   string  $upload_url   The upload URL
 	 *
 	 * @return  void
 	 */
 	protected function uploadToGithub($version, $githubToken, $upload_url)
 	{
-		$deploy = explode(" ", $this->getConfig()->target);
+		$deploy = explode(' ', $this->getConfig()->target);
 
-		$zipfile = $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+		$zipfile = $this->getExtensionName() . '-' . $this->getConfig()->version . '.zip';
 
 		if (in_array('package', $deploy))
 		{
-			$zipfile = "pkg-" . $zipfile;
+			$zipfile = 'pkg-' . $zipfile;
 		}
 
-		$zipfilepath =  JPATH_BASE . "/dist/" . $zipfile;
+		$zipfilepath =  JPATH_BASE . '/dist/' . $zipfile;
 
 		$filesize = filesize($zipfilepath);
 
-		$this->say("Uploading the Extension package to the Github release: " . $version);
+		$this->say('Uploading the Extension package to the Github release: ' . $version);
 
 		$uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
 
