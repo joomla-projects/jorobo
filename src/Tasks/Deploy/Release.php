@@ -19,6 +19,8 @@ use Robo\Exception\TaskException;
 
 /**
  * Release project to github
+ *
+ * @since  0.5.0
  */
 class Release extends Base implements TaskInterface
 {
@@ -26,7 +28,7 @@ class Release extends Base implements TaskInterface
 	use \Robo\Common\TaskIO;
 
 	/**
-	 * Release the project
+	 * Release the project on GitHub
 	 *
 	 * @return  bool
 	 */
@@ -50,7 +52,7 @@ class Release extends Base implements TaskInterface
 		$this->taskGitStack()
 			->add('CHANGELOG.md')
 			->commit("Prepare for release version " . $version)
-			->push($remote. $branch)
+			->push($remote, $branch)
 			->run();
 
 		$this->say("Creating github tag: $version");
@@ -78,6 +80,8 @@ class Release extends Base implements TaskInterface
 			false,
 			true
 		);
+
+		$this->say(print_r($repository, true));
 
 		$this->uploadToGithub($version, $this->getConfig()->github->token, $response->upload_url);
 	}
@@ -188,6 +192,8 @@ class Release extends Base implements TaskInterface
 
 	/**
 	 * Updates changelog with the changes since the last release
+	 *
+	 * @return  void
 	 */
 	public function changelogUpdate($changes)
 	{
@@ -214,27 +220,53 @@ class Release extends Base implements TaskInterface
 	}
 
 	/**
-	 * Upload build Zipfile to GitHub
+	 * Upload built Zip- or Packagefile to GitHub
 	 *
-	 * @param $version
-	 * @param $githubToken
-	 * @param $upload_url
+	 * @param  string  $version      The release version
+	 * @param  string  $githubToken  The github access token
+	 * @param  string  $upload_url   The upload URL
+	 *
+	 * @return  void
 	 */
-	private function uploadToGithub($version, $githubToken, $upload_url)
+	protected function uploadToGithub($version, $githubToken, $upload_url)
 	{
-		$zipfile = "pkg-" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
-		$zipfilepath =  JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+		$deploy = explode(" ", $this->getConfig()->target);
+
+		$zipfile = $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+
+		if (in_array('package', $deploy))
+		{
+			$zipfile = "pkg-" . $zipfile;
+		}
+
+		$zipfilepath =  JPATH_BASE . "/dist/" . $zipfile;
+
 		$filesize = filesize($zipfilepath);
 
-		$this->say("Uploading the Extension package to the Github release: $version");
+		$this->say("Uploading the Extension package to the Github release: " . $version);
 
 		$uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
 
-		$this->say(print_r($uploadUrl, true));
+		$request = curl_init($uploadUrl);
 
-		$http    = new Http();
-		$data    = array("file" => $zipfilepath);
-		$headers = array("Content-Type" => "application/zip");
-		$http->post($uploadUrl, $data, $headers);
+		curl_setopt($request, CURLOPT_POST, true);
+		curl_setopt($request, CURLOPT_VERBOSE, true);
+
+		curl_setopt($request, CURLOPT_HTTPHEADER, array(
+			'Authorization: token ' . $githubToken,
+		));
+
+		curl_setopt($request, CURLOPT_HTTPHEADER, array('Content-type: application/zip'));
+
+		curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));
+
+		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 0);
+
+		$result = curl_exec($request);
+
+		curl_close($request);
+
+		$this->say(print_r($result, true));
 	}
 }
