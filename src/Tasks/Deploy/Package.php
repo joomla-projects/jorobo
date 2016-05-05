@@ -221,8 +221,13 @@ class Package extends Base implements TaskInterface
 		$this->_remove(JPATH_BASE . '/dist/tmp/cbuild/administrator/manifests');
 		$this->_copyDir($this->current . '/language', JPATH_BASE . '/dist/tmp/cbuild/language');
 		$this->_copyDir($this->current . '/components', JPATH_BASE . '/dist/tmp/cbuild/components');
-		$this->_copyDir($this->current . '/media', JPATH_BASE . '/dist/tmp/cbuild/media');
-
+		
+		// Check for media folder if exist then copy
+		if (file_exists($this->current . '/media'))
+		{
+			$this->_copyDir($this->current . '/media', JPATH_BASE . '/dist/tmp/cbuild/media');
+		}
+		
 		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 
 		// Process the files to zip
