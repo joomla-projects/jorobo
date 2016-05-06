@@ -18,7 +18,7 @@ use Robo\Exception\TaskException;
 
 
 /**
- * Release built to github
+ * Release build package to github
  *
  * @since  0.5.0
  */
@@ -28,7 +28,7 @@ class Release extends Base implements TaskInterface
 	use \Robo\Common\TaskIO;
 
 	/**
-	 * Release the built on GitHub
+	 * Release the build package on GitHub
 	 *
 	 * @return  bool
 	 */
@@ -121,7 +121,7 @@ class Release extends Base implements TaskInterface
 	 *
 	 * @return  false|array
 	 */
-	private function getLatestReleases()
+	protected function getLatestReleases()
 	{
 		$github = $this->getGithub();
 		$owner = $this->getConfig()->github->owner;
@@ -159,7 +159,7 @@ class Release extends Base implements TaskInterface
 	 *
 	 * @return  mixed
 	 */
-	private function getAllRepoPulls($state = 'closed', $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
+	protected function getAllRepoPulls($state = 'closed', $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
 	{
 		$github = $this->getGithub();
 
@@ -195,7 +195,7 @@ class Release extends Base implements TaskInterface
 	 *
 	 * @return  void
 	 */
-	public function changelogUpdate($changes)
+	protected function changelogUpdate($changes)
 	{
 		if (!empty($changes))
 		{
@@ -211,7 +211,7 @@ class Release extends Base implements TaskInterface
 	 *
 	 * @return  Github
 	 */
-	private function getGithub()
+	protected function getGithub()
 	{
 		$options = new Registry;
 		$options->set('gh.token', (string) $this->getConfig()->github->token);
@@ -270,3 +270,4 @@ class Release extends Base implements TaskInterface
 		$this->say(print_r($result, true));
 	}
 }
+
