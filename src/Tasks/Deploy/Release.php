@@ -220,7 +220,7 @@ class Release extends Base implements TaskInterface
 	}
 
 	/**
-	 * Upload built Zip- or Packagefile to GitHub
+	 * Upload build Zip- or Packagefile to GitHub
 	 *
 	 * @param   string  $version      The release version
 	 * @param   string  $githubToken  The github access token
