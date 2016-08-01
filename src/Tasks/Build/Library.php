@@ -132,10 +132,7 @@ class Library extends Base implements TaskInterface
 		$xmlFile = $this->target . "/" . $this->libName . ".xml";
 
 		// Version & Date Replace
-		$this->taskReplaceInFile($xmlFile)
-			->from(array('@@DATE@@', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
-			->run();
+		$this->replaceInFile($xmlFile);
 
 		// Files and folders
 		$f = $this->generateFileList($files);
@@ -145,11 +142,11 @@ class Library extends Base implements TaskInterface
 			->to($f)
 			->run();
 
-		// Language files
-		$f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
+		// Language backend files
+		$f = $this->generateLanguageFileList($this->getFiles('backendLanguage'));
 
 		$this->taskReplaceInFile($xmlFile)
-			->from('##FRONTENDLANGUAGEFILES##')
+			->from('##BACKEND_LANGUAGE_FILES##')
 			->to($f)
 			->run();
 

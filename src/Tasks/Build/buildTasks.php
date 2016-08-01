@@ -40,8 +40,8 @@ trait buildTasks
 	/**
 	 * Build media folder
 	 *
-	 * @param   array   $source  The media folder (an extension could have multiple)
-	 * @param   string  $type    The extension name (e.g. mod_xy)
+	 * @param   array   $source   The media folder (an extension could have multiple)
+	 * @param   string  $extName  The extension name (e.g. mod_xy)
 	 *
 	 * @return  Media
 	 */
@@ -143,7 +143,7 @@ trait buildTasks
 	 * Build a Template
 	 *
 	 * @param   String  $templateName  Name of the template
-	 * @param   array   $params   Opt params
+	 * @param   array   $params        Opt params
 	 *
 	 * @return  Template
 	 */
