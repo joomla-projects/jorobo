@@ -93,6 +93,11 @@ class Package extends Base implements TaskInterface
 			$this->createTemplateZips();
 		}
 
+		if ($this->hasLibraries)
+		{
+			$this->createLibraryZips();
+		}
+
 		$this->createPackageZip();
 
 		$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
@@ -209,35 +214,82 @@ class Package extends Base implements TaskInterface
 	{
 		$comZip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
 
-		if (file_exists(JPATH_BASE . '/dist/tmp/cbuild'))
+		$tmp_path = '/dist/tmp/cbuild';
+
+		if (file_exists(JPATH_BASE . $tmp_path))
 		{
-			$this->_deleteDir(JPATH_BASE . '/dist/tmp/cbuild');
+			$this->_deleteDir(JPATH_BASE . $tmp_path);
 		}
 
 		// Improve, should been a whitelist instead of a hardcoded copy
-		$this->_mkdir(JPATH_BASE . '/dist/tmp/cbuild');
+		$this->_mkdir(JPATH_BASE . $tmp_path);
 
-		$this->_copyDir($this->current . '/administrator', JPATH_BASE . '/dist/tmp/cbuild/administrator');
-		$this->_remove(JPATH_BASE . '/dist/tmp/cbuild/administrator/manifests');
-		$this->_copyDir($this->current . '/language', JPATH_BASE . '/dist/tmp/cbuild/language');
-		$this->_copyDir($this->current . '/components', JPATH_BASE . '/dist/tmp/cbuild/components');
-		
-		// Check for media folder if exist then copy
-		if (file_exists($this->current . '/media'))
-		{
-			$this->_copyDir($this->current . '/media', JPATH_BASE . '/dist/tmp/cbuild/media');
-		}
-		
+		$this->_copyDir($this->current . '/administrator', JPATH_BASE . $tmp_path . '/administrator');
+		$this->_remove(JPATH_BASE . $tmp_path . '/administrator/manifests');
+		$this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
+		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
+		$this->_copyDir($this->current . '/media', JPATH_BASE . $tmp_path . '/media');
+
 		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 
 		// Process the files to zip
-		$this->addFiles($comZip, JPATH_BASE . '/dist/tmp/cbuild');
+		$this->addFiles($comZip, JPATH_BASE . $tmp_path);
 
 		$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
 		$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "script.php");
 
 		// Close the zip archive
 		$comZip->close();
+	}
+
+	/**
+	 * Create zips for libraries
+	 *
+	 * @return  void
+	 */
+	public function createLibraryZips()
+	{
+		$path = $this->current . "/libraries";
+
+		// Get every module
+		$hdl = opendir($path);
+
+		while ($lib = readdir($hdl))
+		{
+			// Only folders
+			$p = $path . "/" . $lib;
+
+			if (substr($lib, 0, 1) == '.')
+			{
+				continue;
+			}
+
+			// Workaround for libraries without lib_
+			if (substr($lib, 0, 3) != "lib")
+			{
+				$lib = 'lib_' . $lib;
+			}
+
+			if (!is_file($p))
+			{
+				$this->say("Packaging Library " . $lib);
+
+				// Package file
+				$zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+
+				$zip->open(JPATH_BASE . '/dist/zips/' . $lib . '.zip', \ZipArchive::CREATE);
+
+				$this->say("Library " . $p);
+
+				// Process the files to zip
+				$this->addFiles($zip, $p);
+
+				// Close the zip archive
+				$zip->close();
+			}
+		}
+
+		closedir($hdl);
 	}
 
 	/**
@@ -408,17 +460,20 @@ class Package extends Base implements TaskInterface
 		// Process the files to zip
 		$this->addFiles($zip, JPATH_BASE . '/dist/zips/');
 
-		$zip->addFile($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
+		$pkg_path = $this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName();
+
+		$zip->addFile($pkg_path . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
+		$zip->addFile($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() .  "/script.php", "script.php");
 
 		// If the package has language files, add those
-		if (is_file($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".ini"))
-		{
-			$zip->addFile($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".ini", "language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".ini");
-		}
+		$pkg_languages_path = $pkg_path . "/language";
+		$languages = glob($pkg_languages_path . "/*/*.pkg_" . $this->getExtensionName() . "*.ini");
 
-		if (is_file($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".sys.ini"))
+		// Add all package language files
+		foreach ($languages as $lang_path)
 		{
-			$zip->addFile($this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName() . "/language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".sys.ini", "language/en-GB/en-GB.pkg_" . $this->getExtensionName() . ".sys.ini");
+			$path_in_zip = substr($lang_path, strlen($pkg_path) + 1);
+			$zip->addFile($lang_path, $path_in_zip);
 		}
 
 		// Close the zip archive

@@ -145,13 +145,13 @@ class Language extends Base implements TaskInterface
 	 */
 	private function analyze()
 	{
-		// Just check for english here
-		if (!file_exists($this->adminLangPath . "/en-GB/en-GB." . $this->ext . ".ini") && !file_exists($this->adminLangPath . "/en-GB/en-GB." . $this->ext . ".sys.ini"))
+		// Check for all languages here
+		if (empty(glob($this->adminLangPath . "/*/*." . $this->ext . "*.ini")))
 		{
 			$this->hasAdminLang = false;
 		}
 
-		if (!file_exists($this->frontLangPath . "/en-GB/en-GB." . $this->ext . ".ini") && !file_exists($this->frontLangPath . "/en-GB/en-GB." . $this->ext . ".sys.ini"))
+		if (empty(glob($this->frontLangPath . "/*/*." . $this->ext . "*.ini")))
 		{
 			$this->hasFrontLang = false;
 		}
