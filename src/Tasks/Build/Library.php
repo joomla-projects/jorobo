@@ -150,11 +150,19 @@ class Library extends Base implements TaskInterface
 			->to($f)
 			->run();
 
+		// Language frontend files
+		$f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
+
+		$this->taskReplaceInFile($xmlFile)
+			->from('##FRONTEND_LANGUAGE_FILES##')
+			->to($f)
+			->run();
+
 		// Media files
 		$f = $this->generateFileList($this->getFiles('media'));
 
 		$this->taskReplaceInFile($xmlFile)
-			->from('##MEDIAPACKAGEFILES##')
+			->from('##MEDIA_FILES##')
 			->to($f)
 			->run();
 	}

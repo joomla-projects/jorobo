@@ -276,6 +276,18 @@ class Extension extends Base implements TaskInterface
 			$this->buildPackage($this->params)->run();
 		}
 
+		// Replacements (date, version etc.) in every php file
+		$dir = new \RecursiveDirectoryIterator($this->getBuildFolder(), \RecursiveDirectoryIterator::SKIP_DOTS);
+		$it = new \RecursiveIteratorIterator($dir);
+
+		foreach ($it as $file)
+		{
+			if (in_array(pathinfo($file, PATHINFO_EXTENSION), array('php', 'js')))
+			{
+				$this->replaceInFile($file);
+			}
+		}
+
 		return true;
 	}
 
