@@ -15,7 +15,7 @@ Tools and Tasks based on Robo.li for Joomla Extension Development and Releases
 ## Function overview:
 
   * `vendor/bin/robo build` - Builds your extension into an installable Joomla! package or zip file including replacements
-  * `vendor/bin/robo map` - Map (Symlink) your extension into an running Joomla! installation
+  * `vendor/bin/robo map` - Map (Symlink) your extension into a running Joomla! installation
   * `vendor/bin/robo headers` - Adds / updates the copyright headers in the source directory (set them in the jorobo.ini)
   
 ## How-to use in your own extension
@@ -34,7 +34,7 @@ class RoboFile extends \Robo\Tasks
 	..
 ```
 
-Then you can use it your own tasks for example:
+Then you can use it for your own tasks for example:
 
 `$this->taskMap($target)->run();`
 
