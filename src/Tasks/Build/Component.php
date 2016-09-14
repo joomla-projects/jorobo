@@ -36,6 +36,8 @@ class Component extends Base implements TaskInterface
 
 	protected $hasCli = true;
 
+	protected $hasMedia = true;
+
 	/**
 	 * Initialize Build Task
 	 *
@@ -114,7 +116,7 @@ class Component extends Base implements TaskInterface
 		}
 
 		// Copy Readme
-		if (JPATH_BASE . "/docs/README.md")
+		if (is_file(JPATH_BASE . "/docs/README.md"))
 		{
 			$this->_copy(JPATH_BASE . "/docs/README.md", $this->getBuildFolder() . "/README");
 		}
@@ -142,6 +144,11 @@ class Component extends Base implements TaskInterface
 		if (!file_exists($this->sourceFolder . "/cli"))
 		{
 			$this->hasCli = false;
+		}
+
+		if (!file_exists($this->sourceFolder . "/media"))
+		{
+			$this->hasMedia = false;
 		}
 	}
 
@@ -174,7 +181,7 @@ class Component extends Base implements TaskInterface
 
 		$adminFolder = $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName();
 		$xmlFile     = $adminFolder . "/" . $this->getExtensionName() . ".xml";
-        $configFile  = $adminFolder . "/config.xml";
+		$configFile  = $adminFolder . "/config.xml";
 		$scriptFile  = $adminFolder . "/script.php";
 		$helperFile  = $adminFolder . "/helpers/defines.php";
 
@@ -222,11 +229,14 @@ class Component extends Base implements TaskInterface
 		}
 
 		// Media files
-		$f = $this->generateFileList($this->getFiles('media'));
+		if ($this->hasMedia)
+		{
+			$f = $this->generateFileList($this->getFiles('media'));
 
-		$this->taskReplaceInFile($xmlFile)
-			->from('##MEDIA_FILES##')
-			->to($f)
-			->run();
+			$this->taskReplaceInFile($xmlFile)
+				->from('##MEDIA_FILES##')
+				->to($f)
+				->run();
+		}
 	}
 }
