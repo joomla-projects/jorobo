@@ -61,7 +61,7 @@ class Component extends Base implements TaskInterface
 	{
 		$this->say('Building component');
 
-		// Analyize extension structure
+		// Analyze extension structure
 		$this->analyze();
 
 		// Prepare directories
