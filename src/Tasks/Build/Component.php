@@ -42,6 +42,10 @@ class Component extends Base implements TaskInterface
 	 * Initialize Build Task
 	 *
 	 * @param   String  $params  The target directory
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($params)
 	{
@@ -58,6 +62,8 @@ class Component extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -128,6 +134,8 @@ class Component extends Base implements TaskInterface
 	 * Analyze the component structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function analyze()
 	{
@@ -156,6 +164,8 @@ class Component extends Base implements TaskInterface
 	 * Prepare the directory structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectories()
 	{
@@ -174,6 +184,8 @@ class Component extends Base implements TaskInterface
 	 * Generate the installer xml file for the component
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function createInstaller()
 	{

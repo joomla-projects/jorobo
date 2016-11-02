@@ -16,7 +16,9 @@ trait generateTasks
 	 * @title   string  $title   The component name (e.g. com_component)
 	 * @param   array   $params  Opt params
 	 *
-	 * @return
+	 * @return  null
+	 *
+	 * @since   1.0
 	 */
 	protected function generateComponent($title, $params = array())
 	{
@@ -29,7 +31,9 @@ trait generateTasks
 	 * @title   string  $title   The component name (e.g. com_component)
 	 * @param   array   $params  Opt params
 	 *
-	 * @return
+	 * @return  null
+	 *
+	 * @since   1.0
 	 */
 	protected function generateModule($title, $params = array())
 	{
@@ -42,9 +46,11 @@ trait generateTasks
 	 * @title   string  $title   The component name (e.g. com_component)
 	 * @param   array   $params  Opt params
 	 *
-	 * @return
+	 * @return  null
+	 *
+	 * @since   1.0
 	 */
-	protected  function generatePlugin($title, $params = array())
+	protected function generatePlugin($title, $params = array())
 	{
 		return null;
 	}

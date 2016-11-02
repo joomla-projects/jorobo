@@ -40,6 +40,10 @@ class Media extends Base implements TaskInterface
 	 *
 	 * @param   String  $folder   The target directory
 	 * @param   String  $extName  The extension name
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($folder, $extName)
 	{
@@ -77,6 +81,8 @@ class Media extends Base implements TaskInterface
 	 * Runs the media build task
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -102,6 +108,8 @@ class Media extends Base implements TaskInterface
 	 * Prepare the directory structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectory()
 	{

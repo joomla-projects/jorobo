@@ -16,12 +16,21 @@ trait loadTasks
 	 * The metrics task
 	 *
 	 * @return  Metrics
+	 *
+	 * @since   1.0
 	 */
 	protected function taskMetrics($options = [])
 	{
 		return new \Joomla\Jorobo\Tasks\Metrics\Metrics($options);
 	}
 
+	/**
+	 * The metrics task
+	 *
+	 * @return  Metrics
+	 *
+	 * @since   1.0
+	 */
 	public function metrics($options = [])
 	{
 		$this->taskMetrics($options)->run();

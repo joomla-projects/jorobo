@@ -43,6 +43,10 @@ class Language extends Base implements TaskInterface
 	 * Initialize Build Task
 	 *
 	 * @param   String  $extension  The extension (component, module etc.)
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($extension)
 	{
@@ -60,6 +64,8 @@ class Language extends Base implements TaskInterface
 	 * Returns true
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -87,8 +93,7 @@ class Language extends Base implements TaskInterface
 		}
 		elseif ($this->type == "plg")
 		{
-			$a = explode("_", $this->ext);
-
+			$a     = explode("_", $this->ext);
 			$dest .= "/plugins/" . $a[1] . "/" . $a[2];
 		}
 		elseif ($this->type == "pkg")
@@ -98,8 +103,7 @@ class Language extends Base implements TaskInterface
 		elseif ($this->type == "lib")
 		{
 			// Remove lib before - ugly hack
-			$ex = str_replace("lib_", "" , $this->ext);
-
+			$ex    = str_replace("lib_", "" , $this->ext);
 			$dest .= "/libraries/" . $ex;
 		}
 		elseif ($this->type == "plu")
@@ -107,19 +111,16 @@ class Language extends Base implements TaskInterface
 			$a = explode("_", $this->ext);
 
 			$this->say("plug: " . $this->ext);
-
 			$this->say("/components/com_comprofiler/plugin/" . $a[1] . "/plug_" . $a[3]);
 
 			$dest .= "/components/com_comprofiler/plugin/" . $a[1] . "/plug_" . $a[3];
 
 			$this->ext = "plg_plug_" . $a[3];
-
 			$this->hasFrontLang = false;
 		}
 		elseif ($this->type == "tpl")
 		{
-			$a = explode("_", $this->ext);
-
+			$a     = explode("_", $this->ext);
 			$dest .= "/templates/" . $a[1];
 		}
 
@@ -142,6 +143,8 @@ class Language extends Base implements TaskInterface
 	 * Analyze the extension structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function analyze()
 	{
@@ -160,7 +163,9 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Prepare the directory structure
 	 *
-	 * @return  boolean
+	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectories()
 	{
@@ -206,11 +211,13 @@ class Language extends Base implements TaskInterface
 	 * @param   String  $target  The target directory
 	 *
 	 * @return   array
+	 *
+	 * @since   1.0
 	 */
 	public function copyLanguage($dir, $target)
 	{
 		// Equals administrator/language or language
-		$path = $this->getSourceFolder() . "/" . $dir;
+		$path  = $this->getSourceFolder() . "/" . $dir;
 		$files = array();
 
 		$hdl = opendir($path);

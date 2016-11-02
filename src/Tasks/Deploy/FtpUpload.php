@@ -14,8 +14,6 @@ use Robo\Contract\TaskInterface;
 
 /**
  * Deploy project via FTP - needs zip or pkg deployment to be done before
- *
- * @since  0.3.0
  */
 class FtpUpload extends Base implements TaskInterface
 {
@@ -25,7 +23,9 @@ class FtpUpload extends Base implements TaskInterface
 	/**
 	 * Should we upload a package or a zip (defaults to zip)
 	 *
-	 * @var     string
+	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $target = "zip";
 
@@ -33,6 +33,8 @@ class FtpUpload extends Base implements TaskInterface
 	 * Path to the package we deploy
 	 *
 	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $filepath = null;
 
@@ -40,6 +42,8 @@ class FtpUpload extends Base implements TaskInterface
 	 * Filename of the package
 	 *
 	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $filename = null;
 
@@ -47,6 +51,8 @@ class FtpUpload extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{

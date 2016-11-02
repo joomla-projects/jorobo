@@ -12,53 +12,61 @@ use Joomla\Jorobo\Tasks\Metrics\loadTasks as metricsTasks;
 
 trait loadTasks
 {
-    use metricsTasks;
+	use metricsTasks;
 
-    /**
-     * Map Task
-     *
-     * @param   String  $target  - The target directory
-     *
-     * @return  Map
-     */
-    protected function taskMap($target)
-    {
-        return new Map($target);
-    }
+	/**
+	 * Map Task
+	 *
+	 * @param   String  $target  - The target directory
+	 *
+	 * @return  Map
+	 *
+	 * @since   1.0
+	 */
+	protected function taskMap($target)
+	{
+		return new Map($target);
+	}
 
-    /**
-     * The build task
-     *
-     * @param   array  $params  - Opt params
-     *
-     * @return  Build
-     */
-    protected function taskBuild($params)
-    {
-        return new Build($params);
-    }
+	/**
+	 * The build task
+	 *
+	 * @param   array  $params  - Opt params
+	 *
+	 * @return  Build
+	 *
+	 * @since   1.0
+	 */
+	protected function taskBuild($params)
+	{
+		return new Build($params);
+	}
 
-    /**
-     * The generate task
-     *
-     * @param   array  $params  - Opt params
-     *
-     * @return  Build
-     */
-    protected function taskGenerate($params)
-    {
-        return new Generate($params);
-    }
+	/**
+	 * The generate task
+	 *
+	 * @param   array  $params  - Opt params
+	 *
+	 * @return  Generate
+	 *
+	 * @since   1.0
+	 */
+	protected function taskGenerate($params)
+	{
+		return new Generate($params);
+	}
 
-    /**
-     * The CopyrightHeader task
-     *
-     * @param   array  $params  - Opt params
-     *
-     * @return  CopyrightHeader
-     */
-    protected function taskCopyrightHeaders($params)
-    {
-        return new CopyrightHeader($params);
-    }
+	/**
+	 * The CopyrightHeader task
+	 *
+	 * @param   array  $params  - Opt params
+	 *
+	 * @return  CopyrightHeader
+	 *
+	 * @since   1.0
+	 */
+	protected function taskCopyrightHeaders($params)
+	{
+		return new CopyrightHeader($params);
+	}
 }

@@ -25,7 +25,11 @@ class Generate extends JTask implements TaskInterface
 	use Generate\generateTasks;
 
 	/**
+	 * Additional params
+	 *
 	 * @var array|null
+	 *
+	 * @since   1.0
 	 */
 	protected $params = null;
 
@@ -33,6 +37,8 @@ class Generate extends JTask implements TaskInterface
 	 * Initialize Build Task
 	 *
 	 * @param   array  $params  Additional params
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($params)
 	{
@@ -45,6 +51,8 @@ class Generate extends JTask implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -59,6 +67,8 @@ class Generate extends JTask implements TaskInterface
 	 * @param   string  $dir  The dir
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function cleanup($dir)
 	{
@@ -70,6 +80,8 @@ class Generate extends JTask implements TaskInterface
 	 * Prepare the directories
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareSouceDirectory()
 	{

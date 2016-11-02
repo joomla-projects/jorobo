@@ -30,12 +30,16 @@ class Package extends Base implements TaskInterface
 	 * Initialize Build Task
 	 *
 	 * @param   String  $params  The target directory
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($params)
 	{
 		parent::__construct();
 
-		// Reset files - > new package
+		// Reset files -> new package
 		$this->resetFiles();
 	}
 
@@ -43,6 +47,8 @@ class Package extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -62,6 +68,8 @@ class Package extends Base implements TaskInterface
 	 * Generate the installer xml file for the package
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function createInstaller()
 	{
@@ -70,8 +78,8 @@ class Package extends Base implements TaskInterface
 		// Copy XML and script.php
 		$sourceFolder = $this->getSourceFolder() . "/administrator/manifests/packages";
 		$targetFolder = $this->getBuildFolder() . "/administrator/manifests/packages";
-		$xmlFile     = $targetFolder . "/pkg_" . $this->getExtensionName() . ".xml";
-		$scriptFile  = $targetFolder . "/" . $this->getExtensionName() . "/script.php";
+		$xmlFile      = $targetFolder . "/pkg_" . $this->getExtensionName() . ".xml";
+		$scriptFile   = $targetFolder . "/" . $this->getExtensionName() . "/script.php";
 
 		$this->_copy($sourceFolder . "/pkg_" . $this->getExtensionName() . ".xml", $xmlFile);
 

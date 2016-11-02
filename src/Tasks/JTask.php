@@ -22,6 +22,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * The config object
 	 *
 	 * @var    array|null
+	 *
+	 * @since  1.0
 	 */
 	protected static $config = null;
 
@@ -29,6 +31,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Operating system
 	 *
 	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $os = '';
 
@@ -36,6 +40,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * The file extension (OS Support)
 	 *
 	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $fileExtension = '';
 
@@ -43,6 +49,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * The source folder
 	 *
 	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $sourceFolder = '';
 
@@ -51,6 +59,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Construct
 	 *
 	 * @param   array  $params  Opt params
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($params = array())
 	{
@@ -63,6 +73,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Function to check if folders are existing / writable (Code Base etc.)
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function checkFolders()
 	{
@@ -82,6 +94,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Get the operating system
 	 *
 	 * @return string
+	 *
+	 * @since   1.0
 	 */
 	public function getOs()
 	{
@@ -92,6 +106,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Get the build config
 	 *
 	 * @return  object
+	 *
+	 * @since   1.0
 	 */
 	public function getConfig()
 	{
@@ -102,6 +118,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Get the source folder path
 	 *
 	 * @return  string  absolute path
+	 *
+	 * @since   1.0
 	 */
 	public function getSourceFolder()
 	{
@@ -111,7 +129,9 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Get the extension name
 	 *
-	 * @return   string
+	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	public function getExtensionName()
 	{
@@ -122,6 +142,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * Get the destination / build folder
 	 *
 	 * @return   string
+	 *
+	 * @since   1.0
 	 */
 	public function getBuildFolder()
 	{
@@ -130,6 +152,10 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 
 	/**
 	 * Sets the source folder
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function determineSourceFolder()
 	{
@@ -143,6 +169,10 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 
 	/**
 	 * Sets the operating system
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function determineOperatingSystem()
 	{
@@ -159,7 +189,10 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 *
 	 * @param   array  $params  Optional Params
 	 *
-	 * @return  bool
+	 * @return  bool|void
+	 *
+	 * @since   1.0
+	 * @throws  FileNotFoundException
 	 */
 	private function loadConfiguration($params)
 	{
@@ -193,7 +226,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 		}
 
 		$config->buildFolder = JPATH_BASE . $this->determineTarget($config);
-		$config->params      = $params;
+		$config->params	  = $params;
 
 		self::$config = $config;
 
@@ -206,7 +239,9 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 *
 	 * @param   array  $params  - Robo.li Params
 	 *
-	 * @return  mixed
+	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	private function isDevelopmentVersion($params)
 	{
@@ -219,6 +254,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 * @param   object  $config  - The JoRobo config
 	 *
 	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	private function determineTarget($config)
 	{

@@ -19,8 +19,6 @@ use Robo\Exception\TaskException;
 
 /**
  * Release build package to github
- *
- * @since  0.5.0
  */
 class Release extends Base implements TaskInterface
 {
@@ -31,6 +29,8 @@ class Release extends Base implements TaskInterface
 	 * Release the build package on GitHub
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -93,7 +93,9 @@ class Release extends Base implements TaskInterface
 	 * @param   bool   $latest_release  - Latest release
 	 * @param   array  $pulls           - Pulls
 	 *
-	 * @return array
+	 * @return  array
+	 *
+	 * @since   1.0
 	 */
 	private function getChanges($latest_release = false, $pulls)
 	{
@@ -108,7 +110,7 @@ class Release extends Base implements TaskInterface
 					$changes[] = $pull->title;
 				}
 
-				$message = explode(PHP_EOL, $pull->commit->message);
+				$message   = explode(PHP_EOL, $pull->commit->message);
 				$changes[] = $message[0];
 			}
 		}
@@ -120,11 +122,13 @@ class Release extends Base implements TaskInterface
 	 * Get the latest release
 	 *
 	 * @return  false|array
+	 *
+	 * @since   1.0
 	 */
 	protected function getLatestReleases()
 	{
-		$github = $this->getGithub();
-		$owner = $this->getConfig()->github->owner;
+		$github     = $this->getGithub();
+		$owner      = $this->getConfig()->github->owner;
 		$repository = $this->getConfig()->github->repository;
 
 		$this->say('Get latest Release commit ' . $owner . "/" . $repository);
@@ -158,6 +162,8 @@ class Release extends Base implements TaskInterface
 	 * @param   Date|null  $until   - Changes until (opt)
 	 *
 	 * @return  mixed
+	 *
+	 * @since   1.0
 	 */
 	protected function getAllRepoPulls($state = 'closed', $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
 	{
@@ -194,6 +200,8 @@ class Release extends Base implements TaskInterface
 	 * Updates changelog with the changes since the last release
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	protected function changelogUpdate($changes)
 	{
@@ -210,6 +218,8 @@ class Release extends Base implements TaskInterface
 	 * Get Github
 	 *
 	 * @return  Github
+	 *
+	 * @since   1.0
 	 */
 	protected function getGithub()
 	{
@@ -227,11 +237,12 @@ class Release extends Base implements TaskInterface
 	 * @param   string  $upload_url   The upload URL
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	protected function uploadToGithub($version, $githubToken, $upload_url)
 	{
 		$deploy = explode(' ', $this->getConfig()->target);
-
 		$zipfile = $this->getExtensionName() . '-' . $this->getConfig()->version . '.zip';
 
 		if (in_array('package', $deploy))
@@ -246,8 +257,7 @@ class Release extends Base implements TaskInterface
 		$this->say('Uploading the Extension package to the Github release: ' . $version);
 
 		$uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
-
-		$request = curl_init($uploadUrl);
+		$request   = curl_init($uploadUrl);
 
 		curl_setopt($request, CURLOPT_POST, true);
 		curl_setopt($request, CURLOPT_VERBOSE, true);
@@ -257,9 +267,7 @@ class Release extends Base implements TaskInterface
 		));
 
 		curl_setopt($request, CURLOPT_HTTPHEADER, array('Content-type: application/zip'));
-
 		curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));
-
 		curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 0);
 

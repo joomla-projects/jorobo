@@ -27,6 +27,8 @@ class Package extends Base implements TaskInterface
 	 * The target Zip file of the package
 	 *
 	 * @var    string
+	 *
+	 * @since  1.0
 	 */
 	protected $target = null;
 
@@ -44,6 +46,10 @@ class Package extends Base implements TaskInterface
 
 	/**
 	 * Initialize Build Task
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct()
 	{
@@ -57,6 +63,8 @@ class Package extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -70,7 +78,6 @@ class Package extends Base implements TaskInterface
 		}
 
 		$this->_mkdir(JPATH_BASE . '/dist/zips');
-
 		$this->analyze();
 
 		if ($this->hasComponent)
@@ -99,7 +106,6 @@ class Package extends Base implements TaskInterface
 		}
 
 		$this->createPackageZip();
-
 		$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
 
 		return true;
@@ -109,6 +115,8 @@ class Package extends Base implements TaskInterface
 	 * Analyze the extension structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function analyze()
 	{
@@ -150,10 +158,12 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Add files
 	 *
-	 * @param    \ZipArchive  $zip        The zip object
-	 * @param    string       $path       Optional path
+	 * @param   \ZipArchive  $zip   The zip object
+	 * @param   string       $path  Optional path
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function addFiles($zip, $path = null)
 	{
@@ -209,6 +219,8 @@ class Package extends Base implements TaskInterface
 	 * @TODO implement possibility for multiple components (without duplicate content)
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function createComponentZip()
 	{
@@ -246,6 +258,8 @@ class Package extends Base implements TaskInterface
 	 * Create zips for libraries
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function createLibraryZips()
 	{
@@ -296,6 +310,8 @@ class Package extends Base implements TaskInterface
 	 * Create zips for modules
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function createModuleZips()
 	{
@@ -340,6 +356,8 @@ class Package extends Base implements TaskInterface
 	 * Create zips for plugins
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function createPluginZips()
 	{
@@ -405,6 +423,8 @@ class Package extends Base implements TaskInterface
 	 * Create zips for templates
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function createTemplateZips()
 	{
@@ -449,6 +469,8 @@ class Package extends Base implements TaskInterface
 	 * Create package zip (called latest)
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function createPackageZip()
 	{

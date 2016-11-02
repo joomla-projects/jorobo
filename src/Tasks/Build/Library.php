@@ -40,12 +40,16 @@ class Library extends Base implements TaskInterface
 	 * @param   String  $libName       Name of the library to build
 	 * @param   String  $params        Optional params
 	 * @param   bool    $hasComponent  has the extension a component (then we need to build differnet)
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($libName, $params, $hasComponent)
 	{
 		parent::__construct();
 
-		// Reset files - > new lib
+		// Reset files -> new lib
 		$this->resetFiles();
 
 		$this->libName = $libName;
@@ -59,6 +63,8 @@ class Library extends Base implements TaskInterface
 	 * Runs the library build tasks, just copying files currently
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -74,7 +80,6 @@ class Library extends Base implements TaskInterface
 		$this->prepareDirectory();
 
 		// Libaries are problematic.. we have libraries/name/libraries/name in the end for the build script
-
 		$tar = $this->target;
 
 		if (!$this->hasComponent)
@@ -112,6 +117,8 @@ class Library extends Base implements TaskInterface
 	 * Prepare the directory structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectory()
 	{
@@ -124,6 +131,8 @@ class Library extends Base implements TaskInterface
 	 * @param   array  $files  The library files
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function createInstaller($files)
 	{
