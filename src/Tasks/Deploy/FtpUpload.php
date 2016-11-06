@@ -68,7 +68,7 @@ class FtpUpload extends Base implements TaskInterface
 		{
 			if ($this->getConfig()->ftp->ssl == "true")
 			{
-				$con = ftp_connect($this->getConfig()->ftp->host);
+				$con = ftp_ssl_connect($this->getConfig()->ftp->host);
 			}
 			else
 			{
