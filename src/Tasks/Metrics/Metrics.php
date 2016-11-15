@@ -41,7 +41,7 @@ class Metrics extends \Joomla\Jorobo\Tasks\JTask
 	}
 
 	/**
-	 * Rund the metrics
+	 * Run the metrics
 	 *
 	 * @return  \Robo\Result
 	 *
