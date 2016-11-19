@@ -13,6 +13,8 @@ trait deployTasks
 	 * Build extension
 	 *
 	 * @return  Zip
+	 *
+	 * @since   1.0
 	 */
 	protected function deployZip()
 	{
@@ -23,6 +25,8 @@ trait deployTasks
 	 * Build extension
 	 *
 	 * @return  Package
+	 *
+	 * @since   1.0
 	 */
 	protected function deployPackage()
 	{
@@ -33,6 +37,8 @@ trait deployTasks
 	 * Build extension
 	 *
 	 * @return  Release
+	 *
+	 * @since   1.0
 	 */
 	protected function deployRelease()
 	{
@@ -43,8 +49,9 @@ trait deployTasks
 	 * Deploy to FTP
 	 * (Depends on package or zip deploy task)
 	 *
-	 * @since   0.3
-	 * @return  Release
+	 * @return  FtpUpload
+	 *
+	 * @since   1.0
 	 */
 	protected function deployFtp()
 	{

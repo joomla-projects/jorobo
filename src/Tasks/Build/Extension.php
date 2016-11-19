@@ -56,7 +56,9 @@ class Extension extends Base implements TaskInterface
 	/**
 	 * Community Builder plugins
 	 *
-	 * @var array
+	 * @var    array
+	 *
+	 * @since  1.0
 	 */
 	private $cbplugins = array();
 
@@ -64,6 +66,10 @@ class Extension extends Base implements TaskInterface
 	 * Initialize Build Task
 	 *
 	 * @param   String  $params  The target directory
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($params)
 	{
@@ -74,6 +80,8 @@ class Extension extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -295,6 +303,8 @@ class Extension extends Base implements TaskInterface
 	 * Analyze the extension structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function analyze()
 	{

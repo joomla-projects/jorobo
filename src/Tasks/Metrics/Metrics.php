@@ -26,6 +26,13 @@ class Metrics extends \Joomla\Jorobo\Tasks\JTask
 
 	use \Robo\Task\Base\loadTasks;
 
+	/**
+	 * Initialize Metrics Task
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
 	public function __construct($options = [])
 	{
 		parent::__construct();
@@ -34,7 +41,11 @@ class Metrics extends \Joomla\Jorobo\Tasks\JTask
 	}
 
 	/**
-	 * @return \Robo\Result
+	 * Run the metrics
+	 *
+	 * @return  \Robo\Result
+	 *
+	 * @since    1.0
 	 */
 	public function run()
 	{

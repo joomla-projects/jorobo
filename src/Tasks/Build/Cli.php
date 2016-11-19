@@ -33,6 +33,10 @@ class Cli extends Base implements TaskInterface
 
 	/**
 	 * Initialize Build Task
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct()
 	{
@@ -46,6 +50,8 @@ class Cli extends Base implements TaskInterface
 	 * Runs the cli build tasks, just copying files currently
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -71,6 +77,8 @@ class Cli extends Base implements TaskInterface
 	 * Prepare the directory structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectory()
 	{

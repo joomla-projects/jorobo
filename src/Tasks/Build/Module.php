@@ -37,6 +37,10 @@ class Module extends Base implements TaskInterface
 	 *
 	 * @param   String  $modName  Name of the module
 	 * @param   String  $params   Optional params
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($modName, $params)
 	{
@@ -55,6 +59,8 @@ class Module extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -86,6 +92,8 @@ class Module extends Base implements TaskInterface
 	 * Prepare the directory structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectories()
 	{
@@ -98,6 +106,8 @@ class Module extends Base implements TaskInterface
 	 * @param   array  $files  The module files
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function createInstaller($files)
 	{

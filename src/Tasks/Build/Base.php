@@ -30,24 +30,73 @@ class Base extends JTask implements TaskInterface
 	 *
 	 * They need to be static in order to support multiple files and LANGUAGE
 	 *
-	 * @var  array
+	 * @var    array
+	 *
+	 * @since  1.0
 	 */
 	protected static $mediaFiles = array();
 
+	/**
+	 * Frontend files
+	 *
+	 * They need to be static in order to support multiple files and LANGUAGE
+	 *
+	 * @var    array
+	 *
+	 * @since  1.0
+	 */
 	protected static $frontendFiles = array();
 
+	/**
+	 * Backend files
+	 *
+	 * They need to be static in order to support multiple files and LANGUAGE
+	 *
+	 * @var    array
+	 *
+	 * @since  1.0
+	 */
 	protected static $backendFiles = array();
 
+	/**
+	 * Frontend language files
+	 *
+	 * They need to be static in order to support multiple files and LANGUAGE
+	 *
+	 * @var    array
+	 *
+	 * @since  1.0
+	 */
 	protected static $frontendLanguageFiles = array();
 
+	/**
+	 * Backend language files
+	 *
+	 * They need to be static in order to support multiple files and LANGUAGE
+	 *
+	 * @var    array
+	 *
+	 * @since  1.0
+	 */
 	protected static $backendLanguageFiles = array();
 
+	/**
+	 * Result files
+	 *
+	 * They need to be static in order to support multiple files and LANGUAGE
+	 *
+	 * @var    array
+	 *
+	 * @since  1.0
+	 */
 	protected $resultFiles = array();
 
 	/**
 	 * Returns true
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -60,7 +109,9 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $type       - Type (media, component etc.)
 	 * @param   array   $fileArray  - File array
 	 *
-	 * @return bool
+	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function addFiles($type, $fileArray)
 	{
@@ -83,7 +134,9 @@ class Base extends JTask implements TaskInterface
 	 *
 	 * @param   string  $type  Type (media, component etc.)
 	 *
-	 * @return mixed
+	 * @return  mixed
+	 *
+	 * @since   1.0
 	 */
 	public function  getFiles($type)
 	{
@@ -106,6 +159,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function addMediaFiles($fileArray)
 	{
@@ -118,6 +173,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function addFrontendFiles($fileArray)
 	{
@@ -130,6 +187,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function addBackendFiles($fileArray)
 	{
@@ -142,6 +201,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function addFrontendLanguageFiles($fileArray)
 	{
@@ -154,6 +215,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function addBackendLanguageFiles($fileArray)
 	{
@@ -166,7 +229,9 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $path  - Folder path
 	 * @param   string  $tar   - Target path
 	 *
-	 * @return array
+	 * @return  array
+	 *
+	 * @since   1.0
 	 */
 	protected function copyTarget($path, $tar)
 	{
@@ -208,6 +273,8 @@ class Base extends JTask implements TaskInterface
 	 * Get the result files
 	 *
 	 * @return  array
+	 *
+	 * @since   1.0
 	 */
 	public function getResultFiles()
 	{
@@ -220,6 +287,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $resultFiles  - The result of the copying
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function setResultFiles($resultFiles)
 	{
@@ -230,6 +299,8 @@ class Base extends JTask implements TaskInterface
 	 * Get the current date (formated for building)
 	 *
 	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	public function getDate()
 	{
@@ -242,6 +313,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $files  Files and Folders array
 	 *
 	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	public function generateFileList($files)
 	{
@@ -270,6 +343,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   array  $files  Files and Folders array
 	 *
 	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	public function generateLanguageFileList($files)
 	{
@@ -298,6 +373,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $plugin  The plugin file
 	 *
 	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	public function generatePluginFileList($files, $plugin)
 	{
@@ -334,6 +411,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $module  The module
 	 *
 	 * @return  string
+	 *
+	 * @since   1.0
 	 */
 	public function generateModuleFileList($files, $module)
 	{
@@ -367,6 +446,8 @@ class Base extends JTask implements TaskInterface
 	 * Reset the files list, before build another part
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function resetFiles()
 	{
@@ -384,6 +465,8 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $file  - Path to file
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	protected function replaceInFile($file)
 	{

@@ -40,6 +40,10 @@ class CBPlugin extends Base implements TaskInterface
 	 * @param   String  $type    Type of the plugin
 	 * @param   String  $name    Name of the plugin
 	 * @param   String  $params  Optional params
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($type, $name, $params)
 	{
@@ -59,6 +63,8 @@ class CBPlugin extends Base implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -84,6 +90,8 @@ class CBPlugin extends Base implements TaskInterface
 	 * Prepare the directory structure
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDirectories()
 	{
@@ -96,6 +104,8 @@ class CBPlugin extends Base implements TaskInterface
 	 * @param   array  $files  The module files
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function createInstaller($files)
 	{

@@ -23,6 +23,8 @@ class CopyrightHeader extends JTask implements TaskInterface
 
 	/**
 	 * Initialize Build Task
+	 *
+	 * @since  1.0
 	 */
 	public function __construct()
 	{
@@ -33,6 +35,8 @@ class CopyrightHeader extends JTask implements TaskInterface
 	 * Generate / Update copyright headers
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -87,9 +91,11 @@ class CopyrightHeader extends JTask implements TaskInterface
 	 * Replaces placeholders in the copyright header
 	 * Todo separate and make configurable and extensible
 	 *
-	 * @param   $text  - The header text with placeholders
+	 * @param   $text  The header text with placeholders
 	 *
 	 * @return  mixed
+	 *
+	 * @since   1.0
 	 */
 	protected function replaceInText($text)
 	{
@@ -105,6 +111,8 @@ class CopyrightHeader extends JTask implements TaskInterface
 	 * @param   \SplFileInfo  $file  - Target
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	protected function removeHeader(\SplFileInfo $file)
 	{
@@ -140,13 +148,15 @@ class CopyrightHeader extends JTask implements TaskInterface
 	 * @param   \SplFileInfo  $file  - Target
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	protected  function addHeader(\SplFileInfo $file, $text)
 	{
 		$content = file_get_contents($file->getRealPath());
 
 		$lines = explode(PHP_EOL, $content);
-		$text = explode("\n", $text);
+		$text  = explode("\n", $text);
 
 		foreach ($lines as $i => $l)
 		{

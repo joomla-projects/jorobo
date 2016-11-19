@@ -28,6 +28,8 @@ class Base extends JTask implements TaskInterface
 	 * Returns true - should never be called on this
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{

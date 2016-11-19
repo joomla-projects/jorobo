@@ -26,7 +26,9 @@ class Build extends JTask implements TaskInterface
 	use Deploy\deployTasks;
 
 	/**
-	 * @var array|null
+	 * @var    array|null
+	 *
+	 * @since  1.0
 	 */
 	protected $params = null;
 
@@ -34,6 +36,10 @@ class Build extends JTask implements TaskInterface
 	 * Initialize Build Task
 	 *
 	 * @param   array  $params  Additional params
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	public function __construct($params)
 	{
@@ -46,6 +52,8 @@ class Build extends JTask implements TaskInterface
 	 * Build the package
 	 *
 	 * @return  bool
+	 *
+	 * @since   1.0
 	 */
 	public function run()
 	{
@@ -87,6 +95,8 @@ class Build extends JTask implements TaskInterface
 	 * @param   string  $dir  The dir
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function cleanup($dir)
 	{
@@ -98,6 +108,8 @@ class Build extends JTask implements TaskInterface
 	 * Prepare the directories
 	 *
 	 * @return  void
+	 *
+	 * @since   1.0
 	 */
 	private function prepareDistDirectory()
 	{

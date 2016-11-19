@@ -19,6 +19,8 @@ trait buildTasks
 	 * @param   array  $params  - Opt params
 	 *
 	 * @return  Extension
+	 *
+	 * @since   1.0
 	 */
 	protected function buildExtension($params)
 	{
@@ -31,6 +33,8 @@ trait buildTasks
 	 * @param   array  $params  - Opt params
 	 *
 	 * @return  Component
+	 *
+	 * @since   1.0
 	 */
 	protected function buildComponent($params)
 	{
@@ -44,6 +48,8 @@ trait buildTasks
 	 * @param   string  $extName  The extension name (e.g. mod_xy)
 	 *
 	 * @return  Media
+	 *
+	 * @since   1.0
 	 */
 	protected function buildMedia($source, $extName)
 	{
@@ -56,6 +62,8 @@ trait buildTasks
 	 * @param   string  $extension  - The extension (not the whole, but mod_xy or plg_)
 	 *
 	 * @return  Language
+	 *
+	 * @since   1.0
 	 */
 	protected  function buildLanguage($extension)
 	{
@@ -70,6 +78,8 @@ trait buildTasks
 	 * @param   bool    $hasComponent  has the extension a component (then we need to build differnet)
 	 *
 	 * @return  Library
+	 *
+	 * @since   1.0
 	 */
 	protected function buildLibrary($libName, $params, $hasComponent)
 	{
@@ -80,6 +90,8 @@ trait buildTasks
 	 * Build cli folder
 	 *
 	 * @return  Cli
+	 *
+	 * @since   1.0
 	 */
 	protected function buildCli()
 	{
@@ -93,6 +105,8 @@ trait buildTasks
 	 * @param   array   $params   Opt params
 	 *
 	 * @return  Module
+	 *
+	 * @since   1.0
 	 */
 	protected function buildModule($modName, $params)
 	{
@@ -105,6 +119,8 @@ trait buildTasks
 	 * @param   array  $params  - Opt params
 	 *
 	 * @return  Package
+	 *
+	 * @since   1.0
 	 */
 	protected function buildPackage($params)
 	{
@@ -119,6 +135,8 @@ trait buildTasks
 	 * @param   array   $params  Opt params
 	 *
 	 * @return  Plugin
+	 *
+	 * @since   1.0
 	 */
 	protected function buildPlugin($type, $name, $params)
 	{
@@ -133,6 +151,8 @@ trait buildTasks
 	 * @param   array   $params  Opt params
 	 *
 	 * @return  CBPlugin
+	 *
+	 * @since   1.0
 	 */
 	protected function buildCBPlugin($type, $name, $params)
 	{
@@ -146,6 +166,8 @@ trait buildTasks
 	 * @param   array   $params        Opt params
 	 *
 	 * @return  Template
+	 *
+	 * @since   1.0
 	 */
 	protected function buildTemplate($templateName, $params)
 	{
