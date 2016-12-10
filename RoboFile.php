@@ -34,7 +34,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Map into Joomla installation.
 	 *
-	 * @param   String   $target    The target joomla instance
+	 * @param   String  $target  The target joomla instance
 	 *
 	 * @return  void
 	 */
@@ -74,6 +74,6 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function headers()
 	{
-		(new \Joomla\Jorobo\Tasks\CopyrightHeader())->run();
+		(new \Joomla\Jorobo\Tasks\CopyrightHeader)->run();
 	}
 }
