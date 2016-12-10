@@ -22,10 +22,9 @@
   },
   "require"    : {
     "php": ">=5.4.0",
-    "codegyre/robo": "0.6.*",
-    "joomla-projects/robo": "dev-master",
+    "consolidation/robo": "~1",
     "joomla/github": "~1.3",
-    "greencape/joomla-cs": "~0.2",
+    "greencape/coding-standards": "~1",
     "edgedesign/phpqa": "^1.0"
   },
   "require-dev": {
