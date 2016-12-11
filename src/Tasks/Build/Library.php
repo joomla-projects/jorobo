@@ -41,8 +41,6 @@ class Library extends Base implements TaskInterface
 	 * @param   String  $params        Optional params
 	 * @param   bool    $hasComponent  has the extension a component (then we need to build differnet)
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($libName, $params, $hasComponent)

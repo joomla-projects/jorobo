@@ -33,7 +33,7 @@ class Zip extends Base implements TaskInterface
 	{
 		parent::__construct();
 
-		$this->target = JPATH_BASE . "/dist/" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+		$this->target = JPATH_BASE . "/dist/" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
 		$this->zip    = new \ZipArchive($this->target, \ZipArchive::CREATE);
 	}
 
@@ -46,7 +46,7 @@ class Zip extends Base implements TaskInterface
 	 */
 	public function run()
 	{
-		$this->say('Zipping ' . $this->getConfig()->extension . " " . $this->getConfig()->version);
+		$this->say('Zipping ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
 		// Instantiate the zip archive
 		$this->zip->open($this->target, \ZipArchive::CREATE);

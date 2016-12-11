@@ -8,6 +8,8 @@
 
 namespace Joomla\Jorobo\Tasks;
 
+use Robo\Application;
+use Robo\Runner;
 use Robo\Contract\TaskInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -19,13 +21,13 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 abstract class JTask extends \Robo\Tasks implements TaskInterface
 {
 	/**
-	 * The config object
+	 * The Jorobo config object
 	 *
-	 * @var    array|null
+	 * @var    \stdClass
 	 *
 	 * @since  1.0
 	 */
-	protected static $config = null;
+	protected static $jConfig = null;
 
 	/**
 	 * Operating system
@@ -67,6 +69,11 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 		$this->loadConfiguration($params);
 		$this->determineOperatingSystem();
 		$this->determineSourceFolder();
+
+		// Registers the application to run Robo commands
+		$runner = new Runner;
+		$app = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
+		$runner->registerCommandClass($app, $this);
 	}
 
 	/**
@@ -105,13 +112,13 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Get the build config
 	 *
-	 * @return  object
+	 * @return  \stdClass
 	 *
 	 * @since   1.0
 	 */
-	public function getConfig()
+	public function getJConfig()
 	{
-		return self::$config;
+		return self::$jConfig;
 	}
 
 	/**
@@ -135,7 +142,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	public function getExtensionName()
 	{
-		return strtolower($this->getConfig()->extension);
+		return strtolower($this->getJConfig()->extension);
 	}
 
 	/**
@@ -147,7 +154,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	public function getBuildFolder()
 	{
-		return $this->getConfig()->buildFolder;
+		return $this->getJConfig()->buildFolder;
 	}
 
 	/**
@@ -159,7 +166,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	private function determineSourceFolder()
 	{
-		$this->sourceFolder = JPATH_BASE . "/" . $this->getConfig()->source;
+		$this->sourceFolder = JPATH_BASE . "/" . $this->getJConfig()->source;
 
 		if (!is_dir($this->sourceFolder))
 		{
@@ -196,15 +203,15 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	private function loadConfiguration($params)
 	{
-		if (!is_null(self::$config))
+		if (!is_null(self::$jConfig))
 		{
 			return true;
 		}
 
 		// Load config as object
-		$config = json_decode(json_encode(parse_ini_file(JPATH_BASE . '/jorobo.ini', true)), false);
+		$jConfig = json_decode(json_encode(parse_ini_file(JPATH_BASE . '/jorobo.ini', true)), false);
 
-		if (!$config)
+		if (!$jConfig)
 		{
 			$this->say('Error: Config file jorobo.ini not available');
 
@@ -221,14 +228,14 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 			if ($version)
 			{
 				$this->say("Changing version to development version " . $version);
-				$config->version = $version;
+				$jConfig->version = $version;
 			}
 		}
 
-		$config->buildFolder = JPATH_BASE . $this->determineTarget($config);
-		$config->params	  = $params;
+		$jConfig->buildFolder = JPATH_BASE . $this->determineTarget($jConfig);
+		$jConfig->params	  = $params;
 
-		self::$config = $config;
+		self::$jConfig = $jConfig;
 
 		// Date set
 		date_default_timezone_set('UTC');
@@ -251,24 +258,24 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Get target
 	 *
-	 * @param   object  $config  - The JoRobo config
+	 * @param   object  $jConfig  - The JoRobo config
 	 *
 	 * @return  string
 	 *
 	 * @since   1.0
 	 */
-	private function determineTarget($config)
+	private function determineTarget($jConfig)
 	{
-		if (!isset($config->extension))
+		if (!isset($jConfig->extension))
 		{
 			return 'unnamed';
 		}
 
-		$target = "/dist/" . $config->extension;
+		$target = "/dist/" . $jConfig->extension;
 
-		if (!empty($config->version))
+		if (!empty($jConfig->version))
 		{
-			$target = "/dist/" . $config->extension . "-" . $config->version;
+			$target = "/dist/" . $jConfig->extension . "-" . $jConfig->version;
 
 			return $target;
 		}

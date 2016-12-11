@@ -41,11 +41,11 @@ class CopyrightHeader extends JTask implements TaskInterface
 	public function run()
 	{
 		$this->say("Updating / adding copyright headers");
-		$text = $this->replaceInText(trim($this->getConfig()->header->text));
-		$exclude = explode(",", trim($this->getConfig()->header->exclude));
+		$text = $this->replaceInText(trim($this->getJConfig()->header->text));
+		$exclude = explode(",", trim($this->getJConfig()->header->exclude));
 
-		$path = realpath($this->getConfig()->source);
-		$fileTypes = explode(",", trim($this->getConfig()->header->files));
+		$path = realpath($this->getJConfig()->source);
+		$fileTypes = explode(",", trim($this->getJConfig()->header->files));
 
 		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename)
 		{

@@ -64,7 +64,7 @@ class Map extends JTask implements TaskInterface
 	 */
 	public function run()
 	{
-		$this->say('Mapping ' . $this->getConfig()->extension . " to " . $this->target);
+		$this->say('Mapping ' . $this->getJConfig()->extension . " to " . $this->target);
 		$this->say('OS: ' . $this->getOs() . " | Basedir: " . $this->getSourceFolder());
 
 		if (!$this->checkFolders())

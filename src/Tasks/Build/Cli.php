@@ -34,8 +34,6 @@ class Cli extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct()

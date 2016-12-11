@@ -36,14 +36,12 @@ class Component extends Base implements TaskInterface
 
 	protected $hasCli = true;
 
-	protected $hasMedia = true;
+	protected $hasMedia = false;
 
 	/**
 	 * Initialize Build Task
 	 *
 	 * @param   String  $params  The target directory
-	 *
-	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -154,9 +152,9 @@ class Component extends Base implements TaskInterface
 			$this->hasCli = false;
 		}
 
-		if (!file_exists($this->sourceFolder . "/media"))
+		if (file_exists($this->sourceFolder . "/media"))
 		{
-			$this->hasMedia = false;
+			$this->hasMedia = true;
 		}
 	}
 

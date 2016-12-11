@@ -56,32 +56,32 @@ class FtpUpload extends Base implements TaskInterface
 	 */
 	public function run()
 	{
-		$this->say('Uploading ' . $this->getConfig()->extension . $this->getConfig()->version . " via FTP");
+		$this->say('Uploading ' . $this->getJConfig()->extension . $this->getJConfig()->version . " via FTP");
 
 		// Todo Move filepath and name to config
-		$this->filename = $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+		$this->filename = $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
 		$this->filepath = JPATH_BASE . "/dist/" . $this->filename;
 
 		// Check if we have a package
-		if (in_array("package", explode(" ", $this->getConfig()->target)))
+		if (in_array("package", explode(" ", $this->getJConfig()->target)))
 		{
 			$this->target = "package";
-			$this->filename = "pkg-" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+			$this->filename = "pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
 			$this->filepath = JPATH_BASE . "/dist/" . $this->filename;
 		}
 
 		try
 		{
-			if ($this->getConfig()->ftp->ssl == "true")
+			if ($this->getJConfig()->ftp->ssl == "true")
 			{
-				$con = ftp_ssl_connect($this->getConfig()->ftp->host);
+				$con = ftp_ssl_connect($this->getJConfig()->ftp->host);
 			}
 			else
 			{
-				$con = ftp_connect($this->getConfig()->ftp->host);
+				$con = ftp_connect($this->getJConfig()->ftp->host);
 			}
 
-			$login_result = ftp_login($con, $this->getConfig()->ftp->user, $this->getConfig()->ftp->password);
+			$login_result = ftp_login($con, $this->getJConfig()->ftp->user, $this->getJConfig()->ftp->password);
 
 			// Set passive ftp
 			ftp_pasv($con, true);
@@ -91,7 +91,7 @@ class FtpUpload extends Base implements TaskInterface
 				return Result::error($this, 'Failed logging in');
 			}
 
-			ftp_chdir($con, $this->getConfig()->ftp->target);
+			ftp_chdir($con, $this->getJConfig()->ftp->target);
 
 			$this->say('Uploading ' . $this->filepath);
 

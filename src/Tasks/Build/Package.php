@@ -31,8 +31,6 @@ class Package extends Base implements TaskInterface
 	 *
 	 * @param   String  $params  The target directory
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($params)
@@ -86,7 +84,7 @@ class Package extends Base implements TaskInterface
 		// Version & Date Replace
 		$this->taskReplaceInFile($xmlFile)
 			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
+			->to(array($this->getDate(), date('Y'), $this->getJConfig()->version))
 			->run();
 
 		if (is_file($sourceFolder . "/" . $this->getExtensionName() . "/script.php"))
@@ -95,7 +93,7 @@ class Package extends Base implements TaskInterface
 
 			$this->taskReplaceInFile($scriptFile)
 				->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-				->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
+				->to(array($this->getDate(), date('Y'), $this->getJConfig()->version))
 				->run();
 		}
 

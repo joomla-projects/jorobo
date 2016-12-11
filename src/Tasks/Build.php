@@ -57,7 +57,7 @@ class Build extends JTask implements TaskInterface
 	 */
 	public function run()
 	{
-		$this->say('Building ' . $this->getConfig()->extension . " " . $this->getConfig()->version);
+		$this->say('Building ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
 		if (!$this->checkFolders())
 		{
@@ -74,7 +74,7 @@ class Build extends JTask implements TaskInterface
 		$this->_symlink($this->getBuildFolder(), JPATH_BASE . "/dist/current");
 
 		// Support multiple deployment methods, separated by spaces
-		$deploy = explode(" ", $this->getConfig()->target);
+		$deploy = explode(" ", $this->getJConfig()->target);
 
 		if (count($deploy))
 		{
