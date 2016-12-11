@@ -152,9 +152,9 @@ class Component extends Base implements TaskInterface
 			$this->hasCli = false;
 		}
 
-		if (!file_exists($this->sourceFolder . "/media"))
+		if (file_exists($this->sourceFolder . "/media"))
 		{
-			$this->hasMedia = false;
+			$this->hasMedia = true;
 		}
 	}
 
