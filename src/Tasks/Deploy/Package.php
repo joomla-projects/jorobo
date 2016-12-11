@@ -55,7 +55,7 @@ class Package extends Base implements TaskInterface
 	{
 		parent::__construct();
 
-		$this->target = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getConfig()->version . ".zip";
+		$this->target = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
 		$this->current = JPATH_BASE . "/dist/current";
 	}
 
@@ -69,7 +69,7 @@ class Package extends Base implements TaskInterface
 	public function run()
 	{
 		// TODO improve DRY!
-		$this->say('Creating package ' . $this->getConfig()->extension . " " . $this->getConfig()->version);
+		$this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
 		// Start getting single archives
 		if (file_exists(JPATH_BASE . '/dist/zips'))
@@ -240,7 +240,11 @@ class Package extends Base implements TaskInterface
 		$this->_remove(JPATH_BASE . $tmp_path . '/administrator/manifests');
 		$this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
 		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
-		$this->_copyDir($this->current . '/media', JPATH_BASE . $tmp_path . '/media');
+
+		if (file_exists($this->current . '/media'))
+		{
+			$this->_copyDir($this->current . '/media', JPATH_BASE . $tmp_path . '/media');
+		}
 
 		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 

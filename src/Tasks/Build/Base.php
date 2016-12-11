@@ -245,8 +245,8 @@ class Base extends JTask implements TaskInterface
 			// Ignore hidden files
 			if (substr($entry, 0, 1) != '.')
 			{
-				if (isset($this->getConfig()->exclude)
-					&& in_array($entry, explode(',', $this->getConfig()->exclude)))
+				if (isset($this->getJConfig()->exclude)
+					&& in_array($entry, explode(',', $this->getJConfig()->exclude)))
 				{
 					continue;
 				}
@@ -477,7 +477,7 @@ class Base extends JTask implements TaskInterface
 
 		$this->taskReplaceInFile($file)
 			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getConfig()->version))
+			->to(array($this->getDate(), date('Y'), $this->getJConfig()->version))
 			->run();
 	}
 }

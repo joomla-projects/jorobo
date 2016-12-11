@@ -34,13 +34,13 @@ class Release extends Base implements TaskInterface
 	 */
 	public function run()
 	{
-		$version = $this->getConfig()->version;
-		$remote = $this->getConfig()->github->remote;
-		$branch = $this->getConfig()->github->branch;
-		$owner = $this->getConfig()->github->owner;
-		$repository = $this->getConfig()->github->repository;
+		$version = $this->getJConfig()->version;
+		$remote = $this->getJConfig()->github->remote;
+		$branch = $this->getJConfig()->github->branch;
+		$owner = $this->getJConfig()->github->owner;
+		$repository = $this->getJConfig()->github->repository;
 
-		$this->say('Creating package ' . $this->getConfig()->extension . " " . $this->getConfig()->version);
+		$this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
 		$latest_release = $this->getLatestReleases();
 		$pulls = $this->getAllRepoPulls();
@@ -75,7 +75,7 @@ class Release extends Base implements TaskInterface
 			$repository,
 			(string) $version,
 			'',
-			$this->getConfig()->extension . " " . $version,
+			$this->getJConfig()->extension . " " . $version,
 			$changesInRelease,
 			false,
 			true
@@ -83,7 +83,7 @@ class Release extends Base implements TaskInterface
 
 		$this->say(print_r($repository, true));
 
-		$this->uploadToGithub($version, $this->getConfig()->github->token, $response->upload_url);
+		$this->uploadToGithub($version, $this->getJConfig()->github->token, $response->upload_url);
 	}
 
 
@@ -105,7 +105,7 @@ class Release extends Base implements TaskInterface
 		{
 			if (!$latest_release || strtotime($pull->merged_at) > strtotime($latest_release->published_at))
 			{
-				if($this->getConfig()->github->changelog_source == "pr")
+				if($this->getJConfig()->github->changelog_source == "pr")
 				{
 					$changes[] = $pull->title;
 				}
@@ -128,8 +128,8 @@ class Release extends Base implements TaskInterface
 	protected function getLatestReleases()
 	{
 		$github     = $this->getGithub();
-		$owner      = $this->getConfig()->github->owner;
-		$repository = $this->getConfig()->github->repository;
+		$owner      = $this->getJConfig()->github->owner;
+		$repository = $this->getJConfig()->github->repository;
 
 		$this->say('Get latest Release commit ' . $owner . "/" . $repository);
 
@@ -171,19 +171,19 @@ class Release extends Base implements TaskInterface
 
 		if (!isset($this->allClosedPulls))
 		{
-			if($this->getConfig()->github->changelog_source == "pr")
+			if($this->getJConfig()->github->changelog_source == "pr")
 			{
 				$this->allClosedPulls = $github->pulls->getList(
-					$this->getConfig()->github->owner,
-					$this->getConfig()->github->repository,
+					$this->getJConfig()->github->owner,
+					$this->getJConfig()->github->repository,
 					$state
 				);
 			}
 			else
 			{
 				$this->allClosedPulls = $github->repositories->commits->getList(
-					$this->getConfig()->github->owner,
-					$this->getConfig()->github->repository,
+					$this->getJConfig()->github->owner,
+					$this->getJConfig()->github->repository,
 					$sha,
 					$path,
 					$author,
@@ -209,7 +209,7 @@ class Release extends Base implements TaskInterface
 		{
 			$this->taskChangelog()
 				->changes($changes)
-				->version($this->getConfig()->version)
+				->version($this->getJConfig()->version)
 				->run();
 		}
 	}
@@ -224,7 +224,7 @@ class Release extends Base implements TaskInterface
 	protected function getGithub()
 	{
 		$options = new Registry;
-		$options->set('gh.token', (string) $this->getConfig()->github->token);
+		$options->set('gh.token', (string) $this->getJConfig()->github->token);
 
 		return new Github($options);
 	}
@@ -242,8 +242,8 @@ class Release extends Base implements TaskInterface
 	 */
 	protected function uploadToGithub($version, $githubToken, $upload_url)
 	{
-		$deploy = explode(' ', $this->getConfig()->target);
-		$zipfile = $this->getExtensionName() . '-' . $this->getConfig()->version . '.zip';
+		$deploy = explode(' ', $this->getJConfig()->target);
+		$zipfile = $this->getExtensionName() . '-' . $this->getJConfig()->version . '.zip';
 
 		if (in_array('package', $deploy))
 		{

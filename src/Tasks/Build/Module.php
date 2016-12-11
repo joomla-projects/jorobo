@@ -38,8 +38,6 @@ class Module extends Base implements TaskInterface
 	 * @param   String  $modName  Name of the module
 	 * @param   String  $params   Optional params
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($modName, $params)

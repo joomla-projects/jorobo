@@ -44,8 +44,6 @@ class Language extends Base implements TaskInterface
 	 *
 	 * @param   String  $extension  The extension (component, module etc.)
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($extension)

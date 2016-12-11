@@ -41,8 +41,6 @@ class CBPlugin extends Base implements TaskInterface
 	 * @param   String  $name    Name of the plugin
 	 * @param   String  $params  Optional params
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($type, $name, $params)

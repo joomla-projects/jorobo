@@ -38,8 +38,6 @@ class Template extends Base implements TaskInterface
 	 * @param String $templateName  Name of the template
 	 * @param String $params   Optional params
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($templateName, $params)

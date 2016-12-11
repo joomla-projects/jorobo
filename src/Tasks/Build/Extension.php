@@ -67,8 +67,6 @@ class Extension extends Base implements TaskInterface
 	 *
 	 * @param   String  $params  The target directory
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($params)
