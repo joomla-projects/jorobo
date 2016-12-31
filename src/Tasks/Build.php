@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,20 +9,22 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Class Build
  *
- * @package  Joomla\Jorobo\Tasks
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
+ *
+ * @since       1.0
  */
 class Build extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 	use Build\buildTasks;
 	use Deploy\deployTasks;
 
@@ -37,8 +40,6 @@ class Build extends JTask implements TaskInterface
 	 *
 	 * @param   array  $params  Additional params
 	 *
-	 * @return  void
-	 *
 	 * @since   1.0
 	 */
 	public function __construct($params)
@@ -51,7 +52,7 @@ class Build extends JTask implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

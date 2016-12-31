@@ -1,32 +1,33 @@
 {
-  "name": "joomla-projects/jorobo",
-  "version": "0.6.1",
+  "name":        "joomla-projects/jorobo",
   "description": "Tools and Tasks based on Robo.li for Joomla Extension Development and Releases",
-  "license": "GPL-2.0+",
+  "license":     "GPL-2.0+",
   "authors": [
     {
-      "name": "Yves Hoppe",
-      "email": "yves@compojoom.com"
+      "name":    "Yves Hoppe",
+      "email":   "yves@compojoom.com"
     },
     {
-      "name": "Niels Nübel",
-      "email": "niels@niels-nuebel.de"
+      "name":    "Niels Nübel",
+      "email":   "niels@niels-nuebel.de"
     },
     {
-      "name": "Niels Braczek",
-      "email": "nbraczek@bsds.de"
+      "name":    "Niels Braczek",
+      "email":   "nbraczek@bsds.de"
     }
   ],
   "autoload": {
-    "psr-4": {"Joomla\\Jorobo\\": "src"}
+    "psr-4": {
+      "Joomla\\Jorobo\\": "src"
+    }
   },
   "require"    : {
-    "php": ">=5.4.0",
-    "consolidation/robo": "~1",
-    "joomla/github": "~1.3"
+    "php":                      ">=5.4.0",
+    "consolidation/robo":       "~1",
+    "joomla/github":            "~1.3"
   },
   "require-dev": {
-    "codeception/base": "~2.1",
-    "codeception/aspect-mock": "~0.5"
+    "codeception/base":         "~2.1",
+    "codeception/aspect-mock":  "~0.5"
   }
 }

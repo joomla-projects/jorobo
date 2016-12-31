@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,22 +9,24 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Task\Development\loadTasks;
 
 use Joomla\Jorobo\Tasks\JTask;
 
 /**
  * Build base - contains methods / data used in multiple build tasks
  *
- * @package  Joomla\Jorobo\Tasks\Build
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
+ *
+ * @since       1.0
  */
 class Base extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
 	/**
 	 * Media files
@@ -94,7 +97,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Returns true
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -109,7 +112,7 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $type       - Type (media, component etc.)
 	 * @param   array   $fileArray  - File array
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -138,7 +141,7 @@ class Base extends JTask implements TaskInterface
 	 *
 	 * @since   1.0
 	 */
-	public function  getFiles($type)
+	public function getFiles($type)
 	{
 		$f = $type . 'Files';
 
@@ -394,7 +397,6 @@ class Base extends JTask implements TaskInterface
 				if ($value == $plugin . ".php")
 				{
 					$p = ' plugin="' . $plugin . '"';
-
 				}
 
 				$text[] = "<" . $type . $p . ">" . $value . "</" . $type . ">";
@@ -432,7 +434,6 @@ class Base extends JTask implements TaskInterface
 				if ($value == $module . ".php")
 				{
 					$p = ' module="' . $module . '"';
-
 				}
 
 				$text[] = "<" . $type . $p . ">" . $value . "</" . $type . ">";
@@ -457,7 +458,6 @@ class Base extends JTask implements TaskInterface
 		self::$frontendLanguageFiles = array();
 		self::$mediaFiles = array();
 	}
-
 
 	/**
 	 * Replace Basic placeholders in file (Date, year, version)

@@ -1,41 +1,77 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Class Language
  *
- * @package  Joomla\Jorobo\Tasks\Build
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
+ *
+ * @since       1.0
  */
 class Language extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $ext = null;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $type = "com";
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $target = null;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $adminLangPath = null;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $frontLangPath = null;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasAdminLang = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasFrontLang = true;
 
 
@@ -61,7 +97,7 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Returns true
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -101,7 +137,7 @@ class Language extends Base implements TaskInterface
 		elseif ($this->type == "lib")
 		{
 			// Remove lib before - ugly hack
-			$ex    = str_replace("lib_", "" , $this->ext);
+			$ex    = str_replace("lib_", "", $this->ext);
 			$dest .= "/libraries/" . $ex;
 		}
 		elseif ($this->type == "plu")
@@ -161,7 +197,7 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Prepare the directory structure
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

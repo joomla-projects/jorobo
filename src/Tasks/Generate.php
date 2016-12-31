@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,20 +9,22 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Building class for extensions
  *
- * @package  Joomla\Jorobo\Tasks
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
+ *
+ * @since       1.0
  */
 class Generate extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 	use Generate\generateTasks;
 
 	/**
@@ -50,7 +53,7 @@ class Generate extends JTask implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -59,6 +62,8 @@ class Generate extends JTask implements TaskInterface
 		$this->prepareSouceDirectory();
 
 		$this->say('Not implemented yet');
+
+		return true;
 	}
 
 	/**

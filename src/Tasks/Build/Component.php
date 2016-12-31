@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,34 +9,64 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Class Component
  *
- * @package  Joomla\Jorobo\Tasks\Build
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
+ *
+ * @since       1.0
  */
 class Component extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 	use buildTasks;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $adminPath = null;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $frontPath = null;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasAdmin = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasFront = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasCli = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasMedia = false;
 
 	/**
@@ -59,7 +90,7 @@ class Component extends Base implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

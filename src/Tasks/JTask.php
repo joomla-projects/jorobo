@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -11,14 +12,18 @@ namespace Joomla\Jorobo\Tasks;
 use Robo\Application;
 use Robo\Runner;
 use Robo\Contract\TaskInterface;
+use Robo\Tasks;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
  * Class JTask - Base class for our tasks
  *
- * @package  Joomla\Jorobo\Tasks
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
+ *
+ * @since       1.0
  */
-abstract class JTask extends \Robo\Tasks implements TaskInterface
+abstract class JTask extends Tasks implements TaskInterface
 {
 	/**
 	 * The Jorobo config object
@@ -66,20 +71,20 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	public function __construct($params = array())
 	{
-		$this->loadConfiguration($params);
-		$this->determineOperatingSystem();
-		$this->determineSourceFolder();
-
 		// Registers the application to run Robo commands
 		$runner = new Runner;
 		$app = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
 		$runner->registerCommandClass($app, $this);
+
+		$this->loadConfiguration($params);
+		$this->determineOperatingSystem();
+		$this->determineSourceFolder();
 	}
 
 	/**
 	 * Function to check if folders are existing / writable (Code Base etc.)
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -196,7 +201,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 *
 	 * @param   array  $params  Optional Params
 	 *
-	 * @return  bool|void
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 * @throws  FileNotFoundException
@@ -239,6 +244,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 
 		// Date set
 		date_default_timezone_set('UTC');
+
+		return true;
 	}
 
 	/**
@@ -246,7 +253,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 *
 	 * @param   array  $params  - Robo.li Params
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

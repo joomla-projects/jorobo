@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,17 +9,23 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Codeception\Module\FTP;
+use Robo\Common\TaskIO;
 use Robo\Result;
 use Robo\Contract\TaskInterface;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Deploy project via FTP - needs zip or pkg deployment to be done before
+ *
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
+ *
+ * @since       1.0
  */
 class FtpUpload extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
 	/**
 	 * Should we upload a package or a zip (defaults to zip)
@@ -50,7 +57,7 @@ class FtpUpload extends Base implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean | Result
 	 *
 	 * @since   1.0
 	 */
@@ -81,12 +88,12 @@ class FtpUpload extends Base implements TaskInterface
 				$con = ftp_connect($this->getJConfig()->ftp->host);
 			}
 
-			$login_result = ftp_login($con, $this->getJConfig()->ftp->user, $this->getJConfig()->ftp->password);
+			$loginResult = ftp_login($con, $this->getJConfig()->ftp->user, $this->getJConfig()->ftp->password);
 
 			// Set passive ftp
 			ftp_pasv($con, true);
 
-			if (!$login_result)
+			if (!$loginResult)
 			{
 				return Result::error($this, 'Failed logging in');
 			}

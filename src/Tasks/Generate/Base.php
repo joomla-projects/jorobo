@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Generate
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
 use Joomla\Jorobo\Tasks\JTask;
 
 /**
@@ -22,12 +20,12 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Base extends JTask implements TaskInterface
 {
-	use \Robo\Common\TaskIO;
+	use TaskIO;
 
 	/**
 	 * Returns true - should never be called on this
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

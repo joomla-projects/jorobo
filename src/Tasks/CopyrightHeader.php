@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,17 +9,22 @@
 
 namespace Joomla\Jorobo\Tasks;
 
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Generate / Update copyright headers in project files
  *
- * @package  Joomla\Jorobo\Tasks
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
+ *
+ * @since       1.0
  */
 class CopyrightHeader extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 	use Generate\generateTasks;
 
 	/**
@@ -34,7 +40,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Generate / Update copyright headers
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -55,7 +61,6 @@ class CopyrightHeader extends JTask implements TaskInterface
 			}
 
 			$file = new \SplFileInfo($filename);
-
 
 			if (!in_array($file->getExtension(), $fileTypes))
 			{
@@ -85,13 +90,15 @@ class CopyrightHeader extends JTask implements TaskInterface
 		}
 
 		$this->say("Finished updating copyright headers");
+
+		return true;
 	}
 
 	/**
 	 * Replaces placeholders in the copyright header
 	 * Todo separate and make configurable and extensible
 	 *
-	 * @param   $text  The header text with placeholders
+	 * @param   string  $text  The header text with placeholders
 	 *
 	 * @return  mixed
 	 *
@@ -129,7 +136,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 				continue;
 			}
 
-			if (strpos($l, "/**") !== false || strpos($l, "*") !== false || strpos($l, "*/") !== false )
+			if (strpos($l, "/**") !== false || strpos($l, "*") !== false || strpos($l, "*/") !== false)
 			{
 				unset($lines[$i]);
 
@@ -145,7 +152,8 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Adds copyright headers in file
 	 *
-	 * @param   \SplFileInfo  $file  - Target
+	 * @param   \SplFileInfo  $file  Target
+	 * @param   string        $text  Headers text
 	 *
 	 * @return  void
 	 *
