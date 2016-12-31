@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Generate
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,35 +9,55 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Generate a module skeleton
  *
- * @package  Joomla\Jorobo\Tasks\Generate
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Generate
+ *
+ * @since       1.0
  */
 class Module extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
+	/**
+	 * @var    string
+	 *
+	 * @since  1.0
+	 */
 	protected $adminPath = null;
 
+	/**
+	 * @var    string
+	 *
+	 * @since  1.0
+	 */
 	protected $frontPath = null;
 
+	/**
+	 * @var    string
+	 *
+	 * @since  1.0
+	 */
 	protected $hasAdmin = true;
 
+	/**
+	 * @var    string
+	 *
+	 * @since  1.0
+	 */
 	protected $hasFront = true;
 
 	/**
 	 * Initialize Build Task
 	 *
 	 * @param   String  $params  The target directory
-	 *
-	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -51,7 +72,7 @@ class Module extends Base implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -85,7 +106,7 @@ class Module extends Base implements TaskInterface
 
 		$this->addFiles('media', $media->getResultFiles());
 
-		$language = $this->buildLanguage("com_matukio");
+		$language = $this->buildLanguage("com_" . $this->getExtensionName());
 		$language->run();
 
 		return true;

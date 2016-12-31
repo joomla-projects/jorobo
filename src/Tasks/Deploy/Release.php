@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -10,25 +11,28 @@ namespace Joomla\Jorobo\Tasks\Deploy;
 
 use Joomla\Registry\Registry;
 use Joomla\Github\Github;
-use Joomla\Http\Http;
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Task\Development\loadTasks;
 
 
 /**
  * Release build package to github
+ *
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
+ *
+ * @since       1.0
  */
 class Release extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
 	/**
 	 * Release the build package on GitHub
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -42,10 +46,10 @@ class Release extends Base implements TaskInterface
 
 		$this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
-		$latest_release = $this->getLatestReleases();
+		$latestRelease = $this->getLatestReleases();
 		$pulls = $this->getAllRepoPulls();
 
-		$changes = $this->getChanges($latest_release, $pulls);
+		$changes = $this->getChanges($latestRelease, $pulls);
 
 		$this->changelogUpdate($changes);
 
@@ -84,26 +88,28 @@ class Release extends Base implements TaskInterface
 		$this->say(print_r($repository, true));
 
 		$this->uploadToGithub($version, $this->getJConfig()->github->token, $response->upload_url);
+
+		return true;
 	}
 
 
 	/**
 	 * Get the Changes
 	 *
-	 * @param   bool   $latest_release  - Latest release
-	 * @param   array  $pulls           - Pulls
+	 * @param   object|boolean   $latestRelease  - Latest release
+	 * @param   array            $pulls          - Pulls
 	 *
 	 * @return  array
 	 *
 	 * @since   1.0
 	 */
-	private function getChanges($latest_release = false, $pulls)
+	private function getChanges($latestRelease = false, $pulls)
 	{
 		$changes = array();
 
 		foreach ($pulls as $pull)
 		{
-			if (!$latest_release || strtotime($pull->merged_at) > strtotime($latest_release->published_at))
+			if (!$latestRelease || strtotime($pull->merged_at) > strtotime($latestRelease->published_at))
 			{
 				if($this->getJConfig()->github->changelog_source == "pr")
 				{
@@ -121,7 +127,7 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Get the latest release
 	 *
-	 * @return  false|array
+	 * @return  false|object
 	 *
 	 * @since   1.0
 	 */
@@ -135,7 +141,7 @@ class Release extends Base implements TaskInterface
 
 		try
 		{
-			$latest_release = $github->repositories->releases->get(
+			$latestRelease = $github->repositories->releases->get(
 				$owner,
 				$repository,
 				'latest'
@@ -148,7 +154,7 @@ class Release extends Base implements TaskInterface
 			return false;
 		}
 
-		return $latest_release;
+		return $latestRelease;
 	}
 
 	/**
@@ -199,6 +205,8 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Updates changelog with the changes since the last release
 	 *
+	 * @param   array  $changes  Changes
+	 *
 	 * @return  void
 	 *
 	 * @since   1.0
@@ -234,13 +242,13 @@ class Release extends Base implements TaskInterface
 	 *
 	 * @param   string  $version      The release version
 	 * @param   string  $githubToken  The github access token
-	 * @param   string  $upload_url   The upload URL
+	 * @param   string  $uploadURL    The upload URL
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	protected function uploadToGithub($version, $githubToken, $upload_url)
+	protected function uploadToGithub($version, $githubToken, $uploadURL)
 	{
 		$deploy = explode(' ', $this->getJConfig()->target);
 		$zipfile = $this->getExtensionName() . '-' . $this->getJConfig()->version . '.zip';
@@ -250,21 +258,22 @@ class Release extends Base implements TaskInterface
 			$zipfile = 'pkg-' . $zipfile;
 		}
 
-		$zipfilepath =  JPATH_BASE . '/dist/' . $zipfile;
+		$zipfilepath = JPATH_BASE . '/dist/' . $zipfile;
 
 		$filesize = filesize($zipfilepath);
 
 		$this->say('Uploading the Extension package to the Github release: ' . $version);
 
-		$uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
-		$request   = curl_init($uploadUrl);
+		$uploadURLString = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $uploadURL);
+		$request   = curl_init($uploadURLString);
 
 		curl_setopt($request, CURLOPT_POST, true);
 		curl_setopt($request, CURLOPT_VERBOSE, true);
 
 		curl_setopt($request, CURLOPT_HTTPHEADER, array(
-			'Authorization: token ' . $githubToken,
-		));
+				'Authorization: token ' . $githubToken,
+			)
+		);
 
 		curl_setopt($request, CURLOPT_HTTPHEADER, array('Content-type: application/zip'));
 		curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));

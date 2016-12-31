@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,30 +9,50 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Build Library
  *
- * @package  Joomla\Jorobo\Tasks\Build
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
+ *
+ * @since       1.0
  */
 class Library extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 	use buildTasks;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $source = null;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $target = null;
 
+	/**
+	 * @var   string
+	 *
+	 * @since  1.0
+	 */
 	protected $libName = null;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	protected $hasComponent = false;
 
 	/**
@@ -60,7 +81,7 @@ class Library extends Base implements TaskInterface
 	/**
 	 * Runs the library build tasks, just copying files currently
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

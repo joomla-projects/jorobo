@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,20 +9,22 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Deploy project as Package file
+ *
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
+ *
+ * @since       1.0
  */
 class Package extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
 	/**
 	 * The target Zip file of the package
@@ -32,22 +35,57 @@ class Package extends Base implements TaskInterface
 	 */
 	protected $target = null;
 
+	/**
+	 * @var    string
+	 *
+	 * @since  1.0
+	 */
+	protected $current = null;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	private $hasComponent = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	private $hasModules = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	private $hasTemplates = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	private $hasPlugins = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	private $hasLibraries = true;
 
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
 	private $hasCBPlugins = true;
 
 	/**
 	 * Initialize Build Task
-	 *
-	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -62,7 +100,7 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -122,7 +160,7 @@ class Package extends Base implements TaskInterface
 	{
 		// Check if we have component, module, plugin etc.
 		if (!file_exists($this->current . "/administrator/components/com_" . $this->getExtensionName())
-				&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
+			&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
 		)
 		{
 			$this->say("Extension has no component");
@@ -177,7 +215,7 @@ class Package extends Base implements TaskInterface
 		if (is_dir($source) === true)
 		{
 			$files = new \RecursiveIteratorIterator(
-					new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
+				new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
 			);
 
 			foreach ($files as $file)
@@ -201,13 +239,13 @@ class Package extends Base implements TaskInterface
 				{
 					$zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
 				}
-				else if (is_file($file) === true)
+				elseif (is_file($file) === true)
 				{
 					$zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
 				}
 			}
 		}
-		else if (is_file($source) === true)
+		elseif (is_file($source) === true)
 		{
 			$zip->addFromString(basename($source), file_get_contents($source));
 		}
@@ -226,30 +264,30 @@ class Package extends Base implements TaskInterface
 	{
 		$comZip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
 
-		$tmp_path = '/dist/tmp/cbuild';
+		$tmpPath = '/dist/tmp/cbuild';
 
-		if (file_exists(JPATH_BASE . $tmp_path))
+		if (file_exists(JPATH_BASE . $tmpPath))
 		{
-			$this->_deleteDir(JPATH_BASE . $tmp_path);
+			$this->_deleteDir(JPATH_BASE . $tmpPath);
 		}
 
 		// Improve, should been a whitelist instead of a hardcoded copy
-		$this->_mkdir(JPATH_BASE . $tmp_path);
+		$this->_mkdir(JPATH_BASE . $tmpPath);
 
-		$this->_copyDir($this->current . '/administrator', JPATH_BASE . $tmp_path . '/administrator');
-		$this->_remove(JPATH_BASE . $tmp_path . '/administrator/manifests');
-		$this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
-		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
+		$this->_copyDir($this->current . '/administrator', JPATH_BASE . $tmpPath . '/administrator');
+		$this->_remove(JPATH_BASE . $tmpPath . '/administrator/manifests');
+		$this->_copyDir($this->current . '/language', JPATH_BASE . $tmpPath . '/language');
+		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmpPath . '/components');
 
 		if (file_exists($this->current . '/media'))
 		{
-			$this->_copyDir($this->current . '/media', JPATH_BASE . $tmp_path . '/media');
+			$this->_copyDir($this->current . '/media', JPATH_BASE . $tmpPath . '/media');
 		}
 
 		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 
 		// Process the files to zip
-		$this->addFiles($comZip, JPATH_BASE . $tmp_path);
+		$this->addFiles($comZip, JPATH_BASE . $tmpPath);
 
 		$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
 		$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "script.php");
@@ -486,20 +524,20 @@ class Package extends Base implements TaskInterface
 		// Process the files to zip
 		$this->addFiles($zip, JPATH_BASE . '/dist/zips/');
 
-		$pkg_path = $this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName();
+		$pkgPath = $this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName();
 
-		$zip->addFile($pkg_path . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
-		$zip->addFile($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() .  "/script.php", "script.php");
+		$zip->addFile($pkgPath . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
+		$zip->addFile($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() . "/script.php", "script.php");
 
 		// If the package has language files, add those
-		$pkg_languages_path = $pkg_path . "/language";
-		$languages = glob($pkg_languages_path . "/*/*.pkg_" . $this->getExtensionName() . "*.ini");
+		$pkgLanguagesPath = $pkgPath . "/language";
+		$languages = glob($pkgLanguagesPath . "/*/*.pkg_" . $this->getExtensionName() . "*.ini");
 
 		// Add all package language files
-		foreach ($languages as $lang_path)
+		foreach ($languages as $langPath)
 		{
-			$path_in_zip = substr($lang_path, strlen($pkg_path) + 1);
-			$zip->addFile($lang_path, $path_in_zip);
+			$pathInZip = substr($langPath, strlen($pkgPath) + 1);
+			$zip->addFile($langPath, $pathInZip);
 		}
 
 		// Close the zip archive

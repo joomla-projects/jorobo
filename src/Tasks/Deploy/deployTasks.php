@@ -1,12 +1,21 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 namespace Joomla\Jorobo\Tasks\Deploy;
 
+/**
+ * Deploy tasks trait
+ *
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Deploy
+ *
+ * @since       1.0
+ */
 trait deployTasks
 {
 	/**
@@ -30,7 +39,7 @@ trait deployTasks
 	 */
 	protected function deployPackage()
 	{
-		return new Package();
+		return new Package;
 	}
 
 	/**
@@ -42,7 +51,7 @@ trait deployTasks
 	 */
 	protected function deployRelease()
 	{
-		return new Release();
+		return new Release;
 	}
 
 	/**
@@ -55,6 +64,6 @@ trait deployTasks
 	 */
 	protected function deployFtp()
 	{
-		return new FtpUpload();
+		return new FtpUpload;
 	}
 }

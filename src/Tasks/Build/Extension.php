@@ -1,66 +1,116 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
+
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Task\Development\loadTasks;
 
 /**
  * The supervisor
  *
- * @package  Joomla\Jorobo\Tasks\Build
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks\Build
+ *
+ * @version     1.0
  */
 class Extension extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 	use buildTasks;
 
 	/**
 	 * @var   array
-	 */
-	protected $params = null;
-
-	private $hasComponent = true;
-
-	private $hasModules = true;
-
-	private $hasPackage = true;
-
-	private $hasPlugins = true;
-
-	private $hasLibraries = true;
-
-	private $hasCBPlugins = true;
-
-	private $hasTemplates = true;
-
-	private $modules = array();
-
-	private $plugins = array();
-
-	private $libraries = array();
-
-	private $templates = array();
-
-	/**
-	 * Community Builder plugins
-	 *
-	 * @var    array
 	 *
 	 * @since  1.0
 	 */
-	private $cbplugins = array();
+	protected $params = null;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasComponent = true;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasModules = true;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasPackage = true;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasPlugins = true;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasLibraries = true;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasCBPlugins = true;
+
+	/**
+	 * @var   boolean
+	 *
+	 * @since  1.0
+	 */
+	private $hasTemplates = true;
+
+	/**
+	 * @var   array
+	 *
+	 * @since  1.0
+	 */
+	private $modules = array();
+
+	/**
+	 * @var   array
+	 *
+	 * @since  1.0
+	 */
+	private $plugins = array();
+
+	/**
+	 * @var   array
+	 *
+	 * @since  1.0
+	 */
+	private $libraries = array();
+
+	/**
+	 * @var   array
+	 *
+	 * @since  1.0
+	 */
+	private $templates = array();
 
 	/**
 	 * Initialize Build Task
@@ -77,7 +127,7 @@ class Extension extends Base implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

@@ -1,6 +1,7 @@
 <?php
 /**
- * @package     JoRobo
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
  *
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -8,20 +9,22 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Robo\Common\TaskIO;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Task\Development\loadTasks;
 
 /**
  * Map extension into an Joomla installation
  *
- * @package  Joomla\Jorobo\Tasks\Component
+ * @package     Joomla\Jorobo
+ * @subpackage  Tasks
+ *
+ * @since       1.0
  */
 class Map extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
+	use loadTasks;
+	use TaskIO;
 
 	/**
 	 * The target folder
@@ -58,7 +61,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Maps all parts of an extension into a Joomla! installation
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -147,7 +150,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process components
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   string  $src    The source
+	 * @param   string  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -185,7 +189,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Libraries
 	 *
-	 * @param   String  $toDir  The target
+	 * @param   string  $src    The source
+	 * @param   string  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -199,7 +204,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process media
 	 *
-	 * @param   String  $toDir  The target
+	 * @param   string  $src    The source
+	 * @param   string  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -243,7 +249,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Cli
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   string  $src    The source
+	 * @param   string  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -257,7 +264,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Module
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   string  $src    The source
+	 * @param   string  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -271,7 +279,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Plugins
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   string  $src    The source
+	 * @param   string  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -300,8 +309,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process components
 	 *
-	 * @param   String  $type   - The type
-	 * @param   String  $toDir  - The target
+	 * @param   String  $type   The type
+	 * @param   String  $toDir  The target
 	 *
 	 * @return  void
 	 *
@@ -349,9 +358,9 @@ class Map extends JTask implements TaskInterface
 				->symlink($source, $target)
 				->run();
 		}
-		catch (Exception $e)
+		catch (\Exception $e)
 		{
-			$this->say('Error symlinking: ' . $e->message());
+			$this->say('Error symlinking: ' . $e->getMessage());
 		}
 	}
 }
