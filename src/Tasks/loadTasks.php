@@ -8,12 +8,8 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Joomla\Jorobo\Tasks\Metrics\loadTasks as metricsTasks;
-
 trait loadTasks
 {
-	use metricsTasks;
-
 	/**
 	 * Map Task
 	 *

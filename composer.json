@@ -23,9 +23,7 @@
   "require"    : {
     "php": ">=5.4.0",
     "consolidation/robo": "~1",
-    "joomla/github": "~1.3",
-    "greencape/coding-standards": "~1",
-    "edgedesign/phpqa": "^1.0"
+    "joomla/github": "~1.3"
   },
   "require-dev": {
     "codeception/base": "~2.1",
