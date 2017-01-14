@@ -65,4 +65,16 @@ trait loadTasks
 	{
 		return new CopyrightHeader($params);
 	}
+
+	/**
+	 * Bump the __DEPLOY_VERSION__ task
+	 *
+	 * @return  BumpVersion
+	 *
+	 * @since   1.0
+	 */
+	protected function taskBumbVersion()
+	{
+		return new BumpVersion();
+	}
 }
