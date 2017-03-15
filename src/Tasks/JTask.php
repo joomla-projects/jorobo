@@ -66,6 +66,11 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	public function __construct($params = array())
 	{
+		// Registers the application to run Robo commands
+		$runner = new Runner;
+		$app = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
+		$runner->registerCommandClass($app, $this);
+
 		$this->loadConfiguration($params);
 		$this->determineOperatingSystem();
 		$this->determineSourceFolder();

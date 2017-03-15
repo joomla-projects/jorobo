@@ -336,11 +336,16 @@ class Map extends JTask implements TaskInterface
 	 */
 	private function symlink($source, $target)
 	{
-		// Result $this->say("ln -s " . $source . "  >>>>>  " . $target);
-
 		if (file_exists($target))
 		{
-			$this->_deleteDir($target);
+			if (is_dir($target))
+			{
+				$this->_deleteDir($target);
+			}
+			else
+			{
+				unlink($target);
+			}
 		}
 
 		try
