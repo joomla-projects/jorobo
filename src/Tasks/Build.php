@@ -71,7 +71,14 @@ class Build extends JTask implements TaskInterface
 		$this->buildExtension($this->params)->run();
 
 		// Create symlink to current folder
-		$this->_symlink($this->getBuildFolder(), JPATH_BASE . "/dist/current");
+		if ($this->isWindows())
+		{
+			$this->_exec('mklink /J ' . JPATH_BASE . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()));
+		}
+		else
+		{
+			$this->_symlink($this->getBuildFolder(), JPATH_BASE . "/dist/current");
+		}
 
 		// Support multiple deployment methods, separated by spaces
 		$deploy = explode(" ", $this->getJConfig()->target);
@@ -121,5 +128,31 @@ class Build extends JTask implements TaskInterface
 		}
 
 		$this->cleanup($build);
+	}
+
+	/**
+	 * Check if local OS is Windows
+	 *
+	 * @return  bool
+	 *
+	 * @since   3.7.3
+	 */
+	private function isWindows()
+	{
+		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+	}
+
+	/**
+	 * Return the correct path for Windows (needed by CMD)
+	 *
+	 * @param   string  $path  Linux path
+	 *
+	 * @return  string
+	 *
+	 * @since   3.7.3
+	 */
+	private function getWindowsPath($path)
+	{
+		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
 }
