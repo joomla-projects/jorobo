@@ -106,11 +106,45 @@ class Package extends Base implements TaskInterface
 		}
 
 		$this->createPackageZip();
-		$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+		
+        	// Create symlink to current folder
+        	if ($this->isWindows())
+        	{
+            		$this->_exec('mklink /J ' . JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip". ' '. $this->getWindowsPath($this->target));
+        	}else{
+            		$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+        	}
 
 		return true;
 	}
+	
+	/**
+     	* Check if local OS is Windows
+     	*
+     	* @return  bool
+     	*
+     	* @since   3.7.3
+     	*/
+    	private function isWindows()
+    	{
+        	return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+    	}
 
+
+    	/**
+     	* Return the correct path for Windows (needed by CMD)
+     	*
+     	* @param   string  $path  Linux path
+     	*
+     	* @return  string
+     	*
+     	* @since   3.7.3
+     	*/
+    	private function getWindowsPath($path)
+    	{
+        	return str_replace('/', DIRECTORY_SEPARATOR, $path);
+    	}
+	
 	/**
 	 * Analyze the extension structure
 	 *
