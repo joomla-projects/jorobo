@@ -34,16 +34,16 @@ class Release extends Base implements TaskInterface
 	 */
 	public function run()
 	{
-		$version = $this->getJConfig()->version;
-		$remote = $this->getJConfig()->github->remote;
-		$branch = $this->getJConfig()->github->branch;
-		$owner = $this->getJConfig()->github->owner;
+		$version    = $this->getJConfig()->version;
+		$remote     = $this->getJConfig()->github->remote;
+		$branch     = $this->getJConfig()->github->branch;
+		$owner      = $this->getJConfig()->github->owner;
 		$repository = $this->getJConfig()->github->repository;
 
 		$this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
 		$latest_release = $this->getLatestReleases();
-		$pulls = $this->getAllRepoPulls();
+		$pulls          = $this->getAllRepoPulls();
 
 		$changes = $this->getChanges($latest_release, $pulls);
 
@@ -67,7 +67,7 @@ class Release extends Base implements TaskInterface
 
 		$this->say("Creating the release at: https://github.com/$owner/$repository/releases/tag/$version");
 
-		$github = $this->getGithub();
+		$github           = $this->getGithub();
 		$changesInRelease = "# Changelog: \n\n" . implode("\n* ", $changes);
 
 		$response = $github->repositories->releases->create(
@@ -90,8 +90,8 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Get the Changes
 	 *
-	 * @param   bool   $latest_release  - Latest release
-	 * @param   array  $pulls           - Pulls
+	 * @param   bool  $latest_release - Latest release
+	 * @param   array $pulls          - Pulls
 	 *
 	 * @return  array
 	 *
@@ -105,7 +105,7 @@ class Release extends Base implements TaskInterface
 		{
 			if (!$latest_release || strtotime($pull->merged_at) > strtotime($latest_release->published_at))
 			{
-				if($this->getJConfig()->github->changelog_source == "pr")
+				if ($this->getJConfig()->github->changelog_source == "pr")
 				{
 					$changes[] = $pull->title;
 				}
@@ -154,12 +154,12 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Get all repository pulls for the changelog
 	 *
-	 * @param   string     $state   - The state of the PR (default closed)
-	 * @param   string     $sha     - The sha sum (opt)
-	 * @param   string     $path    - The path (opt)
-	 * @param   string     $author  - The author (opt)
-	 * @param   Date|null  $since   - Changes since (opt)
-	 * @param   Date|null  $until   - Changes until (opt)
+	 * @param   string    $state  - The state of the PR (default closed)
+	 * @param   string    $sha    - The sha sum (opt)
+	 * @param   string    $path   - The path (opt)
+	 * @param   string    $author - The author (opt)
+	 * @param   Date|null $since  - Changes since (opt)
+	 * @param   Date|null $until  - Changes until (opt)
 	 *
 	 * @return  mixed
 	 *
@@ -171,7 +171,7 @@ class Release extends Base implements TaskInterface
 
 		if (!isset($this->allClosedPulls))
 		{
-			if($this->getJConfig()->github->changelog_source == "pr")
+			if ($this->getJConfig()->github->changelog_source == "pr")
 			{
 				$this->allClosedPulls = $github->pulls->getList(
 					$this->getJConfig()->github->owner,
@@ -232,9 +232,9 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Upload build Zip- or Packagefile to GitHub
 	 *
-	 * @param   string  $version      The release version
-	 * @param   string  $githubToken  The github access token
-	 * @param   string  $upload_url   The upload URL
+	 * @param   string $version     The release version
+	 * @param   string $githubToken The github access token
+	 * @param   string $upload_url  The upload URL
 	 *
 	 * @return  void
 	 *
@@ -242,7 +242,7 @@ class Release extends Base implements TaskInterface
 	 */
 	protected function uploadToGithub($version, $githubToken, $upload_url)
 	{
-		$deploy = explode(' ', $this->getJConfig()->target);
+		$deploy  = explode(' ', $this->getJConfig()->target);
 		$zipfile = $this->getExtensionName() . '-' . $this->getJConfig()->version . '.zip';
 
 		if (in_array('package', $deploy))
@@ -250,7 +250,7 @@ class Release extends Base implements TaskInterface
 			$zipfile = 'pkg-' . $zipfile;
 		}
 
-		$zipfilepath =  JPATH_BASE . '/dist/' . $zipfile;
+		$zipfilepath = JPATH_BASE . '/dist/' . $zipfile;
 
 		$filesize = filesize($zipfilepath);
 

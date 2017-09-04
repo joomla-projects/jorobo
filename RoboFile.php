@@ -34,7 +34,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Map into Joomla installation.
 	 *
-	 * @param   String  $target  The target joomla instance
+	 * @param   String $target The target joomla instance
 	 *
 	 * @return  void
 	 */
@@ -46,7 +46,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Build the joomla extension package
 	 *
-	 * @param   array  $params  Additional params
+	 * @param   array $params Additional params
 	 *
 	 * @return  void
 	 */
@@ -58,7 +58,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Generate an extension skeleton - not implemented yet
 	 *
-	 * @param   array  $extensions  Extensions to build (com_xy, mod_xy)
+	 * @param   array $extensions Extensions to build (com_xy, mod_xy)
 	 *
 	 * @return  void
 	 */

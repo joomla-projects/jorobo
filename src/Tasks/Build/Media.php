@@ -38,8 +38,8 @@ class Media extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $folder   The target directory
-	 * @param   String  $extName  The extension name
+	 * @param   String $folder  The target directory
+	 * @param   String $extName The extension name
 	 *
 	 * @since   1.0
 	 */
@@ -47,7 +47,7 @@ class Media extends Base implements TaskInterface
 	{
 		parent::__construct();
 
-		$this->source = $this->getSourceFolder() . "/" . $folder;
+		$this->source  = $this->getSourceFolder() . "/" . $folder;
 		$this->extName = $extName;
 
 		$this->type = substr($extName, 0, 3);

@@ -26,7 +26,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * The target folder
 	 *
-	 * @var    null|String  $target
+	 * @var    null|String $target
 	 *
 	 * @since  1.0
 	 */
@@ -35,7 +35,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Admin folders
 	 *
-	 * @var    array  $adminFolders
+	 * @var    array $adminFolders
 	 *
 	 * @since  1.0
 	 */
@@ -44,7 +44,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Initialize Map Task
 	 *
-	 * @param   String  $target  The target directory
+	 * @param   String $target The target directory
 	 *
 	 * @since   1.0
 	 */
@@ -120,8 +120,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process components
 	 *
-	 * @param   String  $src  - The source
-	 * @param   String  $to   - The target
+	 * @param   String $src - The source
+	 * @param   String $to  - The target
 	 *
 	 * @return  void
 	 *
@@ -147,7 +147,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process components
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   String $toDir - The target
 	 *
 	 * @return  void
 	 *
@@ -185,7 +185,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Libraries
 	 *
-	 * @param   String  $toDir  The target
+	 * @param   String $toDir The target
 	 *
 	 * @return  void
 	 *
@@ -199,7 +199,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process media
 	 *
-	 * @param   String  $toDir  The target
+	 * @param   String $toDir The target
 	 *
 	 * @return  void
 	 *
@@ -213,8 +213,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Link subdirectories into folder
 	 *
-	 * @param   string  $src  The source
-	 * @param   string  $to   The target
+	 * @param   string $src The source
+	 * @param   string $to  The target
 	 *
 	 * @return  void
 	 *
@@ -243,7 +243,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Cli
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   String $toDir - The target
 	 *
 	 * @return  void
 	 *
@@ -257,7 +257,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Module
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   String $toDir - The target
 	 *
 	 * @return  void
 	 *
@@ -271,7 +271,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process Plugins
 	 *
-	 * @param   String  $toDir  - The target
+	 * @param   String $toDir - The target
 	 *
 	 * @return  void
 	 *
@@ -300,8 +300,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Process components
 	 *
-	 * @param   String  $type   - The type
-	 * @param   String  $toDir  - The target
+	 * @param   String $type  - The type
+	 * @param   String $toDir - The target
 	 *
 	 * @return  void
 	 *
@@ -327,8 +327,8 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Symlinks files / folders
 	 *
-	 * @param   String  $source  - The source
-	 * @param   String  $target  - The target
+	 * @param   String $source - The source
+	 * @param   String $target - The target
 	 *
 	 * @return  void
 	 *

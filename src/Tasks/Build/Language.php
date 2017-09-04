@@ -5,6 +5,7 @@
  * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
+
 namespace Joomla\Jorobo\Tasks\Build;
 
 use Robo\Result;
@@ -42,7 +43,7 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $extension  The extension (component, module etc.)
+	 * @param   String $extension The extension (component, module etc.)
 	 *
 	 * @since   1.0
 	 */
@@ -91,7 +92,7 @@ class Language extends Base implements TaskInterface
 		}
 		elseif ($this->type == "plg")
 		{
-			$a     = explode("_", $this->ext);
+			$a    = explode("_", $this->ext);
 			$dest .= "/plugins/" . $a[1] . "/" . $a[2];
 		}
 		elseif ($this->type == "pkg")
@@ -101,7 +102,7 @@ class Language extends Base implements TaskInterface
 		elseif ($this->type == "lib")
 		{
 			// Remove lib before - ugly hack
-			$ex    = str_replace("lib_", "" , $this->ext);
+			$ex   = str_replace("lib_", "", $this->ext);
 			$dest .= "/libraries/" . $ex;
 		}
 		elseif ($this->type == "plu")
@@ -113,12 +114,12 @@ class Language extends Base implements TaskInterface
 
 			$dest .= "/components/com_comprofiler/plugin/" . $a[1] . "/plug_" . $a[3];
 
-			$this->ext = "plg_plug_" . $a[3];
+			$this->ext          = "plg_plug_" . $a[3];
 			$this->hasFrontLang = false;
 		}
 		elseif ($this->type == "tpl")
 		{
-			$a     = explode("_", $this->ext);
+			$a    = explode("_", $this->ext);
 			$dest .= "/templates/" . $a[1];
 		}
 
@@ -205,8 +206,8 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Copy language files
 	 *
-	 * @param   string  $dir     The directory (administrator/language or language or mod_xy/language etc)
-	 * @param   String  $target  The target directory
+	 * @param   string $dir    The directory (administrator/language or language or mod_xy/language etc)
+	 * @param   String $target The target directory
 	 *
 	 * @return   array
 	 *

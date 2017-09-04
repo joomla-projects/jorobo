@@ -14,7 +14,8 @@ trait generateTasks
 	 * Generate a component skeleton
 	 *
 	 * @title   string  $title   The component name (e.g. com_component)
-	 * @param   array   $params  Opt params
+	 *
+	 * @param   array $params Opt params
 	 *
 	 * @return  null
 	 *
@@ -29,7 +30,8 @@ trait generateTasks
 	 * Generate a module skeleton
 	 *
 	 * @title   string  $title   The component name (e.g. com_component)
-	 * @param   array   $params  Opt params
+	 *
+	 * @param   array $params Opt params
 	 *
 	 * @return  null
 	 *
@@ -44,7 +46,8 @@ trait generateTasks
 	 * Generate a plugin skeleton
 	 *
 	 * @title   string  $title   The component name (e.g. com_component)
-	 * @param   array   $params  Opt params
+	 *
+	 * @param   array $params Opt params
 	 *
 	 * @return  null
 	 *

@@ -35,7 +35,7 @@ class Build extends JTask implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   array  $params  Additional params
+	 * @param   array $params Additional params
 	 *
 	 * @return  void
 	 *
@@ -99,7 +99,7 @@ class Build extends JTask implements TaskInterface
 	/**
 	 * Cleanup the given directory
 	 *
-	 * @param   string  $dir  The dir
+	 * @param   string $dir The dir
 	 *
 	 * @return  void
 	 *
@@ -145,7 +145,7 @@ class Build extends JTask implements TaskInterface
 	/**
 	 * Return the correct path for Windows (needed by CMD)
 	 *
-	 * @param   string  $path  Linux path
+	 * @param   string $path Linux path
 	 *
 	 * @return  string
 	 *

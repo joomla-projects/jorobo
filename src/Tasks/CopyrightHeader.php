@@ -41,10 +41,10 @@ class CopyrightHeader extends JTask implements TaskInterface
 	public function run()
 	{
 		$this->say("Updating / adding copyright headers");
-		$text = $this->replaceInText(trim($this->getJConfig()->header->text));
+		$text    = $this->replaceInText(trim($this->getJConfig()->header->text));
 		$exclude = explode(",", trim($this->getJConfig()->header->exclude));
 
-		$path = realpath($this->getJConfig()->source);
+		$path      = realpath($this->getJConfig()->source);
 		$fileTypes = explode(",", trim($this->getJConfig()->header->files));
 
 		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename)
@@ -108,7 +108,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Remove copyright headers in file (If any)
 	 *
-	 * @param   \SplFileInfo  $file  - Target
+	 * @param   \SplFileInfo $file - Target
 	 *
 	 * @return  void
 	 *
@@ -129,7 +129,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 				continue;
 			}
 
-			if (strpos($l, "/**") !== false || strpos($l, "*") !== false || strpos($l, "*/") !== false )
+			if (strpos($l, "/**") !== false || strpos($l, "*") !== false || strpos($l, "*/") !== false)
 			{
 				unset($lines[$i]);
 
@@ -145,13 +145,13 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Adds copyright headers in file
 	 *
-	 * @param   \SplFileInfo  $file  - Target
+	 * @param   \SplFileInfo $file - Target
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
 	 */
-	protected  function addHeader(\SplFileInfo $file, $text)
+	protected function addHeader(\SplFileInfo $file, $text)
 	{
 		$content = file_get_contents($file->getRealPath());
 

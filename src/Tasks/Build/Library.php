@@ -37,9 +37,9 @@ class Library extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $libName       Name of the library to build
-	 * @param   String  $params        Optional params
-	 * @param   bool    $hasComponent  has the extension a component (then we need to build differnet)
+	 * @param   String $libName      Name of the library to build
+	 * @param   String $params       Optional params
+	 * @param   bool   $hasComponent has the extension a component (then we need to build differnet)
 	 *
 	 * @since   1.0
 	 */
@@ -50,7 +50,7 @@ class Library extends Base implements TaskInterface
 		// Reset files -> new lib
 		$this->resetFiles();
 
-		$this->libName = $libName;
+		$this->libName      = $libName;
 		$this->hasComponent = $hasComponent;
 
 		$this->source = $this->getSourceFolder() . "/libraries/" . $libName;
@@ -126,7 +126,7 @@ class Library extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the library
 	 *
-	 * @param   array  $files  The library files
+	 * @param   array $files The library files
 	 *
 	 * @return  void
 	 *

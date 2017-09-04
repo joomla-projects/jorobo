@@ -65,7 +65,7 @@ class FtpUpload extends Base implements TaskInterface
 		// Check if we have a package
 		if (in_array("package", explode(" ", $this->getJConfig()->target)))
 		{
-			$this->target = "package";
+			$this->target   = "package";
 			$this->filename = "pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
 			$this->filepath = JPATH_BASE . "/dist/" . $this->filename;
 		}
