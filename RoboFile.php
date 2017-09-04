@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     Jorobo
+ * @package    Jorobo
  *
- * @copyright   Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 use Joomla\Jorobo\Tasks\loadTasks;
@@ -18,6 +18,8 @@ require_once JPATH_BASE . '/vendor/autoload.php';
 
 /**
  * Sample RoboFile - adjust to your needs, extend your own
+ *
+ * @since   1.0.0
  */
 class RoboFile extends \Robo\Tasks
 {
@@ -34,7 +36,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Map into Joomla installation.
 	 *
-	 * @param   String $target The target joomla instance
+	 * @param   String  $target  The target joomla instance
 	 *
 	 * @return  void
 	 */
@@ -46,7 +48,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Build the joomla extension package
 	 *
-	 * @param   array $params Additional params
+	 * @param   array  $params  Additional params
 	 *
 	 * @return  void
 	 */
@@ -58,7 +60,7 @@ class RoboFile extends \Robo\Tasks
 	/**
 	 * Generate an extension skeleton - not implemented yet
 	 *
-	 * @param   array $extensions Extensions to build (com_xy, mod_xy)
+	 * @param   array  $extensions  Extensions to build (com_xy, mod_xy)
 	 *
 	 * @return  void
 	 */
@@ -86,6 +88,6 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function bump()
 	{
-		(new \Joomla\Jorobo\Tasks\BumpVersion())->run();
+		(new \Joomla\Jorobo\Tasks\BumpVersion)->run();
 	}
 }
