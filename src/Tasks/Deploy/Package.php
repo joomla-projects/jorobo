@@ -238,10 +238,12 @@ class Package extends Base implements TaskInterface
 
 		$this->_copyDir($this->current . '/administrator', JPATH_BASE . $tmp_path . '/administrator');
 		$this->_remove(JPATH_BASE . $tmp_path . '/administrator/manifests');
+
 		if (file_exists($this->current . '/language'))
-        	{
-            		$this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
-        	}
+		{
+			$this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
+		}
+
 		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
 
 		if (file_exists($this->current . '/media'))
