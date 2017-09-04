@@ -55,7 +55,7 @@ class Package extends Base implements TaskInterface
 	{
 		parent::__construct();
 
-		$this->target = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
+		$this->target  = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
 		$this->current = JPATH_BASE . "/dist/current";
 	}
 
@@ -106,45 +106,47 @@ class Package extends Base implements TaskInterface
 		}
 
 		$this->createPackageZip();
-		
-        	// Create symlink to current folder
-        	if ($this->isWindows())
-        	{
-            		$this->_exec('mklink /J ' . JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip". ' '. $this->getWindowsPath($this->target));
-        	}else{
-            		$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
-        	}
+
+		// Create symlink to current folder
+		if ($this->isWindows())
+		{
+			$this->_exec('mklink /J ' . JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target));
+		}
+		else
+		{
+			$this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+		}
 
 		return true;
 	}
-	
+
 	/**
-     	* Check if local OS is Windows
-     	*
-     	* @return  bool
-     	*
-     	* @since   3.7.3
-     	*/
-    	private function isWindows()
-    	{
-        	return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-    	}
+	 * Check if local OS is Windows
+	 *
+	 * @return  bool
+	 *
+	 * @since   3.7.3
+	 */
+	private function isWindows()
+	{
+		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+	}
 
 
-    	/**
-     	* Return the correct path for Windows (needed by CMD)
-     	*
-     	* @param   string  $path  Linux path
-     	*
-     	* @return  string
-     	*
-     	* @since   3.7.3
-     	*/
-    	private function getWindowsPath($path)
-    	{
-        	return str_replace('/', DIRECTORY_SEPARATOR, $path);
-    	}
-	
+	/**
+	 * Return the correct path for Windows (needed by CMD)
+	 *
+	 * @param   string $path Linux path
+	 *
+	 * @return  string
+	 *
+	 * @since   3.7.3
+	 */
+	private function getWindowsPath($path)
+	{
+		return str_replace('/', DIRECTORY_SEPARATOR, $path);
+	}
+
 	/**
 	 * Analyze the extension structure
 	 *
@@ -156,7 +158,7 @@ class Package extends Base implements TaskInterface
 	{
 		// Check if we have component, module, plugin etc.
 		if (!file_exists($this->current . "/administrator/components/com_" . $this->getExtensionName())
-				&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
+			&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
 		)
 		{
 			$this->say("Extension has no component");
@@ -192,8 +194,8 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Add files
 	 *
-	 * @param   \ZipArchive  $zip   The zip object
-	 * @param   string       $path  Optional path
+	 * @param   \ZipArchive $zip  The zip object
+	 * @param   string      $path Optional path
 	 *
 	 * @return  void
 	 *
@@ -211,7 +213,7 @@ class Package extends Base implements TaskInterface
 		if (is_dir($source) === true)
 		{
 			$files = new \RecursiveIteratorIterator(
-					new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
+				new \RecursiveDirectoryIterator($source), \RecursiveIteratorIterator::SELF_FIRST
 			);
 
 			foreach ($files as $file)
@@ -250,7 +252,7 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Create a installable zip file for a component
 	 *
-	 * @TODO implement possibility for multiple components (without duplicate content)
+	 * @TODO    implement possibility for multiple components (without duplicate content)
 	 *
 	 * @return  void
 	 *
@@ -523,11 +525,11 @@ class Package extends Base implements TaskInterface
 		$pkg_path = $this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName();
 
 		$zip->addFile($pkg_path . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
-		$zip->addFile($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() .  "/script.php", "script.php");
+		$zip->addFile($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() . "/script.php", "script.php");
 
 		// If the package has language files, add those
 		$pkg_languages_path = $pkg_path . "/language";
-		$languages = glob($pkg_languages_path . "/*/*.pkg_" . $this->getExtensionName() . "*.ini");
+		$languages          = glob($pkg_languages_path . "/*/*.pkg_" . $this->getExtensionName() . "*.ini");
 
 		// Add all package language files
 		foreach ($languages as $lang_path)
