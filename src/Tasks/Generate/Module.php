@@ -34,7 +34,7 @@ class Module extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $params  The target directory
+	 * @param   String $params The target directory
 	 *
 	 * @return  void
 	 *

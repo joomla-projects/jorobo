@@ -37,9 +37,9 @@ class CBPlugin extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $type    Type of the plugin
-	 * @param   String  $name    Name of the plugin
-	 * @param   String  $params  Optional params
+	 * @param   String $type   Type of the plugin
+	 * @param   String $name   Name of the plugin
+	 * @param   String $params Optional params
 	 *
 	 * @since   1.0
 	 */
@@ -99,7 +99,7 @@ class CBPlugin extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the plugin
 	 *
-	 * @param   array  $files  The module files
+	 * @param   array $files The module files
 	 *
 	 * @return  void
 	 *

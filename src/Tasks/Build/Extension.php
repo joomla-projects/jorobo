@@ -65,7 +65,7 @@ class Extension extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $params  The target directory
+	 * @param   String $params The target directory
 	 *
 	 * @since   1.0
 	 */
@@ -284,7 +284,7 @@ class Extension extends Base implements TaskInterface
 
 		// Replacements (date, version etc.) in every php file
 		$dir = new \RecursiveDirectoryIterator($this->getBuildFolder(), \RecursiveDirectoryIterator::SKIP_DOTS);
-		$it = new \RecursiveIteratorIterator($dir);
+		$it  = new \RecursiveIteratorIterator($dir);
 
 		foreach ($it as $file)
 		{

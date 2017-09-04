@@ -13,7 +13,7 @@ trait loadTasks
 	/**
 	 * Map Task
 	 *
-	 * @param   String  $target  - The target directory
+	 * @param   String $target - The target directory
 	 *
 	 * @return  Map
 	 *
@@ -27,7 +27,7 @@ trait loadTasks
 	/**
 	 * The build task
 	 *
-	 * @param   array  $params  - Opt params
+	 * @param   array $params - Opt params
 	 *
 	 * @return  Build
 	 *
@@ -41,7 +41,7 @@ trait loadTasks
 	/**
 	 * The generate task
 	 *
-	 * @param   array  $params  - Opt params
+	 * @param   array $params - Opt params
 	 *
 	 * @return  Generate
 	 *
@@ -55,7 +55,7 @@ trait loadTasks
 	/**
 	 * The CopyrightHeader task
 	 *
-	 * @param   array  $params  - Opt params
+	 * @param   array $params - Opt params
 	 *
 	 * @return  CopyrightHeader
 	 *

@@ -110,7 +110,7 @@ class Package extends Base implements TaskInterface
 		// Create symlink to current folder
 		if ($this->isWindows())
 		{
-			$this->_exec('mklink /J ' . JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target));
+			$this->_exec('mklink /J ' . JPATH_BASE . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target));
 		}
 		else
 		{

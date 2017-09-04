@@ -36,7 +36,7 @@ class Generate extends JTask implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   array  $params  Additional params
+	 * @param   array $params Additional params
 	 *
 	 * @since   1.0
 	 */
@@ -64,7 +64,7 @@ class Generate extends JTask implements TaskInterface
 	/**
 	 * Cleanup the given directory
 	 *
-	 * @param   string  $dir  The dir
+	 * @param   string $dir The dir
 	 *
 	 * @return  void
 	 *

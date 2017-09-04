@@ -47,7 +47,7 @@ class BumpVersion extends JTask implements TaskInterface
 		// Reusing the header config here
 		$exclude = explode(",", trim($this->getJConfig()->header->exclude));
 
-		$path = realpath($this->getJConfig()->source);
+		$path      = realpath($this->getJConfig()->source);
 		$fileTypes = explode(",", trim($this->getJConfig()->header->files));
 
 		$changedFiles = 0;

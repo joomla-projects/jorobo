@@ -35,8 +35,8 @@ class Module extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $modName  Name of the module
-	 * @param   String  $params   Optional params
+	 * @param   String $modName Name of the module
+	 * @param   String $params  Optional params
 	 *
 	 * @since   1.0
 	 */
@@ -101,7 +101,7 @@ class Module extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the module
 	 *
-	 * @param   array  $files  The module files
+	 * @param   array $files The module files
 	 *
 	 * @return  void
 	 *

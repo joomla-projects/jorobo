@@ -60,7 +60,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Construct
 	 *
-	 * @param   array  $params  Opt params
+	 * @param   array $params Opt params
 	 *
 	 * @since   1.0
 	 */
@@ -68,7 +68,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	{
 		// Registers the application to run Robo commands
 		$runner = new Runner;
-		$app = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
+		$app    = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
 		$runner->registerCommandClass($app, $this);
 
 		$this->loadConfiguration($params);
@@ -194,7 +194,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Load config
 	 *
-	 * @param   array  $params  Optional Params
+	 * @param   array $params Optional Params
 	 *
 	 * @return  bool|void
 	 *
@@ -233,7 +233,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 		}
 
 		$jConfig->buildFolder = JPATH_BASE . $this->determineTarget($jConfig);
-		$jConfig->params	  = $params;
+		$jConfig->params      = $params;
 
 		self::$jConfig = $jConfig;
 
@@ -244,7 +244,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Check if we are building a dev release
 	 *
-	 * @param   array  $params  - Robo.li Params
+	 * @param   array $params - Robo.li Params
 	 *
 	 * @return  bool
 	 *
@@ -258,7 +258,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Get target
 	 *
-	 * @param   object  $jConfig  - The JoRobo config
+	 * @param   object $jConfig - The JoRobo config
 	 *
 	 * @return  string
 	 *

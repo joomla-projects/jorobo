@@ -41,7 +41,7 @@ class Component extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String  $params  The target directory
+	 * @param   String $params The target directory
 	 *
 	 * @since   1.0
 	 */

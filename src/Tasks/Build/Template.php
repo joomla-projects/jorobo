@@ -35,8 +35,8 @@ class Template extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param String $templateName  Name of the template
-	 * @param String $params   Optional params
+	 * @param String $templateName Name of the template
+	 * @param String $params       Optional params
 	 *
 	 * @since   1.0
 	 */
@@ -101,7 +101,7 @@ class Template extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the template
 	 *
-	 * @param   array  $files  The template files
+	 * @param   array $files The template files
 	 *
 	 * @return  void
 	 *
