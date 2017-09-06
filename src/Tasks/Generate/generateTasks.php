@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Generate;
@@ -13,9 +13,8 @@ trait generateTasks
 	/**
 	 * Generate a component skeleton
 	 *
-	 * @title   string  $title   The component name (e.g. com_component)
-	 *
-	 * @param   array $params Opt params
+	 * @param   string  $title   The component name (e.g. com_component)
+	 * @param   array   $params  Opt params
 	 *
 	 * @return  null
 	 *
@@ -29,9 +28,8 @@ trait generateTasks
 	/**
 	 * Generate a module skeleton
 	 *
-	 * @title   string  $title   The component name (e.g. com_component)
-	 *
-	 * @param   array $params Opt params
+	 * @param   string  $title   The component name (e.g. com_component)
+	 * @param   array   $params  Opt params
 	 *
 	 * @return  null
 	 *
@@ -45,9 +43,8 @@ trait generateTasks
 	/**
 	 * Generate a plugin skeleton
 	 *
-	 * @title   string  $title   The component name (e.g. com_component)
-	 *
-	 * @param   array $params Opt params
+	 * @param   string  $title   The component name (e.g. com_component)
+	 * @param   array   $params  Opt params
 	 *
 	 * @return  null
 	 *

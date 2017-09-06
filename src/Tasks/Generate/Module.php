@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Generate;
@@ -17,6 +17,8 @@ use Robo\Exception\TaskException;
  * Generate a module skeleton
  *
  * @package  Joomla\Jorobo\Tasks\Generate
+ *
+ * @since    1.0
  */
 class Module extends Base implements TaskInterface
 {
@@ -34,9 +36,7 @@ class Module extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String $params The target directory
-	 *
-	 * @return  void
+	 * @param   String  $params  The target directory
 	 *
 	 * @since   1.0
 	 */
