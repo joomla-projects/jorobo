@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks;
@@ -13,7 +13,7 @@ trait loadTasks
 	/**
 	 * Map Task
 	 *
-	 * @param   String $target - The target directory
+	 * @param   String  $target  The target directory
 	 *
 	 * @return  Map
 	 *
@@ -27,7 +27,7 @@ trait loadTasks
 	/**
 	 * The build task
 	 *
-	 * @param   array $params - Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @return  Build
 	 *
@@ -41,7 +41,7 @@ trait loadTasks
 	/**
 	 * The generate task
 	 *
-	 * @param   array $params - Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @return  Generate
 	 *
@@ -55,7 +55,7 @@ trait loadTasks
 	/**
 	 * The CopyrightHeader task
 	 *
-	 * @param   array $params - Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @return  CopyrightHeader
 	 *
@@ -75,6 +75,6 @@ trait loadTasks
 	 */
 	protected function taskBumbVersion()
 	{
-		return new BumpVersion();
+		return new BumpVersion;
 	}
 }

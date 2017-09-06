@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks;
@@ -17,6 +17,8 @@ use Robo\Exception\TaskException;
  * Building class for extensions
  *
  * @package  Joomla\Jorobo\Tasks
+ *
+ * @since    1.0
  */
 class Generate extends JTask implements TaskInterface
 {
@@ -36,7 +38,7 @@ class Generate extends JTask implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   array $params Additional params
+	 * @param   array  $params  Additional params
 	 *
 	 * @since   1.0
 	 */
@@ -64,7 +66,7 @@ class Generate extends JTask implements TaskInterface
 	/**
 	 * Cleanup the given directory
 	 *
-	 * @param   string $dir The dir
+	 * @param   string  $dir  The dir
 	 *
 	 * @return  void
 	 *

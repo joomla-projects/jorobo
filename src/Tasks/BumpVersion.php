@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2017 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks;
@@ -16,7 +16,9 @@ use Robo\Exception\TaskException;
 /**
  * Bump the version of an Joomla extension
  *
- * @package  Joomla\Jorobo\Tasks\Component
+ * @package  Joomla\Jorobo\Tasks
+ *
+ * @since    1.0
  */
 class BumpVersion extends JTask implements TaskInterface
 {
@@ -24,7 +26,7 @@ class BumpVersion extends JTask implements TaskInterface
 	use \Robo\Common\TaskIO;
 
 	/**
-	 * Constructor
+	 * Constructor - Possible useless method overriding?
 	 *
 	 * @since   1.0
 	 */
