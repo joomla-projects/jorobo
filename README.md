@@ -17,7 +17,7 @@ Tools and Tasks based on Robo.li for Joomla Extension Development and Releases
   * `vendor/bin/robo build` - Builds your extension into an installable Joomla! package or zip file including replacements
   * `vendor/bin/robo map` - Map (Symlink) your extension into a running Joomla! installation
   * `vendor/bin/robo headers` - Adds / updates the copyright headers in the source directory (set them in the jorobo.ini)
-  * `vendor/bin/robo bump` - Exchanges the string __DEPLOY_VERSION__ in each file in the source directory with the version number set in the jorobo.ini.
+  * `vendor/bin/robo bump` - Exchanges the string `__DEPLOY_VERSION__` in each file in the source directory with the version number set in the jorobo.ini.
   
 ## How-to use in your own extension
 
