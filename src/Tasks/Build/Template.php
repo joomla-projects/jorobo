@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Class Template
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Template extends Base implements TaskInterface
 {
@@ -35,8 +37,8 @@ class Template extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param String $templateName Name of the template
-	 * @param String $params       Optional params
+	 * @param   String  $templateName  Name of the template
+	 * @param   String  $params        Optional params
 	 *
 	 * @since   1.0
 	 */
@@ -85,7 +87,6 @@ class Template extends Base implements TaskInterface
 		return true;
 	}
 
-
 	/**
 	 * Prepare the directory structure
 	 *
@@ -101,7 +102,7 @@ class Template extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the template
 	 *
-	 * @param   array $files The template files
+	 * @param   array  $files  The template files
 	 *
 	 * @return  void
 	 *

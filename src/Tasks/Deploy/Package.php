@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Deploy;
@@ -17,6 +17,10 @@ use Joomla\Jorobo\Tasks\JTask;
 
 /**
  * Deploy project as Package file
+ *
+ * @package  Joomla\Jorobo\Tasks\Deploy
+ *
+ * @since    1.0
  */
 class Package extends Base implements TaskInterface
 {
@@ -46,8 +50,6 @@ class Package extends Base implements TaskInterface
 
 	/**
 	 * Initialize Build Task
-	 *
-	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -132,11 +134,10 @@ class Package extends Base implements TaskInterface
 		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
 	}
 
-
 	/**
 	 * Return the correct path for Windows (needed by CMD)
 	 *
-	 * @param   string $path Linux path
+	 * @param   string  $path  Linux path
 	 *
 	 * @return  string
 	 *
@@ -158,8 +159,7 @@ class Package extends Base implements TaskInterface
 	{
 		// Check if we have component, module, plugin etc.
 		if (!file_exists($this->current . "/administrator/components/com_" . $this->getExtensionName())
-			&& !file_exists($this->current . "/components/com_" . $this->getExtensionName())
-		)
+			&& !file_exists($this->current . "/components/com_" . $this->getExtensionName()))
 		{
 			$this->say("Extension has no component");
 			$this->hasComponent = false;
@@ -194,8 +194,8 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Add files
 	 *
-	 * @param   \ZipArchive $zip  The zip object
-	 * @param   string      $path Optional path
+	 * @param   \ZipArchive  $zip   The zip object
+	 * @param   string       $path  Optional path
 	 *
 	 * @return  void
 	 *
@@ -237,13 +237,13 @@ class Package extends Base implements TaskInterface
 				{
 					$zip->addEmptyDir(str_replace($source . '/', '', $file . '/'));
 				}
-				else if (is_file($file) === true)
+				elseif (is_file($file) === true)
 				{
 					$zip->addFromString(str_replace($source . '/', '', $file), file_get_contents($file));
 				}
 			}
 		}
-		else if (is_file($source) === true)
+		elseif (is_file($source) === true)
 		{
 			$zip->addFromString(basename($source), file_get_contents($source));
 		}

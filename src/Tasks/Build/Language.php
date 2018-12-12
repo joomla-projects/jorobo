@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Class Language
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Language extends Base implements TaskInterface
 {
@@ -39,11 +41,10 @@ class Language extends Base implements TaskInterface
 
 	protected $hasFrontLang = true;
 
-
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String $extension The extension (component, module etc.)
+	 * @param   String  $extension  The extension (component, module etc.)
 	 *
 	 * @since   1.0
 	 */
@@ -206,8 +207,8 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Copy language files
 	 *
-	 * @param   string $dir    The directory (administrator/language or language or mod_xy/language etc)
-	 * @param   String $target The target directory
+	 * @param   string  $dir     The directory (administrator/language or language or mod_xy/language etc)
+	 * @param   String  $target  The target directory
 	 *
 	 * @return   array
 	 *

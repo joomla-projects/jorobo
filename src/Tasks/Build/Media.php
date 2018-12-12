@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Class Media
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Media extends Base implements TaskInterface
 {
@@ -38,8 +40,8 @@ class Media extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String $folder  The target directory
-	 * @param   String $extName The extension name
+	 * @param   String  $folder   The target directory
+	 * @param   String  $extName  The extension name
 	 *
 	 * @since   1.0
 	 */

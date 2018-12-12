@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -16,7 +16,7 @@ trait buildTasks
 	/**
 	 * Build extension
 	 *
-	 * @param   array $params - Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @return  Extension
 	 *
@@ -30,7 +30,7 @@ trait buildTasks
 	/**
 	 * Build component
 	 *
-	 * @param   array $params - Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @return  Component
 	 *
@@ -44,8 +44,8 @@ trait buildTasks
 	/**
 	 * Build media folder
 	 *
-	 * @param   array  $source  The media folder (an extension could have multiple)
-	 * @param   string $extName The extension name (e.g. mod_xy)
+	 * @param   array   $source   The media folder (an extension could have multiple)
+	 * @param   string  $extName  The extension name (e.g. mod_xy)
 	 *
 	 * @return  Media
 	 *
@@ -59,7 +59,7 @@ trait buildTasks
 	/**
 	 * Build language folder
 	 *
-	 * @param   string $extension - The extension (not the whole, but mod_xy or plg_)
+	 * @param   string  $extension  The extension (not the whole, but mod_xy or plg_)
 	 *
 	 * @return  Language
 	 *
@@ -73,9 +73,9 @@ trait buildTasks
 	/**
 	 * Build a library
 	 *
-	 * @param   String $libName      Name of the module
-	 * @param   array  $params       Opt params
-	 * @param   bool   $hasComponent has the extension a component (then we need to build differnet)
+	 * @param   String  $libName       Name of the module
+	 * @param   array   $params        Opt params
+	 * @param   bool    $hasComponent  has the extension a component (then we need to build differnet)
 	 *
 	 * @return  Library
 	 *
@@ -101,8 +101,8 @@ trait buildTasks
 	/**
 	 * Build a Module
 	 *
-	 * @param   String $modName Name of the module
-	 * @param   array  $params  Opt params
+	 * @param   String  $modName  Name of the module
+	 * @param   array   $params   Opt params
 	 *
 	 * @return  Module
 	 *
@@ -116,7 +116,7 @@ trait buildTasks
 	/**
 	 * Build package
 	 *
-	 * @param   array $params - Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @return  Package
 	 *
@@ -130,9 +130,9 @@ trait buildTasks
 	/**
 	 * Build a Plugin
 	 *
-	 * @param   String $type   Type of the plugin
-	 * @param   String $name   Name of the plugin
-	 * @param   array  $params Opt params
+	 * @param   String  $type    Type of the plugin
+	 * @param   String  $name    Name of the plugin
+	 * @param   array   $params  Opt params
 	 *
 	 * @return  Plugin
 	 *
@@ -146,9 +146,9 @@ trait buildTasks
 	/**
 	 * Build a CBPlugin
 	 *
-	 * @param   String $type   Type of the plugin
-	 * @param   String $name   Name of the plugin
-	 * @param   array  $params Opt params
+	 * @param   String  $type    Type of the plugin
+	 * @param   String  $name    Name of the plugin
+	 * @param   array   $params  Opt params
 	 *
 	 * @return  CBPlugin
 	 *
@@ -162,8 +162,8 @@ trait buildTasks
 	/**
 	 * Build a Template
 	 *
-	 * @param   String $templateName Name of the template
-	 * @param   array  $params       Opt params
+	 * @param   String  $templateName  Name of the template
+	 * @param   array   $params        Opt params
 	 *
 	 * @return  Template
 	 *
