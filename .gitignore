@@ -19,6 +19,9 @@ Desktop.ini
 .project
 .settings
 
+# Netbeans
+nbproject/*
+
 # Temp files
 *.tmp
 *.bak
@@ -48,3 +51,4 @@ selenium.log
 /jorobo.ini
 /source
 /build
+
