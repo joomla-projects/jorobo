@@ -46,7 +46,8 @@ class RoboFile extends \Robo\Tasks
 	}
 
 	/**
-	 * Map into Joomla installation.
+	 * Unmap from Joomla installation. You habe to gibe the 
+         * path to Joomla as parameter
 	 *
 	 * @param   String  $target  The target joomla instance
 	 *
