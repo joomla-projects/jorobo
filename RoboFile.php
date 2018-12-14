@@ -55,7 +55,7 @@ class RoboFile extends \Robo\Tasks
 	 */
 	public function umap($target)
 	{
-		(new \Joomla\Jorobo\Tasks\UMap($target))->run();
+		(new \Joomla\Jorobo\Tasks\Umap($target))->run();
 	}
 
         /**
