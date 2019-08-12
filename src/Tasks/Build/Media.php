@@ -22,9 +22,6 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Media extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-
 	protected $source = null;
 
 	protected $target = null;

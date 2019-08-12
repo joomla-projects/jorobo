@@ -20,9 +20,6 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Package extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-
 	/**
 	 * The target Zip file of the package
 	 *

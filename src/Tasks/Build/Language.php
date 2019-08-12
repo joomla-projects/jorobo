@@ -22,9 +22,6 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Language extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-
 	protected $ext = null;
 
 	protected $type = "com";

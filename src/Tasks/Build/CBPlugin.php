@@ -22,8 +22,6 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class CBPlugin extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
 	use buildTasks;
 
 	protected $plgName = null;

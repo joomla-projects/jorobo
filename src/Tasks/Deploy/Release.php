@@ -22,9 +22,6 @@ use Robo\Exception\TaskException;
  */
 class Release extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-
 	/**
 	 * Release the build package on GitHub
 	 *

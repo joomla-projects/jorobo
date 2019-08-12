@@ -17,9 +17,6 @@ use Robo\Contract\TaskInterface;
  */
 class FtpUpload extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-
 	/**
 	 * Should we upload a package or a zip (defaults to zip)
 	 *
