@@ -26,9 +26,13 @@ class Component extends Base implements TaskInterface
 
 	protected $adminPath = null;
 
+	protected $apiPath = null;
+
 	protected $frontPath = null;
 
 	protected $hasAdmin = true;
+
+	protected $hasApi = true;
 
 	protected $hasFront = true;
 
@@ -51,6 +55,7 @@ class Component extends Base implements TaskInterface
 		$this->resetFiles();
 
 		$this->adminPath = $this->getSourceFolder() . "/administrator/components/com_" . $this->getExtensionName();
+		$this->apiPath = $this->getSourceFolder() . "/api/components/com_" . $this->getExtensionName();
 		$this->frontPath = $this->getSourceFolder() . "/components/com_" . $this->getExtensionName();
 	}
 
@@ -76,6 +81,13 @@ class Component extends Base implements TaskInterface
 			$adminFiles = $this->copyTarget($this->adminPath, $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
 
 			$this->addFiles('backend', $adminFiles);
+		}
+
+		if ($this->hasApi)
+		{
+			$apiFiles = $this->copyTarget($this->apiPath, $this->getBuildFolder() . "/api/components/com_" . $this->getExtensionName());
+
+			$this->addFiles('api', $apiFiles);
 		}
 
 		if ($this->hasFront)
@@ -140,6 +152,11 @@ class Component extends Base implements TaskInterface
 			$this->hasAdmin = false;
 		}
 
+		if (!file_exists($this->apiPath))
+		{
+			$this->hasApi = false;
+		}
+
 		if (!file_exists($this->frontPath))
 		{
 			$this->hasFront = false;
@@ -168,6 +185,11 @@ class Component extends Base implements TaskInterface
 		if ($this->hasAdmin)
 		{
 			$this->_mkdir($this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
+		}
+
+		if ($this->hasApi)
+		{
+			$this->_mkdir($this->getBuildFolder() . "/api/components/com_" . $this->getExtensionName());
 		}
 
 		if ($this->hasFront)
@@ -214,6 +236,16 @@ class Component extends Base implements TaskInterface
 
 			$this->taskReplaceInFile($xmlFile)
 				->from('##BACKEND_LANGUAGE_FILES##')
+				->to($f)
+				->run();
+		}
+
+		if ($this->hasApi)
+		{
+			$f = $this->generateFileList($this->getFiles('api'));
+
+			$this->taskReplaceInFile($xmlFile)
+				->from('##API_COMPONENT_FILES##')
 				->to($f)
 				->run();
 		}
