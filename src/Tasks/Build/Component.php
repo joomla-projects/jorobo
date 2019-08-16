@@ -248,14 +248,6 @@ class Component extends Base implements TaskInterface
 				->from('##API_COMPONENT_FILES##')
 				->to($f)
 				->run();
-
-			// Language files
-			$f = $this->generateLanguageFileList($this->getFiles('apiLanguage'));
-
-			$this->taskReplaceInFile($xmlFile)
-				->from('##API_LANGUAGE_FILES##')
-				->to($f)
-				->run();
 		}
 
 		if ($this->hasFront)
