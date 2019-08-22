@@ -47,6 +47,17 @@ class Base extends JTask implements TaskInterface
 	 */
 	protected static $frontendFiles = array();
 
+    /**
+     * Api files
+     *
+     * They need to be static in order to support multiple files and LANGUAGE
+     *
+     * @var    array
+     *
+     * @since  1.0
+     */
+    protected static $apiFiles = array();
+
 	/**
 	 * Backend files
 	 *
@@ -180,6 +191,20 @@ class Base extends JTask implements TaskInterface
 	{
 		self::$frontendFiles = array_merge(self::$frontendFiles, $fileArray);
 	}
+
+    /**
+     * Adds Files / Folders to media array
+     *
+     * @param   array $fileArray Array of files / folders
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function addApiFiles($fileArray)
+    {
+        self::$apiFiles = array_merge(self::$apiFiles, $fileArray);
+    }
 
 	/**
 	 * Adds Files / Folders to media array
