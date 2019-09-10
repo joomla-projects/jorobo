@@ -1,7 +1,7 @@
 {
   "name": "joomla-projects/jorobo",
   "description": "Tools and Tasks based on Robo.li for Joomla Extension Development and Releases",
-  "license": "GPL-2.0+",
+  "license": "GPL-2.0-or-later",
   "authors": [
     {
       "name": "Yves Hoppe",
