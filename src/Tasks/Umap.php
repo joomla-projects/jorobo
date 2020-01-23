@@ -366,16 +366,5 @@ class Umap extends JTask implements TaskInterface
 				unlink($target);
 			}
 		}
-
-		try
-		{
-			$this->taskFileSystemStack()
-				->symlink($source, $target)
-				->run();
-		}
-		catch (Exception $e)
-		{
-			$this->say('Error symlinking: ' . $e->message());
-		}
 	}
 }
