@@ -287,6 +287,11 @@ class Package extends Base implements TaskInterface
 			$this->_copyDir($this->current . '/media', JPATH_BASE . $tmp_path . '/media');
 		}
 
+		if (file_exists($this->current . '/api'))
+		{
+			$this->_copyDir($this->current . '/api', JPATH_BASE . $tmp_path . '/api');
+		}
+
 		$comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 
 		// Process the files to zip

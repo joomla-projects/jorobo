@@ -87,6 +87,18 @@ trait buildTasks
 	}
 
 	/**
+	 * Build api folder
+	 *
+	 * @return  Api
+	 *
+	 * @since   1.0
+	 */
+	protected function buildApi()
+	{
+		return new Api;
+	}
+
+	/**
 	 * Build cli folder
 	 *
 	 * @return  Cli
