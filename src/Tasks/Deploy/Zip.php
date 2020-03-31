@@ -19,9 +19,6 @@ use Robo\Contract\TaskInterface;
  */
 class Zip extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-
 	protected $target = null;
 
 	private $zip = null;

@@ -23,7 +23,6 @@ use Robo\Exception\TaskException;
 class Module extends Base implements TaskInterface
 {
 	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
 
 	protected $adminPath = null;
 
