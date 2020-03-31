@@ -272,6 +272,22 @@ class Map extends JTask implements TaskInterface
 	}
 
 	/**
+	 * Process Api
+	 *
+	 * @param   String  $src    The source
+	 * @param   String  $toDir  The target
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 */
+	private function processApi($src, $toDir)
+	{
+		$sourceFolder = $this->getSourceFolder();
+		$this->processComponents($sourceFolder . '/api/components', $this->target . '/api');
+	}
+
+	/**
 	 * Process Module
 	 *
 	 * @param   String  $src    The source

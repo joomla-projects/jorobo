@@ -36,6 +36,8 @@ class Component extends Base implements TaskInterface
 
 	protected $hasFront = true;
 
+	protected $hasApi = true;
+
 	protected $hasCli = true;
 
 	protected $hasMedia = false;
@@ -105,6 +107,12 @@ class Component extends Base implements TaskInterface
 			$this->buildCli()->run();
 		}
 
+		// Api
+		if ($this->hasApi)
+		{
+			$this->buildApi()->run();
+		}
+
 		// Update XML and script.php
 		$this->createInstaller();
 
@@ -147,6 +155,11 @@ class Component extends Base implements TaskInterface
 		if (!file_exists($this->frontPath))
 		{
 			$this->hasFront = false;
+		}
+
+		if (file_exists($this->sourceFolder . "/api"))
+		{
+			$this->hasApi = true;
 		}
 
 		if (!file_exists($this->sourceFolder . "/cli"))
@@ -236,6 +249,17 @@ class Component extends Base implements TaskInterface
 
 			$this->taskReplaceInFile($xmlFile)
 				->from('##FRONTEND_LANGUAGE_FILES##')
+				->to($f)
+				->run();
+		}
+
+		// Api files
+		if ($this->hasApi)
+		{
+			$f = $this->generateFileList($this->getFiles('api'));
+
+			$this->taskReplaceInFile($xmlFile)
+				->from('##API_FILES##')
 				->to($f)
 				->run();
 		}
