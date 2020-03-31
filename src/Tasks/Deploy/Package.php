@@ -278,7 +278,11 @@ class Package extends Base implements TaskInterface
 		}
 
 		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
-		$this->_copyDir($this->current . '/api', JPATH_BASE . $tmp_path . '/api');
+
+		if (file_exists($this->current . '/api'))
+		{
+			$this->_copyDir($this->current . '/api', JPATH_BASE . $tmp_path . '/api');
+		}
 
 		if (file_exists($this->current . '/media'))
 		{
