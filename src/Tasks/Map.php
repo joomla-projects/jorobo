@@ -28,7 +28,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * The target folder
 	 *
-	 * @var    null|String $target
+	 * @var    null|string $target
 	 *
 	 * @since  1.0
 	 */
@@ -60,7 +60,7 @@ class Map extends JTask implements TaskInterface
 	/**
 	 * Maps all parts of an extension into a Joomla! installation
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

@@ -28,7 +28,7 @@ class Umap extends JTask implements TaskInterface
 	/**
 	 * The target folder
 	 *
-	 * @var    null|String $target
+	 * @var    null|string $target
 	 *
 	 * @since  1.0
 	 */
@@ -60,7 +60,7 @@ class Umap extends JTask implements TaskInterface
 	/**
 	 * Maps all parts of an extension into a Joomla! installation
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -227,16 +227,16 @@ class Umap extends JTask implements TaskInterface
 		$this->linkSubdirectories($src, $toDir . "/templates");
 	}
 
-        /**
-	 * Link subdirectories into folder
-	 *
-	 * @param   string  $src  The source
-	 * @param   string  $to   The target
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
+		/**
+		 * Link subdirectories into folder
+		 *
+		 * @param   string  $src  The source
+		 * @param   string  $to   The target
+		 *
+		 * @return  void
+		 *
+		 * @since   1.0
+		 */
 	private function linkSubdirectories($src, $to)
 	{
 		if (is_dir($src))

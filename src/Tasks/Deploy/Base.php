@@ -30,7 +30,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Returns true
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

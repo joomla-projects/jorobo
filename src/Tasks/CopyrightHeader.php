@@ -36,7 +36,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Generate / Update copyright headers
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
