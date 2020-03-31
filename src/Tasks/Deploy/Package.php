@@ -61,7 +61,7 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -122,7 +122,7 @@ class Package extends Base implements TaskInterface
 	/**
 	 * Check if local OS is Windows
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   3.7.3
 	 */
@@ -271,12 +271,12 @@ class Package extends Base implements TaskInterface
 
 		$this->_copyDir($this->current . '/administrator', JPATH_BASE . $tmp_path . '/administrator');
 		$this->_remove(JPATH_BASE . $tmp_path . '/administrator/manifests');
-                
-                if (file_exists($this->current . '/language'))
-                {
-                    $this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
-                }
-                
+
+		if (file_exists($this->current . '/language'))
+		{
+			$this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
+		}
+
 		$this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
 		$this->_copyDir($this->current . '/api', JPATH_BASE . $tmp_path . '/api');
 

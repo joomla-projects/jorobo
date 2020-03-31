@@ -29,7 +29,7 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Release the build package on GitHub
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

@@ -29,7 +29,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Returns true - should never be called on this
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

@@ -60,7 +60,7 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Returns true
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -160,7 +160,7 @@ class Language extends Base implements TaskInterface
 	/**
 	 * Prepare the directory structure
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

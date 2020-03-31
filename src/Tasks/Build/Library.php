@@ -60,7 +60,7 @@ class Library extends Base implements TaskInterface
 	/**
 	 * Runs the library build tasks, just copying files currently
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

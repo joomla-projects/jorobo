@@ -49,7 +49,7 @@ class Api extends Base implements TaskInterface
 	/**
 	 * Runs the api build tasks, just copying files currently
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
