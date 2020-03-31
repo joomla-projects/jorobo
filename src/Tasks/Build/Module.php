@@ -24,8 +24,6 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Module extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
 	use buildTasks;
 
 	protected $modName = null;
