@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks;
@@ -14,6 +14,8 @@ use Robo\Contract\TaskInterface;
  * Generate / Update copyright headers in project files
  *
  * @package  Joomla\Jorobo\Tasks
+ *
+ * @since    1.0
  */
 class CopyrightHeader extends JTask implements TaskInterface
 {
@@ -22,7 +24,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	use Generate\generateTasks;
 
 	/**
-	 * Initialize Build Task
+	 * Initialize Build Task - Possible useless method overriding?
 	 *
 	 * @since  1.0
 	 */
@@ -55,7 +57,6 @@ class CopyrightHeader extends JTask implements TaskInterface
 			}
 
 			$file = new \SplFileInfo($filename);
-
 
 			if (!in_array($file->getExtension(), $fileTypes))
 			{
@@ -91,7 +92,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	 * Replaces placeholders in the copyright header
 	 * Todo separate and make configurable and extensible
 	 *
-	 * @param   $text  The header text with placeholders
+	 * @param   string  $text  The header text with placeholders
 	 *
 	 * @return  mixed
 	 *
@@ -108,7 +109,7 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Remove copyright headers in file (If any)
 	 *
-	 * @param   \SplFileInfo $file - Target
+	 * @param   \SplFileInfo  $file  Target
 	 *
 	 * @return  void
 	 *
@@ -145,7 +146,8 @@ class CopyrightHeader extends JTask implements TaskInterface
 	/**
 	 * Adds copyright headers in file
 	 *
-	 * @param   \SplFileInfo $file - Target
+	 * @param   \SplFileInfo  $file  Target
+	 * @param   string        $text  The header text with placeholders
 	 *
 	 * @return  void
 	 *

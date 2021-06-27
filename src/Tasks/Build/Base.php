@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Build base - contains methods / data used in multiple build tasks
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Base extends JTask implements TaskInterface
 {
@@ -117,8 +119,8 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Add files to array
 	 *
-	 * @param   string $type      - Type (media, component etc.)
-	 * @param   array  $fileArray - File array
+	 * @param   string  $type       Type (media, component etc.)
+	 * @param   array   $fileArray  File array
 	 *
 	 * @return  bool
 	 *
@@ -143,7 +145,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Retrieve the files
 	 *
-	 * @param   string $type Type (media, component etc.)
+	 * @param   string  $type  Type (media, component etc.)
 	 *
 	 * @return  mixed
 	 *
@@ -163,11 +165,10 @@ class Base extends JTask implements TaskInterface
 		return "";
 	}
 
-
 	/**
 	 * Adds Files / Folders to media array
 	 *
-	 * @param   array $fileArray Array of files / folders
+	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
 	 *
@@ -181,7 +182,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Adds Files / Folders to media array
 	 *
-	 * @param   array $fileArray Array of files / folders
+	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
 	 *
@@ -195,7 +196,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Adds Files / Folders to media array
 	 *
-	 * @param   array $fileArray Array of files / folders
+	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
 	 *
@@ -223,7 +224,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Adds Files / Folders to language array
 	 *
-	 * @param   array $fileArray Array of files / folders
+	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
 	 *
@@ -237,7 +238,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Adds Files / Folders to language array
 	 *
-	 * @param   array $fileArray Array of files / folders
+	 * @param   array  $fileArray  Array of files / folders
 	 *
 	 * @return  void
 	 *
@@ -251,8 +252,8 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Copies the files and maps them into an array
 	 *
-	 * @param   string $path - Folder path
-	 * @param   string $tar  - Target path
+	 * @param   string  $path  Folder path
+	 * @param   string  $tar   Target path
 	 *
 	 * @return  array
 	 *
@@ -309,7 +310,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Set the result files
 	 *
-	 * @param   array $resultFiles - The result of the copying
+	 * @param   array  $resultFiles  The result of the copying
 	 *
 	 * @return  void
 	 *
@@ -335,7 +336,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Generate a list of files
 	 *
-	 * @param   array $files Files and Folders array
+	 * @param   array  $files  Files and Folders array
 	 *
 	 * @return  string
 	 *
@@ -361,11 +362,10 @@ class Base extends JTask implements TaskInterface
 		return implode("\n", $text);
 	}
 
-
 	/**
 	 * Generate a list of files
 	 *
-	 * @param   array $files Files and Folders array
+	 * @param   array  $files  Files and Folders array
 	 *
 	 * @return  string
 	 *
@@ -394,8 +394,8 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Generate a list of files for plugins
 	 *
-	 * @param   array  $files  Files and Folders array
-	 * @param   string $plugin The plugin file
+	 * @param   array   $files   Files and Folders array
+	 * @param   string  $plugin  The plugin file
 	 *
 	 * @return  string
 	 *
@@ -419,7 +419,6 @@ class Base extends JTask implements TaskInterface
 				if ($value == $plugin . ".php")
 				{
 					$p = ' plugin="' . $plugin . '"';
-
 				}
 
 				$text[] = "<" . $type . $p . ">" . $value . "</" . $type . ">";
@@ -432,8 +431,8 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Generate a list of files for modules
 	 *
-	 * @param   array  $files  Files and Folders array
-	 * @param   string $module The module
+	 * @param   array   $files   Files and Folders array
+	 * @param   string  $module  The module
 	 *
 	 * @return  string
 	 *
@@ -457,7 +456,6 @@ class Base extends JTask implements TaskInterface
 				if ($value == $module . ".php")
 				{
 					$p = ' module="' . $module . '"';
-
 				}
 
 				$text[] = "<" . $type . $p . ">" . $value . "</" . $type . ">";
@@ -483,11 +481,10 @@ class Base extends JTask implements TaskInterface
 		self::$mediaFiles            = array();
 	}
 
-
 	/**
 	 * Replace Basic placeholders in file (Date, year, version)
 	 *
-	 * @param   string $file - Path to file
+	 * @param   string  $file  Path to file
 	 *
 	 * @return  void
 	 *

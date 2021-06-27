@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Deploy;
@@ -19,6 +19,10 @@ use Robo\Exception\TaskException;
 
 /**
  * Release build package to github
+ *
+ * @package  Joomla\Jorobo\Tasks\Deploy
+ *
+ * @since    1.0
  */
 class Release extends Base implements TaskInterface
 {
@@ -83,12 +87,11 @@ class Release extends Base implements TaskInterface
 		$this->uploadToGithub($version, $this->getJConfig()->github->token, $response->upload_url);
 	}
 
-
 	/**
 	 * Get the Changes
 	 *
-	 * @param   bool  $latest_release - Latest release
-	 * @param   array $pulls          - Pulls
+	 * @param   bool   $latest_release  Latest release
+	 * @param   array  $pulls           Pulls
 	 *
 	 * @return  array
 	 *
@@ -151,12 +154,12 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Get all repository pulls for the changelog
 	 *
-	 * @param   string    $state  - The state of the PR (default closed)
-	 * @param   string    $sha    - The sha sum (opt)
-	 * @param   string    $path   - The path (opt)
-	 * @param   string    $author - The author (opt)
-	 * @param   Date|null $since  - Changes since (opt)
-	 * @param   Date|null $until  - Changes until (opt)
+	 * @param   string     $state   The state of the PR (default closed)
+	 * @param   string     $sha     The sha sum (opt)
+	 * @param   string     $path    The path (opt)
+	 * @param   string     $author  The author (opt)
+	 * @param   Date|null  $since   Changes since (opt)
+	 * @param   Date|null  $until   Changes until (opt)
 	 *
 	 * @return  mixed
 	 *
@@ -196,6 +199,8 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Updates changelog with the changes since the last release
 	 *
+	 * @param   string  $changes  The changes
+	 *
 	 * @return  void
 	 *
 	 * @since   1.0
@@ -229,9 +234,9 @@ class Release extends Base implements TaskInterface
 	/**
 	 * Upload build Zip- or Packagefile to GitHub
 	 *
-	 * @param   string $version     The release version
-	 * @param   string $githubToken The github access token
-	 * @param   string $upload_url  The upload URL
+	 * @param   string  $version      The release version
+	 * @param   string  $githubToken  The github access token
+	 * @param   string  $upload_url   The upload URL
 	 *
 	 * @return  void
 	 *
@@ -259,9 +264,7 @@ class Release extends Base implements TaskInterface
 		curl_setopt($request, CURLOPT_POST, true);
 		curl_setopt($request, CURLOPT_VERBOSE, true);
 
-		curl_setopt($request, CURLOPT_HTTPHEADER, array(
-			'Authorization: token ' . $githubToken,
-		));
+		curl_setopt($request, CURLOPT_HTTPHEADER, array('Authorization: token ' . $githubToken,	));
 
 		curl_setopt($request, CURLOPT_HTTPHEADER, array('Content-type: application/zip'));
 		curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));
@@ -275,4 +278,3 @@ class Release extends Base implements TaskInterface
 		$this->say(print_r($result, true));
 	}
 }
-

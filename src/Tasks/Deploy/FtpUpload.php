@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Deploy;
@@ -14,6 +14,10 @@ use Robo\Contract\TaskInterface;
 
 /**
  * Deploy project via FTP - needs zip or pkg deployment to be done before
+ *
+ * @package  Joomla\Jorobo\Tasks\Deploy
+ *
+ * @since    1.0
  */
 class FtpUpload extends Base implements TaskInterface
 {

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Build Library
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Library extends Base implements TaskInterface
 {
@@ -35,9 +37,9 @@ class Library extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String $libName      Name of the library to build
-	 * @param   String $params       Optional params
-	 * @param   bool   $hasComponent has the extension a component (then we need to build differnet)
+	 * @param   String  $libName       Name of the library to build
+	 * @param   String  $params        Optional params
+	 * @param   bool    $hasComponent  Has the extension a component (then we need to build differnet)
 	 *
 	 * @since   1.0
 	 */
@@ -124,7 +126,7 @@ class Library extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the library
 	 *
-	 * @param   array $files The library files
+	 * @param   array  $files  The library files
 	 *
 	 * @return  void
 	 *

@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Class Component
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Component extends Base implements TaskInterface
 {
@@ -43,7 +45,7 @@ class Component extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String $params The target directory
+	 * @param   String  $params  The target directory
 	 *
 	 * @since   1.0
 	 */

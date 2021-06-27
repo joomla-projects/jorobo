@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks;
@@ -17,6 +17,8 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
  * Class JTask - Base class for our tasks
  *
  * @package  Joomla\Jorobo\Tasks
+ *
+ * @since    1.0
  */
 abstract class JTask extends \Robo\Tasks implements TaskInterface
 {
@@ -56,11 +58,10 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 */
 	protected $sourceFolder = '';
 
-
 	/**
 	 * Construct
 	 *
-	 * @param   array $params Opt params
+	 * @param   array  $params  Opt params
 	 *
 	 * @since   1.0
 	 */
@@ -194,7 +195,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Load config
 	 *
-	 * @param   array $params Optional Params
+	 * @param   array  $params  Optional Params
 	 *
 	 * @return  bool|void
 	 *
@@ -244,7 +245,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Check if we are building a dev release
 	 *
-	 * @param   array $params - Robo.li Params
+	 * @param   array  $params  Robo.li Params
 	 *
 	 * @return  bool
 	 *
@@ -258,7 +259,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Get target
 	 *
-	 * @param   object $jConfig - The JoRobo config
+	 * @param   object  $jConfig  The JoRobo config
 	 *
 	 * @return  string
 	 *

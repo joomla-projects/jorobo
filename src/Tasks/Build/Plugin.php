@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Build;
@@ -19,6 +19,8 @@ use Joomla\Jorobo\Tasks\JTask;
  * Class Plugin
  *
  * @package  Joomla\Jorobo\Tasks\Build
+ *
+ * @since    1.0
  */
 class Plugin extends Base implements TaskInterface
 {
@@ -35,9 +37,9 @@ class Plugin extends Base implements TaskInterface
 	/**
 	 * Initialize Build Task
 	 *
-	 * @param   String $type   Type of the plugin
-	 * @param   String $name   Name of the plugin
-	 * @param   String $params Optional params
+	 * @param   String  $type    Type of the plugin
+	 * @param   String  $name    Name of the plugin
+	 * @param   String  $params  Optional params
 	 *
 	 * @since   1.0
 	 */
@@ -87,7 +89,6 @@ class Plugin extends Base implements TaskInterface
 		return true;
 	}
 
-
 	/**
 	 * Prepare the directory structure
 	 *
@@ -103,7 +104,7 @@ class Plugin extends Base implements TaskInterface
 	/**
 	 * Generate the installer xml file for the plugin
 	 *
-	 * @param   array $files The module files
+	 * @param   array  $files  The module files
 	 *
 	 * @return  void
 	 *

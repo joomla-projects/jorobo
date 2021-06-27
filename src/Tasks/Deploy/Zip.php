@@ -1,9 +1,9 @@
 <?php
 /**
- * @package     JoRobo
+ * @package    JoRobo
  *
- * @copyright   Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
- * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 namespace Joomla\Jorobo\Tasks\Deploy;
@@ -12,6 +12,10 @@ use Robo\Contract\TaskInterface;
 
 /**
  * Deploy project as Zip
+ *
+ * @package  Joomla\Jorobo\Tasks\Deploy
+ *
+ * @since    1.0
  */
 class Zip extends Base implements TaskInterface
 {
@@ -21,8 +25,6 @@ class Zip extends Base implements TaskInterface
 
 	/**
 	 * Initialize Build Task
-	 *
-	 * @return  void
 	 *
 	 * @since   1.0
 	 */
@@ -49,7 +51,11 @@ class Zip extends Base implements TaskInterface
 		$this->zip->open($this->target, \ZipArchive::CREATE);
 
 		// Process the files to zip
-		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->getBuildFolder()), \RecursiveIteratorIterator::SELF_FIRST) as $subfolder)
+		foreach (new \RecursiveIteratorIterator(
+					new \RecursiveDirectoryIterator($this->getBuildFolder()), \RecursiveIteratorIterator::SELF_FIRST
+					)
+					as $subfolder
+				)
 		{
 			if ($subfolder->isFile())
 			{
