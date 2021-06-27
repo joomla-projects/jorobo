@@ -146,12 +146,12 @@ class Language extends Base implements TaskInterface
 	private function analyze()
 	{
 		// Check for all languages here
-		if (empty(glob($this->adminLangPath . "/*/*." . $this->ext . "*.ini")))
+		if (empty(glob($this->adminLangPath . "/*/*" . $this->ext . "*.ini")))
 		{
 			$this->hasAdminLang = false;
 		}
 
-		if (empty(glob($this->frontLangPath . "/*/*." . $this->ext . "*.ini")))
+		if (empty(glob($this->frontLangPath . "/*/*" . $this->ext . "*.ini")))
 		{
 			$this->hasFrontLang = false;
 		}
@@ -238,7 +238,7 @@ class Language extends Base implements TaskInterface
 					while ($file = readdir($fileHdl))
 					{
 						// Only copy language files for this extension (and sys files..)
-						if (substr($file, 0, 1) != '.' && strpos($file, $this->ext . "."))
+						if (substr($file, 0, 1) !== '.' && strpos($file, $this->ext . ".") !== false)
 						{
 							$files[] = array($entry => $file);
 

@@ -536,7 +536,7 @@ class Package extends Base implements TaskInterface
 
 		// If the package has language files, add those
 		$pkg_languages_path = $pkg_path . "/language";
-		$languages          = glob($pkg_languages_path . "/*/*.pkg_" . $this->getExtensionName() . "*.ini");
+		$languages          = glob($pkg_languages_path . "/*/*pkg_" . $this->getExtensionName() . "*.ini");
 
 		// Add all package language files
 		foreach ($languages as $lang_path)
