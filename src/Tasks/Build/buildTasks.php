@@ -99,6 +99,18 @@ trait buildTasks
 	}
 
 	/**
+	 * Build api folder
+	 *
+	 * @return  Api
+	 *
+	 * @since   1.0
+	 */
+	protected function buildApi()
+	{
+		return new Api;
+	}
+	
+	/**
 	 * Build a Module
 	 *
 	 * @param   String  $modName  Name of the module
