@@ -115,6 +115,12 @@ class Component extends Base implements TaskInterface
 			$this->buildCli()->run();
 		}
 
+		// Api
+		if ($this->hasApi)
+		{
+			$this->buildApi()->run();
+		}
+
 		// Update XML and script.php
 		$this->createInstaller();
 

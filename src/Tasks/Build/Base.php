@@ -479,6 +479,7 @@ class Base extends JTask implements TaskInterface
 		self::$frontendFiles         = array();
 		self::$frontendLanguageFiles = array();
 		self::$mediaFiles            = array();
+		self::$apiFiles              = array();
 	}
 
 	/**
