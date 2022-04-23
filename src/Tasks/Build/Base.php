@@ -107,7 +107,7 @@ class Base extends JTask implements TaskInterface
 	/**
 	 * Returns true
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -122,7 +122,7 @@ class Base extends JTask implements TaskInterface
 	 * @param   string  $type       Type (media, component etc.)
 	 * @param   array   $fileArray  File array
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
