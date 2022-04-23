@@ -26,6 +26,7 @@
   },
   "require-dev": {
     "codeception/base": "~2.1",
-    "codeception/aspect-mock": "~0.5"
+    "codeception/aspect-mock": "~0.5",
+    "joomla/coding-standards": "~3.0@dev"
   }
 }
