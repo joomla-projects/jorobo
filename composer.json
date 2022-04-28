@@ -30,7 +30,7 @@
     "joomla/github": "~1.3"
   },
   "require-dev": {
-    "codeception/base": "~2.1",
+    "codeception/base": "~3.0",
     "codeception/aspect-mock": "~0.5"
   }
 }
