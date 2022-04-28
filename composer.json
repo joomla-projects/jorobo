@@ -16,11 +16,16 @@
       "email": "nbraczek@bsds.de"
     }
   ],
+  "config": {
+    "platform": {
+      "php": "7.2.5"
+    }
+  },
   "autoload": {
     "psr-4": {"Joomla\\Jorobo\\": "src"}
   },
   "require"    : {
-    "php": ">=5.4.0",
+    "php": ">=7.2.5",
     "consolidation/robo": "~1",
     "joomla/github": "~1.3"
   },
