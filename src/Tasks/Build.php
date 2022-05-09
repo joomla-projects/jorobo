@@ -51,7 +51,7 @@ class Build extends JTask implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -133,7 +133,7 @@ class Build extends JTask implements TaskInterface
 	/**
 	 * Check if local OS is Windows
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   3.7.3
 	 */

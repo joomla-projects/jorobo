@@ -1,7 +1,33 @@
-image: php5.5
-script:
-  - echo todo
-notify:
-  email:
-    recipients:
-      - yves@compojoom.com
+---
+kind: pipeline
+name: default
+
+clone:
+
+steps:
+  - name: composer
+    image: joomlaprojects/docker-images:php7.4
+    volumes:
+      - name: composer-cache
+        path: /tmp/composer-cache
+    commands:
+      - composer install --no-progress --no-suggest
+
+  - name: phpcs
+    image: joomlaprojects/docker-images:php7.2
+    depends_on: [ composer ]
+    commands:
+      - echo $(date)
+      - ./vendor/bin/phpcs --extensions=php -p --standard=vendor/joomla/coding-standards/Joomla src
+      - echo $(date)
+
+volumes:
+  - name: composer-cache
+    host:
+      path: /tmp/composer-cache
+
+---
+kind: signature
+hmac: cf6c013d6fb9e58637d6ff8775ce49441cc9e41210c677ea40623269b0cf4417
+
+...

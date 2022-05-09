@@ -52,7 +52,7 @@ class Generate extends JTask implements TaskInterface
 	/**
 	 * Build the package
 	 *
-	 * @return  bool
+	 * @return  void
 	 *
 	 * @since   1.0
 	 */

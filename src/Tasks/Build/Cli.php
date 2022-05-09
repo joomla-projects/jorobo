@@ -46,7 +46,7 @@ class Cli extends Base implements TaskInterface
 	/**
 	 * Runs the cli build tasks, just copying files currently
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

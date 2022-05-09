@@ -80,7 +80,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	/**
 	 * Function to check if folders are existing / writable (Code Base etc.)
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
@@ -197,7 +197,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 *
 	 * @param   array  $params  Optional Params
 	 *
-	 * @return  bool|void
+	 * @return  boolean|void
 	 *
 	 * @since   1.0
 	 * @throws  FileNotFoundException
@@ -247,7 +247,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
 	 *
 	 * @param   array  $params  Robo.li Params
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */

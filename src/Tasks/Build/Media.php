@@ -77,7 +77,7 @@ class Media extends Base implements TaskInterface
 	/**
 	 * Runs the media build task
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0
 	 */
