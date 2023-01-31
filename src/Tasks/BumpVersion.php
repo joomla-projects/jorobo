@@ -47,6 +47,13 @@ class BumpVersion extends JTask implements TaskInterface
 		$this->say('Updating ' . $this->getJConfig()->extension . " to " . $this->getJConfig()->version);
 
 		// Reusing the header config here
+		$excludeList = $this->getJConfig()->header->exclude;
+
+		if ($excludeList !== '')
+		{
+			$exclude = explode(",", trim());
+		}
+
 		$exclude = explode(",", trim($this->getJConfig()->header->exclude));
 
 		$path      = realpath($this->getJConfig()->source);
