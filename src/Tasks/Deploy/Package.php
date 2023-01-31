@@ -257,9 +257,9 @@ class Package extends Base implements TaskInterface
 	 */
 	public function createComponentZip()
 	{
-		$comZip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
-
+		$comZip   = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
 		$tmp_path = '/dist/tmp/cbuild';
+		$componentScriptPath = $this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php";
 
 		if (file_exists(JPATH_BASE . $tmp_path))
 		{
@@ -295,7 +295,11 @@ class Package extends Base implements TaskInterface
 		$this->addFiles($comZip, JPATH_BASE . $tmp_path);
 
 		$comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
-		$comZip->addFile($this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php", "script.php");
+
+		if (file_exists($componentScriptPath))
+		{
+			$comZip->addFile($componentScriptPath, "script.php");
+		}
 
 		// Close the zip archive
 		$comZip->close();
