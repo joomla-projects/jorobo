@@ -54,8 +54,6 @@ class BumpVersion extends JTask implements TaskInterface
 			$exclude = explode(",", trim());
 		}
 
-		$exclude = explode(",", trim($this->getJConfig()->header->exclude));
-
 		$path      = realpath($this->getJConfig()->source);
 		$fileTypes = explode(",", trim($this->getJConfig()->header->files));
 
