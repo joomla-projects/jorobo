@@ -124,7 +124,6 @@ class Component extends Base implements TaskInterface
 		$scriptFile  = $adminFolder . "/script.php";
 
 		$this->_copy($xmlFile, $this->getBuildFolder() . "/" . $this->getExtensionName() . ".xml");
-		$this->_copy($scriptFile, $this->getBuildFolder() . "/script.php");
 
 		if (file_exists($scriptFile))
 		{
