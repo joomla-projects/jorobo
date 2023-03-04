@@ -416,7 +416,10 @@ class Base extends JTask implements TaskInterface
 			{
 				$p = "";
 
-				if ($value == $plugin . ".php")
+				if (
+					$value == $plugin . ".php"
+					|| $value == "services"
+				)
 				{
 					$p = ' plugin="' . $plugin . '"';
 				}
