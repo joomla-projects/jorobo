@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<ruleset name="Joomla-CMS">
+    <description>The Joomla CMS PSR-12 exceptions.</description>
+
+    <!-- Exclude 3rd party libraries and Framework code. -->
+    <exclude-pattern type="relative">^vendor/*</exclude-pattern>
+
+    <exclude-pattern type="relative">^RoboFile.php</exclude-pattern>
+
+    <rule ref="PSR12" />
+
+    <!-- temporary extend the line length -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="560"/>
+            <property name="absoluteLineLimit" value="560"/>
+        </properties>
+    </rule>
+
+    <rule ref="Squiz.Classes.ValidClassName">
+        <exclude-pattern type="relative">src/Tasks/Build/buildTasks\.php</exclude-pattern>
+        <exclude-pattern type="relative">src/Tasks/Deploy/deployTasks\.php</exclude-pattern>
+        <exclude-pattern type="relative">src/Tasks/Generate/generateTasks\.php</exclude-pattern>
+        <exclude-pattern type="relative">src/Tasks/loadTasks\.php</exclude-pattern>
+    </rule>
+</ruleset>

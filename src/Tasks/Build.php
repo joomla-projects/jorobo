@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -22,137 +23,130 @@ use Robo\Exception\TaskException;
  */
 class Build extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-	use Build\buildTasks;
-	use Deploy\deployTasks;
+    use \Robo\Task\Development\loadTasks;
+    use \Robo\Common\TaskIO;
+    use Build\buildTasks;
+    use Deploy\deployTasks;
 
-	/**
-	 * @var    array|null
-	 *
-	 * @since  1.0
-	 */
-	protected $params = null;
+    /**
+     * @var    array|null
+     *
+     * @since  1.0
+     */
+    protected $params = null;
 
-	/**
-	 * Initialize Build Task
-	 *
-	 * @param   array  $params  Additional  params
-	 *
-	 * @since   1.0
-	 */
-	public function __construct($params)
-	{
-		parent::__construct($params);
+    /**
+     * Initialize Build Task
+     *
+     * @param   array  $params  Additional  params
+     *
+     * @since   1.0
+     */
+    public function __construct($params)
+    {
+        parent::__construct($params);
 
-		$this->params = $params;
-	}
+        $this->params = $params;
+    }
 
-	/**
-	 * Build the package
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->say('Building ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
+    /**
+     * Build the package
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->say('Building ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
-		if (!$this->checkFolders())
-		{
-			return false;
-		}
+        if (!$this->checkFolders()) {
+            return false;
+        }
 
-		// Create directory
-		$this->prepareDistDirectory();
+        // Create directory
+        $this->prepareDistDirectory();
 
-		// Build extension
-		$this->buildExtension($this->params)->run();
+        // Build extension
+        $this->buildExtension($this->params)->run();
 
-		// Create symlink to current folder
-		if ($this->isWindows())
-		{
-			$this->_exec('mklink /J ' . JPATH_BASE . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()));
-		}
-		else
-		{
-			$this->_symlink($this->getBuildFolder(), JPATH_BASE . "/dist/current");
-		}
+        // Create symlink to current folder
+        if ($this->isWindows()) {
+            $this->_exec('mklink /J ' . JPATH_BASE . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()));
+        } else {
+            $this->_symlink($this->getBuildFolder(), JPATH_BASE . "/dist/current");
+        }
 
-		// Support multiple deployment methods, separated by spaces
-		$deploy = explode(" ", $this->getJConfig()->target);
+        // Support multiple deployment methods, separated by spaces
+        $deploy = explode(" ", $this->getJConfig()->target);
 
-		if (count($deploy))
-		{
-			foreach ($deploy as $d)
-			{
-				$task = 'deploy' . ucfirst($d);
+        if (count($deploy)) {
+            foreach ($deploy as $d) {
+                $task = 'deploy' . ucfirst($d);
 
-				$this->{$task}()->run();
-			}
-		}
+                $this->{$task}()->run();
+            }
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Cleanup the given directory
-	 *
-	 * @param   string  $dir  The dir
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function cleanup($dir)
-	{
-		// Clean building directory
-		$this->_cleanDir($dir);
-	}
+    /**
+     * Cleanup the given directory
+     *
+     * @param   string  $dir  The dir
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function cleanup($dir)
+    {
+        // Clean building directory
+        $this->_cleanDir($dir);
+    }
 
-	/**
-	 * Prepare the directories
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function prepareDistDirectory()
-	{
-		$build = $this->getBuildFolder();
+    /**
+     * Prepare the directories
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function prepareDistDirectory()
+    {
+        $build = $this->getBuildFolder();
 
-		if (!file_exists($build))
-		{
-			$this->_mkdir($build);
-		}
+        if (!file_exists($build)) {
+            $this->_mkdir($build);
+        }
 
-		$this->cleanup($build);
-	}
+        $this->cleanup($build);
+    }
 
-	/**
-	 * Check if local OS is Windows
-	 *
-	 * @return  boolean
-	 *
-	 * @since   3.7.3
-	 */
-	private function isWindows()
-	{
-		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-	}
+    /**
+     * Check if local OS is Windows
+     *
+     * @return  boolean
+     *
+     * @since   3.7.3
+     */
+    private function isWindows()
+    {
+        return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+    }
 
-	/**
-	 * Return the correct path for Windows (needed by CMD)
-	 *
-	 * @param   string  $path  Linux path
-	 *
-	 * @return  string
-	 *
-	 * @since   3.7.3
-	 */
-	private function getWindowsPath($path)
-	{
-		return str_replace('/', DIRECTORY_SEPARATOR, $path);
-	}
+    /**
+     * Return the correct path for Windows (needed by CMD)
+     *
+     * @param   string  $path  Linux path
+     *
+     * @return  string
+     *
+     * @since   3.7.3
+     */
+    private function getWindowsPath($path)
+    {
+        return str_replace('/', DIRECTORY_SEPARATOR, $path);
+    }
 }

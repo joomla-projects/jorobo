@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -12,7 +13,6 @@ use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
-
 use Joomla\Jorobo\Tasks\JTask;
 
 /**
@@ -24,85 +24,84 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Package extends Base implements TaskInterface
 {
-	use buildTasks;
+    use buildTasks;
 
-	/**
-	 * Initialize Build Task
-	 *
-	 * @param   String  $params  The target directory
-	 *
-	 * @since   1.0
-	 */
-	public function __construct($params)
-	{
-		parent::__construct();
+    /**
+     * Initialize Build Task
+     *
+     * @param   String  $params  The target directory
+     *
+     * @since   1.0
+     */
+    public function __construct($params)
+    {
+        parent::__construct();
 
-		// Reset files -> new package
-		$this->resetFiles();
-	}
+        // Reset files -> new package
+        $this->resetFiles();
+    }
 
-	/**
-	 * Build the package
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->say('Building package');
+    /**
+     * Build the package
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->say('Building package');
 
-		// Build language files for the package
-		$language = $this->buildLanguage("pkg_" . $this->getExtensionName());
-		$language->run();
+        // Build language files for the package
+        $language = $this->buildLanguage("pkg_" . $this->getExtensionName());
+        $language->run();
 
-		// Update XML and script.php
-		$this->createInstaller();
+        // Update XML and script.php
+        $this->createInstaller();
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Generate the installer xml file for the package
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function createInstaller()
-	{
-		$this->say("Creating package installer");
+    /**
+     * Generate the installer xml file for the package
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function createInstaller()
+    {
+        $this->say("Creating package installer");
 
-		// Copy XML and script.php
-		$sourceFolder = $this->getSourceFolder() . "/administrator/manifests/packages";
-		$targetFolder = $this->getBuildFolder() . "/administrator/manifests/packages";
-		$xmlFile      = $targetFolder . "/pkg_" . $this->getExtensionName() . ".xml";
-		$scriptFile   = $targetFolder . "/" . $this->getExtensionName() . "/script.php";
+        // Copy XML and script.php
+        $sourceFolder = $this->getSourceFolder() . "/administrator/manifests/packages";
+        $targetFolder = $this->getBuildFolder() . "/administrator/manifests/packages";
+        $xmlFile      = $targetFolder . "/pkg_" . $this->getExtensionName() . ".xml";
+        $scriptFile   = $targetFolder . "/" . $this->getExtensionName() . "/script.php";
 
-		$this->_copy($sourceFolder . "/pkg_" . $this->getExtensionName() . ".xml", $xmlFile);
+        $this->_copy($sourceFolder . "/pkg_" . $this->getExtensionName() . ".xml", $xmlFile);
 
-		// Version & Date Replace
-		$this->taskReplaceInFile($xmlFile)
-			->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-			->to(array($this->getDate(), date('Y'), $this->getJConfig()->version))
-			->run();
+        // Version & Date Replace
+        $this->taskReplaceInFile($xmlFile)
+            ->from(['##DATE##', '##YEAR##', '##VERSION##'])
+            ->to([$this->getDate(), date('Y'), $this->getJConfig()->version])
+            ->run();
 
-		if (is_file($sourceFolder . "/" . $this->getExtensionName() . "/script.php"))
-		{
-			$this->_copy($sourceFolder . "/" . $this->getExtensionName() . "/script.php", $scriptFile);
+        if (is_file($sourceFolder . "/" . $this->getExtensionName() . "/script.php")) {
+            $this->_copy($sourceFolder . "/" . $this->getExtensionName() . "/script.php", $scriptFile);
 
-			$this->taskReplaceInFile($scriptFile)
-				->from(array('##DATE##', '##YEAR##', '##VERSION##'))
-				->to(array($this->getDate(), date('Y'), $this->getJConfig()->version))
-				->run();
-		}
+            $this->taskReplaceInFile($scriptFile)
+                ->from(['##DATE##', '##YEAR##', '##VERSION##'])
+                ->to([$this->getDate(), date('Y'), $this->getJConfig()->version])
+                ->run();
+        }
 
-		// Language files
-		$f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
+        // Language files
+        $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
 
-		$this->taskReplaceInFile($xmlFile)
-			->from('##LANGUAGE_FILES##')
-			->to($f)
-			->run();
-	}
+        $this->taskReplaceInFile($xmlFile)
+            ->from('##LANGUAGE_FILES##')
+            ->to($f)
+            ->run();
+    }
 }

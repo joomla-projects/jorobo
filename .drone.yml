@@ -19,7 +19,7 @@ steps:
     commands:
       - echo $(date)
       - ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
-      - ./vendor/bin/phpcs --extensions=php -p --standard=PSR-12 .
+      - ./vendor/bin/phpcs --extensions=php -p --standard=ruleset.xml .
       - echo $(date)
 
 volumes:

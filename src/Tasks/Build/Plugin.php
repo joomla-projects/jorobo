@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -12,7 +13,6 @@ use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
-
 use Joomla\Jorobo\Tasks\JTask;
 
 /**
@@ -24,123 +24,123 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Plugin extends Base implements TaskInterface
 {
-	use buildTasks;
+    use buildTasks;
 
-	protected $plgName = null;
+    protected $plgName = null;
 
-	protected $plgType = null;
+    protected $plgType = null;
 
-	protected $source = null;
+    protected $source = null;
 
-	protected $target = null;
+    protected $target = null;
 
-	/**
-	 * Initialize Build Task
-	 *
-	 * @param   String  $type    Type of the plugin
-	 * @param   String  $name    Name of the plugin
-	 * @param   String  $params  Optional params
-	 *
-	 * @since   1.0
-	 */
-	public function __construct($type, $name, $params)
-	{
-		parent::__construct();
+    /**
+     * Initialize Build Task
+     *
+     * @param   String  $type    Type of the plugin
+     * @param   String  $name    Name of the plugin
+     * @param   String  $params  Optional params
+     *
+     * @since   1.0
+     */
+    public function __construct($type, $name, $params)
+    {
+        parent::__construct();
 
-		// Reset files - > new module
-		$this->resetFiles();
+        // Reset files - > new module
+        $this->resetFiles();
 
-		$this->plgName = $name;
-		$this->plgType = $type;
+        $this->plgName = $name;
+        $this->plgType = $type;
 
-		$this->source = $this->getSourceFolder() . "/plugins/" . $type . "/" . $name;
-		$this->target = $this->getBuildFolder() . "/plugins/" . $type . "/" . $name;
-	}
+        $this->source = $this->getSourceFolder() . "/plugins/" . $type . "/" . $name;
+        $this->target = $this->getBuildFolder() . "/plugins/" . $type . "/" . $name;
+    }
 
-	/**
-	 * Build the package
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->say('Building plugin: ' . $this->plgName . " (" . $this->plgType . ")");
+    /**
+     * Build the package
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->say('Building plugin: ' . $this->plgName . " (" . $this->plgType . ")");
 
-		// Prepare directories
-		$this->prepareDirectories();
+        // Prepare directories
+        $this->prepareDirectories();
 
-		$files = $this->copyTarget($this->source, $this->target);
+        $files = $this->copyTarget($this->source, $this->target);
 
-		// Build media (relative path)
-		$media = $this->buildMedia("media/plg_" . $this->plgType . "_" . $this->plgName, 'plg_' . $this->plgType . "_" . $this->plgName);
-		$media->run();
+        // Build media (relative path)
+        $media = $this->buildMedia("media/plg_" . $this->plgType . "_" . $this->plgName, 'plg_' . $this->plgType . "_" . $this->plgName);
+        $media->run();
 
-		$this->addFiles('media', $media->getResultFiles());
+        $this->addFiles('media', $media->getResultFiles());
 
-		// Build language files
-		$language = $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName);
-		$language->run();
+        // Build language files
+        $language = $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName);
+        $language->run();
 
-		// Update XML and script.php
-		$this->createInstaller($files);
+        // Update XML and script.php
+        $this->createInstaller($files);
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Prepare the directory structure
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function prepareDirectories()
-	{
-		$this->_mkdir($this->target);
-	}
+    /**
+     * Prepare the directory structure
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function prepareDirectories()
+    {
+        $this->_mkdir($this->target);
+    }
 
-	/**
-	 * Generate the installer xml file for the plugin
-	 *
-	 * @param   array  $files  The module files
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function createInstaller($files)
-	{
-		$this->say("Creating plugin installer");
+    /**
+     * Generate the installer xml file for the plugin
+     *
+     * @param   array  $files  The module files
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function createInstaller($files)
+    {
+        $this->say("Creating plugin installer");
 
-		$xmlFile = $this->target . "/" . $this->plgName . ".xml";
+        $xmlFile = $this->target . "/" . $this->plgName . ".xml";
 
-		// Version & Date Replace
-		$this->replaceInFile($xmlFile);
+        // Version & Date Replace
+        $this->replaceInFile($xmlFile);
 
-		// Files and folders
-		$f = $this->generatePluginFileList($files, $this->plgName);
+        // Files and folders
+        $f = $this->generatePluginFileList($files, $this->plgName);
 
-		$this->taskReplaceInFile($xmlFile)
-			->from('##FILES##')
-			->to($f)
-			->run();
+        $this->taskReplaceInFile($xmlFile)
+            ->from('##FILES##')
+            ->to($f)
+            ->run();
 
-		// Language files
-		$f = $this->generateLanguageFileList($this->getFiles('backendLanguage'));
+        // Language files
+        $f = $this->generateLanguageFileList($this->getFiles('backendLanguage'));
 
-		$this->taskReplaceInFile($xmlFile)
-			->from('##LANGUAGE_FILES##')
-			->to($f)
-			->run();
+        $this->taskReplaceInFile($xmlFile)
+            ->from('##LANGUAGE_FILES##')
+            ->to($f)
+            ->run();
 
-		// Media files
-		$f = $this->generateFileList($this->getFiles('media'));
+        // Media files
+        $f = $this->generateFileList($this->getFiles('media'));
 
-		$this->taskReplaceInFile($xmlFile)
-			->from('##MEDIA_FILES##')
-			->to($f)
-			->run();
-	}
+        $this->taskReplaceInFile($xmlFile)
+            ->from('##MEDIA_FILES##')
+            ->to($f)
+            ->run();
+    }
 }

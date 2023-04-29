@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -10,48 +11,48 @@ namespace Joomla\Jorobo\Tasks\Generate;
 
 trait generateTasks
 {
-	/**
-	 * Generate a component skeleton
-	 *
-	 * @param   string  $title   The component name (e.g. com_component)
-	 * @param   array   $params  Opt params
-	 *
-	 * @return  null
-	 *
-	 * @since   1.0
-	 */
-	protected function generateComponent($title, $params = array())
-	{
-		return null;
-	}
+    /**
+     * Generate a component skeleton
+     *
+     * @param   string  $title   The component name (e.g. com_component)
+     * @param   array   $params  Opt params
+     *
+     * @return  null
+     *
+     * @since   1.0
+     */
+    protected function generateComponent($title, $params = [])
+    {
+        return null;
+    }
 
-	/**
-	 * Generate a module skeleton
-	 *
-	 * @param   string  $title   The component name (e.g. com_component)
-	 * @param   array   $params  Opt params
-	 *
-	 * @return  null
-	 *
-	 * @since   1.0
-	 */
-	protected function generateModule($title, $params = array())
-	{
-		return null;
-	}
+    /**
+     * Generate a module skeleton
+     *
+     * @param   string  $title   The component name (e.g. com_component)
+     * @param   array   $params  Opt params
+     *
+     * @return  null
+     *
+     * @since   1.0
+     */
+    protected function generateModule($title, $params = [])
+    {
+        return null;
+    }
 
-	/**
-	 * Generate a plugin skeleton
-	 *
-	 * @param   string  $title   The component name (e.g. com_component)
-	 * @param   array   $params  Opt params
-	 *
-	 * @return  null
-	 *
-	 * @since   1.0
-	 */
-	protected function generatePlugin($title, $params = array())
-	{
-		return null;
-	}
+    /**
+     * Generate a plugin skeleton
+     *
+     * @param   string  $title   The component name (e.g. com_component)
+     * @param   array   $params  Opt params
+     *
+     * @return  null
+     *
+     * @since   1.0
+     */
+    protected function generatePlugin($title, $params = [])
+    {
+        return null;
+    }
 }

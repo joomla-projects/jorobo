@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -12,7 +13,6 @@ use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
-
 use Joomla\Jorobo\Tasks\JTask;
 
 /**
@@ -24,17 +24,17 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Base extends JTask implements TaskInterface
 {
-	use \Robo\Common\TaskIO;
+    use \Robo\Common\TaskIO;
 
-	/**
-	 * Returns true - should never be called on this
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		return true;
-	}
+    /**
+     * Returns true - should never be called on this
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        return true;
+    }
 }

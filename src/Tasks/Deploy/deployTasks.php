@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -10,52 +11,52 @@ namespace Joomla\Jorobo\Tasks\Deploy;
 
 trait deployTasks
 {
-	/**
-	 * Build extension
-	 *
-	 * @return  Zip
-	 *
-	 * @since   1.0
-	 */
-	protected function deployZip()
-	{
-		return new Zip;
-	}
+    /**
+     * Build extension
+     *
+     * @return  Zip
+     *
+     * @since   1.0
+     */
+    protected function deployZip()
+    {
+        return new Zip();
+    }
 
-	/**
-	 * Build extension
-	 *
-	 * @return  Package
-	 *
-	 * @since   1.0
-	 */
-	protected function deployPackage()
-	{
-		return new Package;
-	}
+    /**
+     * Build extension
+     *
+     * @return  Package
+     *
+     * @since   1.0
+     */
+    protected function deployPackage()
+    {
+        return new Package();
+    }
 
-	/**
-	 * Build extension
-	 *
-	 * @return  Release
-	 *
-	 * @since   1.0
-	 */
-	protected function deployRelease()
-	{
-		return new Release;
-	}
+    /**
+     * Build extension
+     *
+     * @return  Release
+     *
+     * @since   1.0
+     */
+    protected function deployRelease()
+    {
+        return new Release();
+    }
 
-	/**
-	 * Deploy to FTP
-	 * (Depends on package or zip deploy task)
-	 *
-	 * @return  FtpUpload
-	 *
-	 * @since   1.0
-	 */
-	protected function deployFtp()
-	{
-		return new FtpUpload;
-	}
+    /**
+     * Deploy to FTP
+     * (Depends on package or zip deploy task)
+     *
+     * @return  FtpUpload
+     *
+     * @since   1.0
+     */
+    protected function deployFtp()
+    {
+        return new FtpUpload();
+    }
 }

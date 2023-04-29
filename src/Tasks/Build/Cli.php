@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -12,7 +13,6 @@ use Robo\Result;
 use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
 use Robo\Exception\TaskException;
-
 use Joomla\Jorobo\Tasks\JTask;
 
 /**
@@ -24,61 +24,60 @@ use Joomla\Jorobo\Tasks\JTask;
  */
 class Cli extends Base implements TaskInterface
 {
-	protected $source = null;
+    protected $source = null;
 
-	protected $target = null;
+    protected $target = null;
 
-	protected $fileMap = null;
+    protected $fileMap = null;
 
-	/**
-	 * Initialize Build Task
-	 *
-	 * @since   1.0
-	 */
-	public function __construct()
-	{
-		parent::__construct();
+    /**
+     * Initialize Build Task
+     *
+     * @since   1.0
+     */
+    public function __construct()
+    {
+        parent::__construct();
 
-		$this->source = $this->getSourceFolder() . "/cli";
-		$this->target = $this->getBuildFolder() . "/cli";
-	}
+        $this->source = $this->getSourceFolder() . "/cli";
+        $this->target = $this->getBuildFolder() . "/cli";
+    }
 
-	/**
-	 * Runs the cli build tasks, just copying files currently
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->say("Copying CLI files " . $this->source);
+    /**
+     * Runs the cli build tasks, just copying files currently
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->say("Copying CLI files " . $this->source);
 
-		if (!file_exists($this->source))
-		{
-			$this->say("Folder " . $this->source . " does not exist!");
+        if (!file_exists($this->source)) {
+            $this->say("Folder " . $this->source . " does not exist!");
 
-			return true;
-		}
+            return true;
+        }
 
-		$this->prepareDirectory();
+        $this->prepareDirectory();
 
-		$map = $this->copyTarget($this->source, $this->target);
+        $map = $this->copyTarget($this->source, $this->target);
 
-		$this->setResultFiles($map);
+        $this->setResultFiles($map);
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Prepare the directory structure
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function prepareDirectory()
-	{
-		$this->_mkdir($this->target);
-	}
+    /**
+     * Prepare the directory structure
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function prepareDirectory()
+    {
+        $this->_mkdir($this->target);
+    }
 }

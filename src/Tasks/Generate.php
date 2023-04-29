@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -22,75 +23,74 @@ use Robo\Exception\TaskException;
  */
 class Generate extends JTask implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
-	use \Robo\Common\TaskIO;
-	use Generate\generateTasks;
+    use \Robo\Task\Development\loadTasks;
+    use \Robo\Common\TaskIO;
+    use Generate\generateTasks;
 
-	/**
-	 * Additional params
-	 *
-	 * @var array|null
-	 *
-	 * @since   1.0
-	 */
-	protected $params = null;
+    /**
+     * Additional params
+     *
+     * @var array|null
+     *
+     * @since   1.0
+     */
+    protected $params = null;
 
-	/**
-	 * Initialize Build Task
-	 *
-	 * @param   array  $params  Additional params
-	 *
-	 * @since   1.0
-	 */
-	public function __construct($params)
-	{
-		parent::__construct();
+    /**
+     * Initialize Build Task
+     *
+     * @param   array  $params  Additional params
+     *
+     * @since   1.0
+     */
+    public function __construct($params)
+    {
+        parent::__construct();
 
-		$this->params = $params;
-	}
+        $this->params = $params;
+    }
 
-	/**
-	 * Build the package
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->prepareSouceDirectory();
+    /**
+     * Build the package
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->prepareSouceDirectory();
 
-		$this->say('Not implemented yet');
-	}
+        $this->say('Not implemented yet');
+    }
 
-	/**
-	 * Cleanup the given directory
-	 *
-	 * @param   string  $dir  The dir
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function cleanup($dir)
-	{
-		// Clean building directory
-		$this->_cleanDir($dir);
-	}
+    /**
+     * Cleanup the given directory
+     *
+     * @param   string  $dir  The dir
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function cleanup($dir)
+    {
+        // Clean building directory
+        $this->_cleanDir($dir);
+    }
 
-	/**
-	 * Prepare the directories
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function prepareSouceDirectory()
-	{
-		if (!file_exists($this->sourceFolder))
-		{
-			$this->say('Creating source folder');
-			$this->_mkdir($this->sourceFolder);
-		}
-	}
+    /**
+     * Prepare the directories
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function prepareSouceDirectory()
+    {
+        if (!file_exists($this->sourceFolder)) {
+            $this->say('Creating source folder');
+            $this->_mkdir($this->sourceFolder);
+        }
+    }
 }

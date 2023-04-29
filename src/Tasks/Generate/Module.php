@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -22,111 +23,105 @@ use Robo\Exception\TaskException;
  */
 class Module extends Base implements TaskInterface
 {
-	use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\loadTasks;
 
-	protected $adminPath = null;
+    protected $adminPath = null;
 
-	protected $frontPath = null;
+    protected $frontPath = null;
 
-	protected $hasAdmin = true;
+    protected $hasAdmin = true;
 
-	protected $hasFront = true;
+    protected $hasFront = true;
 
-	/**
-	 * Initialize Build Task
-	 *
-	 * @param   String  $params  The target directory
-	 *
-	 * @since   1.0
-	 */
-	public function __construct($params)
-	{
-		parent::__construct();
+    /**
+     * Initialize Build Task
+     *
+     * @param   String  $params  The target directory
+     *
+     * @since   1.0
+     */
+    public function __construct($params)
+    {
+        parent::__construct();
 
-		$this->adminPath = $this->getSourceFolder() . "/administrator/components/com_" . $this->getExtensionName();
-		$this->frontPath = $this->getSourceFolder() . "/components/com_" . $this->getExtensionName();
-	}
+        $this->adminPath = $this->getSourceFolder() . "/administrator/components/com_" . $this->getExtensionName();
+        $this->frontPath = $this->getSourceFolder() . "/components/com_" . $this->getExtensionName();
+    }
 
-	/**
-	 * Build the package
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->say('Building component');
+    /**
+     * Build the package
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->say('Building component');
 
-		// Analyize extension structure
-		$this->analyze();
+        // Analyize extension structure
+        $this->analyze();
 
-		// Prepare directories
-		$this->prepareDirectories();
+        // Prepare directories
+        $this->prepareDirectories();
 
-		if ($this->hasAdmin)
-		{
-			$adminFiles = $this->copyTarget($this->adminPath, $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
+        if ($this->hasAdmin) {
+            $adminFiles = $this->copyTarget($this->adminPath, $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
 
-			$this->addFiles('backend', $adminFiles);
-		}
+            $this->addFiles('backend', $adminFiles);
+        }
 
-		if ($this->hasFront)
-		{
-			$frontendFiles = $this->copyTarget($this->frontPath, $this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
+        if ($this->hasFront) {
+            $frontendFiles = $this->copyTarget($this->frontPath, $this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
 
-			$this->addFiles('frontend', $frontendFiles);
-		}
+            $this->addFiles('frontend', $frontendFiles);
+        }
 
-		// Build media (relative path)
-		$media = $this->buildMedia("media/com_" . $this->getExtensionName());
-		$media->run();
+        // Build media (relative path)
+        $media = $this->buildMedia("media/com_" . $this->getExtensionName());
+        $media->run();
 
-		$this->addFiles('media', $media->getResultFiles());
+        $this->addFiles('media', $media->getResultFiles());
 
-		$language = $this->buildLanguage("com_matukio");
-		$language->run();
+        $language = $this->buildLanguage("com_matukio");
+        $language->run();
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Analyze the component structure
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function analyze()
-	{
-		if (!file_exists($this->adminPath))
-		{
-			$this->hasAdmin = false;
-		}
+    /**
+     * Analyze the component structure
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function analyze()
+    {
+        if (!file_exists($this->adminPath)) {
+            $this->hasAdmin = false;
+        }
 
-		if (!file_exists($this->frontPath))
-		{
-			$this->hasFront = false;
-		}
-	}
+        if (!file_exists($this->frontPath)) {
+            $this->hasFront = false;
+        }
+    }
 
-	/**
-	 * Prepare the directory structure
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	private function prepareDirectories()
-	{
-		if ($this->hasAdmin)
-		{
-			$this->_mkdir($this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
-		}
+    /**
+     * Prepare the directory structure
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    private function prepareDirectories()
+    {
+        if ($this->hasAdmin) {
+            $this->_mkdir($this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
+        }
 
-		if ($this->hasFront)
-		{
-			$this->_mkdir($this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
-		}
-	}
+        if ($this->hasFront) {
+            $this->_mkdir($this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
+        }
+    }
 }

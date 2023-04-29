@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package    JoRobo
  *
@@ -21,93 +22,84 @@ use Robo\Contract\TaskInterface;
  */
 class FtpUpload extends Base implements TaskInterface
 {
-	/**
-	 * Should we upload a package or a zip (defaults to zip)
-	 *
-	 * @var    string
-	 *
-	 * @since  1.0
-	 */
-	protected $target = "zip";
+    /**
+     * Should we upload a package or a zip (defaults to zip)
+     *
+     * @var    string
+     *
+     * @since  1.0
+     */
+    protected $target = "zip";
 
-	/**
-	 * Path to the package we deploy
-	 *
-	 * @var    string
-	 *
-	 * @since  1.0
-	 */
-	protected $filepath = null;
+    /**
+     * Path to the package we deploy
+     *
+     * @var    string
+     *
+     * @since  1.0
+     */
+    protected $filepath = null;
 
-	/**
-	 * Filename of the package
-	 *
-	 * @var    string
-	 *
-	 * @since  1.0
-	 */
-	protected $filename = null;
+    /**
+     * Filename of the package
+     *
+     * @var    string
+     *
+     * @since  1.0
+     */
+    protected $filename = null;
 
-	/**
-	 * Build the package
-	 *
-	 * @return  boolean
-	 *
-	 * @since   1.0
-	 */
-	public function run()
-	{
-		$this->say('Uploading ' . $this->getJConfig()->extension . $this->getJConfig()->version . " via FTP");
+    /**
+     * Build the package
+     *
+     * @return  boolean
+     *
+     * @since   1.0
+     */
+    public function run()
+    {
+        $this->say('Uploading ' . $this->getJConfig()->extension . $this->getJConfig()->version . " via FTP");
 
-		// Todo Move filepath and name to config
-		$this->filename = $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
-		$this->filepath = JPATH_BASE . "/dist/" . $this->filename;
+        // Todo Move filepath and name to config
+        $this->filename = $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
+        $this->filepath = JPATH_BASE . "/dist/" . $this->filename;
 
-		// Check if we have a package
-		if (in_array("package", explode(" ", $this->getJConfig()->target)))
-		{
-			$this->target   = "package";
-			$this->filename = "pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
-			$this->filepath = JPATH_BASE . "/dist/" . $this->filename;
-		}
+        // Check if we have a package
+        if (in_array("package", explode(" ", $this->getJConfig()->target))) {
+            $this->target   = "package";
+            $this->filename = "pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
+            $this->filepath = JPATH_BASE . "/dist/" . $this->filename;
+        }
 
-		try
-		{
-			if ($this->getJConfig()->ftp->ssl == "true")
-			{
-				$con = ftp_ssl_connect($this->getJConfig()->ftp->host);
-			}
-			else
-			{
-				$con = ftp_connect($this->getJConfig()->ftp->host);
-			}
+        try {
+            if ($this->getJConfig()->ftp->ssl == "true") {
+                $con = ftp_ssl_connect($this->getJConfig()->ftp->host);
+            } else {
+                $con = ftp_connect($this->getJConfig()->ftp->host);
+            }
 
-			$login_result = ftp_login($con, $this->getJConfig()->ftp->user, $this->getJConfig()->ftp->password);
+            $login_result = ftp_login($con, $this->getJConfig()->ftp->user, $this->getJConfig()->ftp->password);
 
-			// Set passive ftp
-			ftp_pasv($con, true);
+            // Set passive ftp
+            ftp_pasv($con, true);
 
-			if (!$login_result)
-			{
-				return Result::error($this, 'Failed logging in');
-			}
+            if (!$login_result) {
+                return Result::error($this, 'Failed logging in');
+            }
 
-			ftp_chdir($con, $this->getJConfig()->ftp->target);
+            ftp_chdir($con, $this->getJConfig()->ftp->target);
 
-			$this->say('Uploading ' . $this->filepath);
+            $this->say('Uploading ' . $this->filepath);
 
-			if (!ftp_put($con, $this->filename, $this->filepath, FTP_BINARY))
-			{
-				return Result::error($this, 'Failed uploading package');
-			}
+            if (!ftp_put($con, $this->filename, $this->filepath, FTP_BINARY)) {
+                return Result::error($this, 'Failed uploading package');
+            }
 
-			$this->say("Upload finished");
-		}
-		catch (\Exception $e)
-		{
-			return Result::error($this, 'Error: ' . $e->getMessage());
-		}
+            $this->say("Upload finished");
+        } catch (\Exception $e) {
+            return Result::error($this, 'Error: ' . $e->getMessage());
+        }
 
-		return true;
-	}
+        return true;
+    }
 }
