@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
-use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
 use Joomla\Jorobo\Tasks\JTask;
+use Robo\Contract\TaskInterface;
 
 /**
  * Build base - contains methods / data used in multiple build tasks
@@ -22,9 +19,9 @@ use Joomla\Jorobo\Tasks\JTask;
  *
  * @since    1.0
  */
-class Base extends JTask implements TaskInterface
+abstract class Base extends JTask implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
     use \Robo\Common\TaskIO;
 
     /**
@@ -103,18 +100,6 @@ class Base extends JTask implements TaskInterface
      * @since  1.0
      */
     protected $resultFiles = [];
-
-    /**
-     * Returns true
-     *
-     * @return  boolean
-     *
-     * @since   1.0
-     */
-    public function run()
-    {
-        return true;
-    }
 
     /**
      * Add files to array

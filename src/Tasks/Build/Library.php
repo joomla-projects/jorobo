@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Build Library
@@ -60,7 +57,7 @@ class Library extends Base implements TaskInterface
     /**
      * Runs the library build tasks, just copying files currently
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -69,9 +66,7 @@ class Library extends Base implements TaskInterface
         $this->say("Building library folder " . $this->libName);
 
         if (!file_exists($this->source)) {
-            $this->say("Folder " . $this->source . " does not exist!");
-
-            return true;
+            return Result::success($this, "Folder " . $this->source . " does not exist!");
         }
 
         $this->prepareDirectory();
@@ -105,7 +100,7 @@ class Library extends Base implements TaskInterface
         // Copy XML
         $this->createInstaller($files);
 
-        return true;
+        return Result::success($this, "Library build");
     }
 
     /**

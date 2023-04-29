@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
-use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
 use Joomla\Jorobo\Tasks\JTask;
+use Robo\Contract\TaskInterface;
 
 /**
  * Generate base class - contains methods / data used in multiple generateion tasks
@@ -22,19 +19,7 @@ use Joomla\Jorobo\Tasks\JTask;
  *
  * @since    1.0
  */
-class Base extends JTask implements TaskInterface
+abstract class Base extends JTask implements TaskInterface
 {
     use \Robo\Common\TaskIO;
-
-    /**
-     * Returns true - should never be called on this
-     *
-     * @return  boolean
-     *
-     * @since   1.0
-     */
-    public function run()
-    {
-        return true;
-    }
 }

@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Class Media
@@ -72,7 +69,7 @@ class Media extends Base implements TaskInterface
     /**
      * Runs the media build task
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -83,7 +80,7 @@ class Media extends Base implements TaskInterface
         if (!file_exists($this->source)) {
             $this->say("Folder " . $this->source . " does not exist!");
 
-            return true;
+            return Result::success($this);
         }
 
         $this->prepareDirectory();
@@ -92,7 +89,7 @@ class Media extends Base implements TaskInterface
 
         $this->setResultFiles($map);
 
-        return true;
+        return Result::success($this);
     }
 
     /**

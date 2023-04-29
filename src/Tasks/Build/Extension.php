@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * The supervisor
@@ -77,7 +74,7 @@ class Extension extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -264,7 +261,7 @@ class Extension extends Base implements TaskInterface
             }
         }
 
-        return true;
+        return Result::success($this);
     }
 
     /**

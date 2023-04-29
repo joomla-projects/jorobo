@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Community Builder build class
@@ -60,7 +57,7 @@ class CBPlugin extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -80,7 +77,7 @@ class CBPlugin extends Base implements TaskInterface
         // No XML
         $this->createInstaller($files);
 
-        return true;
+        return Result::success($this);
     }
 
     /**

@@ -9,13 +9,10 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Joomla\Registry\Registry;
 use Joomla\Github\Github;
-use Joomla\Http\Http;
-use Robo\Result;
-use Robo\Task\BaseTask;
+use Joomla\Registry\Registry;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Result;
 
 /**
  * Release build package to github
@@ -29,7 +26,7 @@ class Release extends Base implements TaskInterface
     /**
      * Release the build package on GitHub
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -85,13 +82,15 @@ class Release extends Base implements TaskInterface
         $this->say(print_r($repository, true));
 
         $this->uploadToGithub($version, $this->getJConfig()->github->token, $response->upload_url);
+
+        return Result::success($this);
     }
 
     /**
      * Get the Changes
      *
-     * @param   bool   $latest_release  Latest release
-     * @param   array  $pulls           Pulls
+     * @param   object  $latest_release  Latest release
+     * @param   array   $pulls           Pulls
      *
      * @return  array
      *
@@ -118,7 +117,7 @@ class Release extends Base implements TaskInterface
     /**
      * Get the latest release
      *
-     * @return  false|array
+     * @return  false|object
      *
      * @since   1.0
      */
@@ -148,18 +147,18 @@ class Release extends Base implements TaskInterface
     /**
      * Get all repository pulls for the changelog
      *
-     * @param   string     $state   The state of the PR (default closed)
-     * @param   string     $sha     The sha sum (opt)
-     * @param   string     $path    The path (opt)
-     * @param   string     $author  The author (opt)
-     * @param   Date|null  $since   Changes since (opt)
-     * @param   Date|null  $until   Changes until (opt)
+     * @param   string               $state   The state of the PR (default closed)
+     * @param   string               $sha     The sha sum (opt)
+     * @param   string               $path    The path (opt)
+     * @param   string               $author  The author (opt)
+     * @param   ?\DateTimeInterface  $since   Changes since (opt)
+     * @param   ?\DateTimeInterface  $until   Changes until (opt)
      *
      * @return  mixed
      *
      * @since   1.0
      */
-    protected function getAllRepoPulls($state = 'closed', $sha = '', $path = '', $author = '', Date $since = null, Date $until = null)
+    protected function getAllRepoPulls($state = 'closed', $sha = '', $path = '', $author = '', \DateTimeInterface $since = null, \DateTimeInterface $until = null)
     {
         $github = $this->getGithub();
 
@@ -189,7 +188,7 @@ class Release extends Base implements TaskInterface
     /**
      * Updates changelog with the changes since the last release
      *
-     * @param   string  $changes  The changes
+     * @param   string[]  $changes  The changes
      *
      * @return  void
      *

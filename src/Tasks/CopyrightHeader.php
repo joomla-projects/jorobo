@@ -10,6 +10,7 @@
 namespace Joomla\Jorobo\Tasks;
 
 use Robo\Contract\TaskInterface;
+use Robo\Result;
 
 /**
  * Generate / Update copyright headers in project files
@@ -20,7 +21,7 @@ use Robo\Contract\TaskInterface;
  */
 class CopyrightHeader extends JTask implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
     use \Robo\Common\TaskIO;
     use Generate\generateTasks;
 
@@ -37,7 +38,7 @@ class CopyrightHeader extends JTask implements TaskInterface
     /**
      * Generate / Update copyright headers
      *
-     * @return  void
+     * @return  Result
      *
      * @since   1.0
      */
@@ -48,7 +49,7 @@ class CopyrightHeader extends JTask implements TaskInterface
         $excludeList = $this->getJConfig()->header->exclude;
 
         if ($excludeList !== '') {
-            $exclude = explode(",", trim());
+            $exclude = explode(",", trim($excludeList));
         }
 
         $path      = realpath($this->getJConfig()->source);
@@ -84,7 +85,7 @@ class CopyrightHeader extends JTask implements TaskInterface
             $this->addHeader($file, $text);
         }
 
-        $this->say("Finished updating copyright headers");
+        return Result::success($this, "Finished updating copyright headers");
     }
 
     /**

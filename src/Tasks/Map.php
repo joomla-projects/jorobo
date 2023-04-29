@@ -9,10 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Result;
 
 /**
  * Map extension into an Joomla installation
@@ -23,7 +21,7 @@ use Robo\Exception\TaskException;
  */
 class Map extends JTask implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
     use \Robo\Common\TaskIO;
 
     /**
@@ -61,7 +59,7 @@ class Map extends JTask implements TaskInterface
     /**
      * Maps all parts of an extension into a Joomla! installation
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -71,7 +69,7 @@ class Map extends JTask implements TaskInterface
         $this->say('OS: ' . $this->getOs() . " | Basedir: " . $this->getSourceFolder());
 
         if (!$this->checkFolders()) {
-            return false;
+            return Result::error($this, 'checkFolders failed');
         }
 
         $dirHandle = opendir($this->getSourceFolder());
@@ -93,9 +91,7 @@ class Map extends JTask implements TaskInterface
 
         closedir($dirHandle);
 
-        $this->say("Finished symlinking into Joomla!");
-
-        return true;
+        return Result::success($this, "Finished symlinking into Joomla!");
     }
 
     /**
@@ -328,8 +324,8 @@ class Map extends JTask implements TaskInterface
             $this->taskFileSystemStack()
                 ->symlink($source, $target)
                 ->run();
-        } catch (Exception $e) {
-            $this->say('Error symlinking: ' . $e->message());
+        } catch (\Exception $e) {
+            $this->say('Error symlinking: ' . $e->getMessage());
         }
     }
 }

@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Class Language
@@ -60,7 +57,7 @@ class Language extends Base implements TaskInterface
     /**
      * Returns true
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -72,7 +69,7 @@ class Language extends Base implements TaskInterface
 
         if (!$this->hasAdminLang && !$this->hasFrontLang) {
             // No Language files
-            return true;
+            return Result::success($this);
         }
 
         $this->say("Building language for " . $this->ext . " | Type " . $this->type);
@@ -118,7 +115,7 @@ class Language extends Base implements TaskInterface
             $this->addFiles('frontendLanguage', $map);
         }
 
-        return true;
+        return Result::success($this);
     }
 
     /**

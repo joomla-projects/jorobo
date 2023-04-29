@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Class Package
@@ -44,7 +41,7 @@ class Package extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -59,7 +56,7 @@ class Package extends Base implements TaskInterface
         // Update XML and script.php
         $this->createInstaller();
 
-        return true;
+        return Result::success($this);
     }
 
     /**

@@ -9,9 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Joomla\Jorobo\Tasks\Build\Component;
-use Joomla\Jorobo\Tasks\Build\Media;
-
 trait buildTasks
 {
     /**
@@ -45,8 +42,8 @@ trait buildTasks
     /**
      * Build media folder
      *
-     * @param   array   $source   The media folder (an extension could have multiple)
-     * @param   string  $extName  The extension name (e.g. mod_xy)
+     * @param   string   $source   The media folder (an extension could have multiple)
+     * @param   string   $extName  The extension name (e.g. mod_xy)
      *
      * @return  Media
      *

@@ -10,8 +10,8 @@
 namespace Joomla\Jorobo\Tasks;
 
 use Robo\Application;
-use Robo\Runner;
 use Robo\Contract\TaskInterface;
+use Robo\Runner;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
@@ -23,6 +23,8 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
  */
 abstract class JTask extends \Robo\Tasks implements TaskInterface
 {
+    use \Robo\Common\TaskIO;
+
     /**
      * The Jorobo config object
      *

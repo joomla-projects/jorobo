@@ -9,10 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Result;
 
 /**
  * Class Build
@@ -23,7 +21,7 @@ use Robo\Exception\TaskException;
  */
 class Build extends JTask implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
     use \Robo\Common\TaskIO;
     use Build\buildTasks;
     use Deploy\deployTasks;
@@ -52,7 +50,7 @@ class Build extends JTask implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -61,7 +59,7 @@ class Build extends JTask implements TaskInterface
         $this->say('Building ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         if (!$this->checkFolders()) {
-            return false;
+            return Result::error($this, 'checkFolders failed');
         }
 
         // Create directory
@@ -88,7 +86,7 @@ class Build extends JTask implements TaskInterface
             }
         }
 
-        return true;
+        return Result::success($this, 'Build successfull');
     }
 
     /**

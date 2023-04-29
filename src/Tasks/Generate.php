@@ -9,10 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
 
 /**
  * Building class for extensions
@@ -23,7 +20,7 @@ use Robo\Exception\TaskException;
  */
 class Generate extends JTask implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
     use \Robo\Common\TaskIO;
     use Generate\generateTasks;
 

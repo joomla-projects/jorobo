@@ -9,8 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Robo\Result;
 use Robo\Contract\TaskInterface;
+use Robo\Result;
 
 /**
  * Deploy project via FTP - needs zip or pkg deployment to be done before
@@ -51,7 +51,7 @@ class FtpUpload extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -99,6 +99,6 @@ class FtpUpload extends Base implements TaskInterface
             return Result::error($this, 'Error: ' . $e->getMessage());
         }
 
-        return true;
+        return Result::success($this);
     }
 }

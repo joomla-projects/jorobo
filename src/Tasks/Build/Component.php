@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Class Component
@@ -64,7 +61,7 @@ class Component extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -130,7 +127,7 @@ class Component extends Base implements TaskInterface
             $this->_copy(JPATH_BASE . "/docs/README.md", $this->getBuildFolder() . "/README");
         }
 
-        return true;
+        return Result::success($this, "Component build");
     }
 
     /**

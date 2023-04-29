@@ -9,10 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Result;
 
 /**
  * Generate a module skeleton
@@ -23,7 +21,7 @@ use Robo\Exception\TaskException;
  */
 class Module extends Base implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
 
     protected $adminPath = null;
 
@@ -51,7 +49,7 @@ class Module extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -86,7 +84,7 @@ class Module extends Base implements TaskInterface
         $language = $this->buildLanguage("com_matukio");
         $language->run();
 
-        return true;
+        return Result::success($this, 'Module build');
     }
 
     /**

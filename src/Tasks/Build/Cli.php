@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Build Cli
@@ -46,7 +43,7 @@ class Cli extends Base implements TaskInterface
     /**
      * Runs the cli build tasks, just copying files currently
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -55,9 +52,7 @@ class Cli extends Base implements TaskInterface
         $this->say("Copying CLI files " . $this->source);
 
         if (!file_exists($this->source)) {
-            $this->say("Folder " . $this->source . " does not exist!");
-
-            return true;
+            return Result::success($this, "Folder " . $this->source . " does not exist!");
         }
 
         $this->prepareDirectory();
@@ -66,7 +61,7 @@ class Cli extends Base implements TaskInterface
 
         $this->setResultFiles($map);
 
-        return true;
+        return Result::success($this, "Cli build");
     }
 
     /**

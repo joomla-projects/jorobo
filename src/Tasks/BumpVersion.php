@@ -9,10 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
+use Robo\Result;
 
 /**
  * Bump the version of an Joomla extension
@@ -23,23 +21,13 @@ use Robo\Exception\TaskException;
  */
 class BumpVersion extends JTask implements TaskInterface
 {
-    use \Robo\Task\Development\loadTasks;
+    use \Robo\Task\Development\Tasks;
     use \Robo\Common\TaskIO;
-
-    /**
-     * Constructor - Possible useless method overriding?
-     *
-     * @since   1.0
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Maps all parts of an extension into a Joomla! installation
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -51,7 +39,7 @@ class BumpVersion extends JTask implements TaskInterface
         $excludeList = $this->getJConfig()->header->exclude;
 
         if ($excludeList !== '') {
-            $exclude = explode(",", trim());
+            $exclude = explode(",", trim($excludeList));
         }
 
         $path      = realpath($this->getJConfig()->source);
@@ -97,8 +85,6 @@ class BumpVersion extends JTask implements TaskInterface
             }
         }
 
-        $this->say('Updated ' . $changedFiles . ' files');
-
-        return true;
+        return Result::success($this, 'Updated ' . $changedFiles . ' files');
     }
 }

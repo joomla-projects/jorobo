@@ -10,6 +10,7 @@
 namespace Joomla\Jorobo\Tasks\Deploy;
 
 use Robo\Contract\TaskInterface;
+use Robo\Result;
 
 /**
  * Deploy project as Zip
@@ -34,13 +35,13 @@ class Zip extends Base implements TaskInterface
         parent::__construct();
 
         $this->target = JPATH_BASE . "/dist/" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
-        $this->zip    = new \ZipArchive($this->target, \ZipArchive::CREATE);
+        $this->zip    = new \ZipArchive();
     }
 
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -83,6 +84,6 @@ class Zip extends Base implements TaskInterface
         // Close the zip archive
         $this->zip->close();
 
-        return true;
+        return Result::success($this);
     }
 }

@@ -9,11 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Robo\Result;
-use Robo\Task\BaseTask;
 use Robo\Contract\TaskInterface;
-use Robo\Exception\TaskException;
-use Joomla\Jorobo\Tasks\JTask;
+use Robo\Result;
 
 /**
  * Deploy project as Package file
@@ -61,7 +58,7 @@ class Package extends Base implements TaskInterface
     /**
      * Build the package
      *
-     * @return  boolean
+     * @return  Result
      *
      * @since   1.0
      */
@@ -107,7 +104,7 @@ class Package extends Base implements TaskInterface
             $this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
         }
 
-        return true;
+        return Result::success($this);
     }
 
     /**
@@ -235,7 +232,7 @@ class Package extends Base implements TaskInterface
      */
     public function createComponentZip()
     {
-        $comZip              = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+        $comZip              = new \ZipArchive();
         $tmp_path            = '/dist/tmp/cbuild';
         $componentScriptPath = $this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php";
 
@@ -309,7 +306,7 @@ class Package extends Base implements TaskInterface
                 $this->say("Packaging Library " . $lib);
 
                 // Package file
-                $zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+                $zip = new \ZipArchive();
 
                 $zip->open(JPATH_BASE . '/dist/zips/' . $lib . '.zip', \ZipArchive::CREATE);
 
@@ -352,7 +349,7 @@ class Package extends Base implements TaskInterface
                 $this->say("Packaging Module " . $entry);
 
                 // Package file
-                $zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+                $zip = new \ZipArchive();
 
                 $zip->open(JPATH_BASE . '/dist/zips/' . $entry . '.zip', \ZipArchive::CREATE);
 
@@ -411,7 +408,7 @@ class Package extends Base implements TaskInterface
                         $this->say("Packaging Plugin " . $plg);
 
                         // Package file
-                        $zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+                        $zip = new \ZipArchive();
 
                         $zip->open(JPATH_BASE . '/dist/zips/' . $plg . '.zip', \ZipArchive::CREATE);
 
@@ -456,7 +453,7 @@ class Package extends Base implements TaskInterface
                 $this->say("Packaging Template " . $entry);
 
                 // Package file
-                $zip = new \ZipArchive(JPATH_BASE . "/dist", \ZipArchive::CREATE);
+                $zip = new \ZipArchive();
 
                 $zip->open(JPATH_BASE . '/dist/zips/tpl_' . $entry . '.zip', \ZipArchive::CREATE);
 
@@ -482,7 +479,7 @@ class Package extends Base implements TaskInterface
      */
     public function createPackageZip()
     {
-        $zip = new \ZipArchive($this->target, \ZipArchive::CREATE);
+        $zip = new \ZipArchive();
 
         // Instantiate the zip archive
         $zip->open($this->target, \ZipArchive::CREATE);
