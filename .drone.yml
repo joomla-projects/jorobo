@@ -18,7 +18,8 @@ steps:
     depends_on: [ composer ]
     commands:
       - echo $(date)
-      - ./vendor/bin/phpcs --extensions=php -p --standard=vendor/joomla/coding-standards/Joomla src
+      - ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
+      - ./vendor/bin/phpcs --extensions=php -p --standard=PSR-12 .
       - echo $(date)
 
 volumes:
