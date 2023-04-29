@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Codeception\Module\FTP;
 use Robo\Result;
 use Robo\Contract\TaskInterface;
 
