@@ -79,7 +79,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
      */
     public function __construct($params = [])
     {
-        $this->params = (array) $params;
+        $this->params         = (array) $params;
         $this->params['base'] = $this->params['base'] ?? JPATH_BASE;
 
         // Registers the application to run Robo commands
