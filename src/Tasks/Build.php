@@ -27,27 +27,6 @@ class Build extends JTask implements TaskInterface
     use Deploy\deployTasks;
 
     /**
-     * @var    array|null
-     *
-     * @since  1.0
-     */
-    protected $params = null;
-
-    /**
-     * Initialize Build Task
-     *
-     * @param   array  $params  Additional  params
-     *
-     * @since   1.0
-     */
-    public function __construct($params)
-    {
-        parent::__construct($params);
-
-        $this->params = $params;
-    }
-
-    /**
      * Build the package
      *
      * @return  Result
@@ -70,9 +49,9 @@ class Build extends JTask implements TaskInterface
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            $this->_exec('mklink /J ' . JPATH_BASE . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()));
+            $this->_exec('mklink /J ' . $this->params['base'] . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()));
         } else {
-            $this->_symlink($this->getBuildFolder(), JPATH_BASE . "/dist/current");
+            $this->_symlink($this->getBuildFolder(), $this->params['base'] . "/dist/current");
         }
 
         // Support multiple deployment methods, separated by spaces
@@ -82,7 +61,7 @@ class Build extends JTask implements TaskInterface
             foreach ($deploy as $d) {
                 $task = 'deploy' . ucfirst($d);
 
-                $this->{$task}()->run();
+                $this->{$task}($this->params)->run();
             }
         }
 

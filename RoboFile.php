@@ -40,9 +40,9 @@ class RoboFile extends \Robo\Tasks
      *
      * @return  void
      */
-    public function map($target)
+    public function map($target, $params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\Map($target))->run();
+        (new \Joomla\Jorobo\Tasks\Map($target, $params))->run();
     }
 
     /**
@@ -52,7 +52,7 @@ class RoboFile extends \Robo\Tasks
      *
      * @return  void
      */
-    public function build($params = ['dev' => false])
+    public function build($params = ['dev' => false, 'base' => JPATH_BASE])
     {
         (new \Joomla\Jorobo\Tasks\Build($params))->run();
     }
@@ -64,9 +64,9 @@ class RoboFile extends \Robo\Tasks
      *
      * @return  void
      */
-    public function generate($extensions)
+    public function generate($extensions, $params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\Generate($extensions))->run();
+        (new \Joomla\Jorobo\Tasks\Generate($extensions, $params))->run();
     }
 
     /**
@@ -74,9 +74,9 @@ class RoboFile extends \Robo\Tasks
      *
      * @return  void
      */
-    public function headers()
+    public function headers($params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\CopyrightHeader())->run();
+        (new \Joomla\Jorobo\Tasks\CopyrightHeader($params))->run();
     }
 
     /**
@@ -86,8 +86,8 @@ class RoboFile extends \Robo\Tasks
      *
      * @since   1.0.0
      */
-    public function bump()
+    public function bump($params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\BumpVersion())->run();
+        (new \Joomla\Jorobo\Tasks\BumpVersion($params))->run();
     }
 }

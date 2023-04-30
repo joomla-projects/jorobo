@@ -20,9 +20,9 @@ trait loadTasks
      *
      * @since   1.0
      */
-    protected function taskMap($target)
+    protected function taskMap($target, $params = [])
     {
-        return new Map($target);
+        return new Map($target, $params);
     }
 
     /**
@@ -34,7 +34,7 @@ trait loadTasks
      *
      * @since   1.0
      */
-    protected function taskBuild($params)
+    protected function taskBuild($params = [])
     {
         return new Build($params);
     }
@@ -48,7 +48,7 @@ trait loadTasks
      *
      * @since   1.0
      */
-    protected function taskGenerate($params)
+    protected function taskGenerate($params = [])
     {
         return new Generate($params);
     }
@@ -62,7 +62,7 @@ trait loadTasks
      *
      * @since   1.0
      */
-    protected function taskCopyrightHeaders($params)
+    protected function taskCopyrightHeaders($params = [])
     {
         return new CopyrightHeader($params);
     }
@@ -74,8 +74,8 @@ trait loadTasks
      *
      * @since   1.0
      */
-    protected function taskBumbVersion()
+    protected function taskBumpVersion($params = [])
     {
-        return new BumpVersion();
+        return new BumpVersion($params);
     }
 }

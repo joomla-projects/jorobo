@@ -42,9 +42,9 @@ class Language extends Base implements TaskInterface
      *
      * @since   1.0
      */
-    public function __construct($extension)
+    public function __construct($extension, $params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->adminLangPath = $this->getSourceFolder() . "/administrator/language";
         $this->frontLangPath = $this->getSourceFolder() . "/language";

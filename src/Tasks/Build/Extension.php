@@ -60,18 +60,6 @@ class Extension extends Base implements TaskInterface
     private $cbplugins = [];
 
     /**
-     * Initialize Build Task
-     *
-     * @param   String  $params  The target directory
-     *
-     * @since   1.0
-     */
-    public function __construct($params)
-    {
-        parent::__construct();
-    }
-
-    /**
      * Build the package
      *
      * @return  Result

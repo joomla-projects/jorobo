@@ -34,15 +34,15 @@ class Library extends Base implements TaskInterface
     /**
      * Initialize Build Task
      *
-     * @param   String  $libName       Name of the library to build
-     * @param   String  $params        Optional params
+     * @param   string  $libName       Name of the library to build
+     * @param   array   $params        Optional params
      * @param   bool    $hasComponent  Has the extension a component (then we need to build differnet)
      *
      * @since   1.0
      */
     public function __construct($libName, $params, $hasComponent)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         // Reset files -> new lib
         $this->resetFiles();

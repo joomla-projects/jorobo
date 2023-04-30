@@ -47,12 +47,12 @@ class Package extends Base implements TaskInterface
      *
      * @since   1.0
      */
-    public function __construct()
+    public function __construct($params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
-        $this->target  = JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
-        $this->current = JPATH_BASE . "/dist/current";
+        $this->target  = $this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
+        $this->current = $this->params['base'] . "/dist/current";
     }
 
     /**
@@ -68,11 +68,11 @@ class Package extends Base implements TaskInterface
         $this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         // Start getting single archives
-        if (file_exists(JPATH_BASE . '/dist/zips')) {
-            $this->_deleteDir(JPATH_BASE . '/dist/zips');
+        if (file_exists($this->params['base'] . '/dist/zips')) {
+            $this->_deleteDir($this->params['base'] . '/dist/zips');
         }
 
-        $this->_mkdir(JPATH_BASE . '/dist/zips');
+        $this->_mkdir($this->params['base'] . '/dist/zips');
         $this->analyze();
 
         if ($this->hasComponent) {
@@ -99,9 +99,9 @@ class Package extends Base implements TaskInterface
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            $this->_exec('mklink /J ' . JPATH_BASE . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target));
+            $this->_exec('mklink /J ' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target));
         } else {
-            $this->_symlink($this->target, JPATH_BASE . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+            $this->_symlink($this->target, $this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
         }
 
         return Result::success($this);
@@ -236,34 +236,34 @@ class Package extends Base implements TaskInterface
         $tmp_path            = '/dist/tmp/cbuild';
         $componentScriptPath = $this->current . "/administrator/components/com_" . $this->getExtensionName() . "/script.php";
 
-        if (file_exists(JPATH_BASE . $tmp_path)) {
-            $this->_deleteDir(JPATH_BASE . $tmp_path);
+        if (file_exists($this->params['base'] . $tmp_path)) {
+            $this->_deleteDir($this->params['base'] . $tmp_path);
         }
 
         // Improve, should been a whitelist instead of a hardcoded copy
-        $this->_mkdir(JPATH_BASE . $tmp_path);
+        $this->_mkdir($this->params['base'] . $tmp_path);
 
-        $this->_copyDir($this->current . '/administrator', JPATH_BASE . $tmp_path . '/administrator');
-        $this->_remove(JPATH_BASE . $tmp_path . '/administrator/manifests');
+        $this->_copyDir($this->current . '/administrator', $this->params['base'] . $tmp_path . '/administrator');
+        $this->_remove($this->params['base'] . $tmp_path . '/administrator/manifests');
 
         if (file_exists($this->current . '/language')) {
-            $this->_copyDir($this->current . '/language', JPATH_BASE . $tmp_path . '/language');
+            $this->_copyDir($this->current . '/language', $this->params['base'] . $tmp_path . '/language');
         }
 
-        $this->_copyDir($this->current . '/components', JPATH_BASE . $tmp_path . '/components');
+        $this->_copyDir($this->current . '/components', $this->params['base'] . $tmp_path . '/components');
 
         if (file_exists($this->current . '/api')) {
-            $this->_copyDir($this->current . '/api', JPATH_BASE . $tmp_path . '/api');
+            $this->_copyDir($this->current . '/api', $this->params['base'] . $tmp_path . '/api');
         }
 
         if (file_exists($this->current . '/media')) {
-            $this->_copyDir($this->current . '/media', JPATH_BASE . $tmp_path . '/media');
+            $this->_copyDir($this->current . '/media', $this->params['base'] . $tmp_path . '/media');
         }
 
-        $comZip->open(JPATH_BASE . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
+        $comZip->open($this->params['base'] . '/dist/zips/com_' . $this->getExtensionName() . '.zip', \ZipArchive::CREATE);
 
         // Process the files to zip
-        $this->addFiles($comZip, JPATH_BASE . $tmp_path);
+        $this->addFiles($comZip, $this->params['base'] . $tmp_path);
 
         $comZip->addFile($this->current . "/" . $this->getExtensionName() . ".xml", $this->getExtensionName() . ".xml");
 
@@ -308,7 +308,7 @@ class Package extends Base implements TaskInterface
                 // Package file
                 $zip = new \ZipArchive();
 
-                $zip->open(JPATH_BASE . '/dist/zips/' . $lib . '.zip', \ZipArchive::CREATE);
+                $zip->open($this->params['base'] . '/dist/zips/' . $lib . '.zip', \ZipArchive::CREATE);
 
                 $this->say("Library " . $p);
 
@@ -351,7 +351,7 @@ class Package extends Base implements TaskInterface
                 // Package file
                 $zip = new \ZipArchive();
 
-                $zip->open(JPATH_BASE . '/dist/zips/' . $entry . '.zip', \ZipArchive::CREATE);
+                $zip->open($this->params['base'] . '/dist/zips/' . $entry . '.zip', \ZipArchive::CREATE);
 
                 $this->say("Module " . $p);
 
@@ -410,7 +410,7 @@ class Package extends Base implements TaskInterface
                         // Package file
                         $zip = new \ZipArchive();
 
-                        $zip->open(JPATH_BASE . '/dist/zips/' . $plg . '.zip', \ZipArchive::CREATE);
+                        $zip->open($this->params['base'] . '/dist/zips/' . $plg . '.zip', \ZipArchive::CREATE);
 
                         // Process the files to zip
                         $this->addFiles($zip, $p2);
@@ -455,7 +455,7 @@ class Package extends Base implements TaskInterface
                 // Package file
                 $zip = new \ZipArchive();
 
-                $zip->open(JPATH_BASE . '/dist/zips/tpl_' . $entry . '.zip', \ZipArchive::CREATE);
+                $zip->open($this->params['base'] . '/dist/zips/tpl_' . $entry . '.zip', \ZipArchive::CREATE);
 
                 $this->say("Template " . $p);
 
@@ -485,7 +485,7 @@ class Package extends Base implements TaskInterface
         $zip->open($this->target, \ZipArchive::CREATE);
 
         // Process the files to zip
-        $this->addFiles($zip, JPATH_BASE . '/dist/zips/');
+        $this->addFiles($zip, $this->params['base'] . '/dist/zips/');
 
         $pkg_path = $this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName();
 

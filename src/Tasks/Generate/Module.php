@@ -34,13 +34,13 @@ class Module extends Base implements TaskInterface
     /**
      * Initialize Build Task
      *
-     * @param   String  $params  The target directory
+     * @param   array  $params  The target directory
      *
      * @since   1.0
      */
-    public function __construct($params)
+    public function __construct($params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->adminPath = $this->getSourceFolder() . "/administrator/components/com_" . $this->getExtensionName();
         $this->frontPath = $this->getSourceFolder() . "/components/com_" . $this->getExtensionName();

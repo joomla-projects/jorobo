@@ -30,11 +30,11 @@ class Zip extends Base implements TaskInterface
      *
      * @since   1.0
      */
-    public function __construct()
+    public function __construct($params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
-        $this->target = JPATH_BASE . "/dist/" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
+        $this->target = $this->params['base'] . "/dist/" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
         $this->zip    = new \ZipArchive();
     }
 

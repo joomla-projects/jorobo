@@ -32,9 +32,9 @@ class Cli extends Base implements TaskInterface
      *
      * @since   1.0
      */
-    public function __construct()
+    public function __construct($params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->source = $this->getSourceFolder() . "/cli";
         $this->target = $this->getBuildFolder() . "/cli";

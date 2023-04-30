@@ -239,7 +239,7 @@ class Release extends Base implements TaskInterface
             $zipfile = 'pkg-' . $zipfile;
         }
 
-        $zipfilepath = JPATH_BASE . '/dist/' . $zipfile;
+        $zipfilepath = $this->params['base'] . '/dist/' . $zipfile;
 
         $filesize = filesize($zipfilepath);
 

@@ -34,20 +34,6 @@ class Generate extends JTask implements TaskInterface
     protected $params = null;
 
     /**
-     * Initialize Build Task
-     *
-     * @param   array  $params  Additional params
-     *
-     * @since   1.0
-     */
-    public function __construct($params)
-    {
-        parent::__construct();
-
-        $this->params = $params;
-    }
-
-    /**
      * Build the package
      *
      * @return  void

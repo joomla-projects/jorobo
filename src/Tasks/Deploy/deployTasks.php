@@ -18,9 +18,9 @@ trait deployTasks
      *
      * @since   1.0
      */
-    protected function deployZip()
+    protected function deployZip($params = [])
     {
-        return new Zip();
+        return new Zip($params);
     }
 
     /**
@@ -30,9 +30,9 @@ trait deployTasks
      *
      * @since   1.0
      */
-    protected function deployPackage()
+    protected function deployPackage($params = [])
     {
-        return new Package();
+        return new Package($params);
     }
 
     /**
@@ -42,9 +42,9 @@ trait deployTasks
      *
      * @since   1.0
      */
-    protected function deployRelease()
+    protected function deployRelease($params = [])
     {
-        return new Release();
+        return new Release($params);
     }
 
     /**
@@ -55,8 +55,8 @@ trait deployTasks
      *
      * @since   1.0
      */
-    protected function deployFtp()
+    protected function deployFtp($params = [])
     {
-        return new FtpUpload();
+        return new FtpUpload($params);
     }
 }

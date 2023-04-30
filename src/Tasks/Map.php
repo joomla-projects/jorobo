@@ -49,9 +49,9 @@ class Map extends JTask implements TaskInterface
      *
      * @since   1.0
      */
-    public function __construct($target)
+    public function __construct($target, $params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->target = $target;
     }

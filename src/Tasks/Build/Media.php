@@ -39,9 +39,9 @@ class Media extends Base implements TaskInterface
      *
      * @since   1.0
      */
-    public function __construct($folder, $extName)
+    public function __construct($folder, $extName, $params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         $this->source  = $this->getSourceFolder() . "/" . $folder;
         $this->extName = $extName;

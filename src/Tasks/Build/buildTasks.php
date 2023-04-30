@@ -20,7 +20,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildExtension($params)
+    protected function buildExtension($params = [])
     {
         return new Extension($params);
     }
@@ -34,7 +34,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildComponent($params)
+    protected function buildComponent($params = [])
     {
         return new Component($params);
     }
@@ -49,9 +49,9 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildMedia($source, $extName)
+    protected function buildMedia($source, $extName, $params = [])
     {
-        return new Media($source, $extName);
+        return new Media($source, $extName, $params);
     }
 
     /**
@@ -63,9 +63,9 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildLanguage($extension)
+    protected function buildLanguage($extension, $params = [])
     {
-        return new Language($extension);
+        return new Language($extension, $params);
     }
 
     /**
@@ -91,9 +91,9 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildCli()
+    protected function buildCli($params = [])
     {
-        return new Cli();
+        return new Cli($params);
     }
 
     /**
@@ -106,7 +106,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildModule($modName, $params)
+    protected function buildModule($modName, $params = [])
     {
         return new Module($modName, $params);
     }
@@ -120,7 +120,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildPackage($params)
+    protected function buildPackage($params = [])
     {
         return new Package($params);
     }
@@ -136,7 +136,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildPlugin($type, $name, $params)
+    protected function buildPlugin($type, $name, $params = [])
     {
         return new Plugin($type, $name, $params);
     }
@@ -152,7 +152,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildCBPlugin($type, $name, $params)
+    protected function buildCBPlugin($type, $name, $params = [])
     {
         return new CBPlugin($type, $name, $params);
     }
@@ -167,7 +167,7 @@ trait buildTasks
      *
      * @since   1.0
      */
-    protected function buildTemplate($templateName, $params)
+    protected function buildTemplate($templateName, $params = [])
     {
         return new Template($templateName, $params);
     }

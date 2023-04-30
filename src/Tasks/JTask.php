@@ -62,6 +62,15 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
     protected $sourceFolder = '';
 
     /**
+     * Build parameters
+     *
+     * @var    array
+     *
+     * @since  1.0
+     */
+    protected $params = [];
+
+    /**
      * Construct
      *
      * @param   array  $params  Opt params
@@ -70,6 +79,9 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
      */
     public function __construct($params = [])
     {
+        $this->params = (array) $params;
+        $this->params['base'] = $this->params['base'] ?? JPATH_BASE;
+
         // Registers the application to run Robo commands
         $runner = new Runner();
         $app    = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
@@ -169,7 +181,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
      */
     private function determineSourceFolder()
     {
-        $this->sourceFolder = JPATH_BASE . "/" . $this->getJConfig()->source;
+        $this->sourceFolder = $this->params['base'] . "/" . $this->getJConfig()->source;
 
         if (!is_dir($this->sourceFolder)) {
             $this->say('Warning - Directory: ' . $this->sourceFolder . ' is not available');
@@ -209,7 +221,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
         }
 
         // Load config as object
-        $jConfig = json_decode(json_encode(parse_ini_file(JPATH_BASE . '/jorobo.ini', true)), false);
+        $jConfig = json_decode(json_encode(parse_ini_file($this->params['base'] . '/jorobo.ini', true)), false);
 
         if (!$jConfig) {
             $this->say('Error: Config file jorobo.ini not available');
@@ -229,7 +241,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
             }
         }
 
-        $jConfig->buildFolder = JPATH_BASE . $this->determineTarget($jConfig);
+        $jConfig->buildFolder = $this->params['base'] . $this->determineTarget($jConfig);
         $jConfig->params      = $params;
 
         self::$jConfig = $jConfig;

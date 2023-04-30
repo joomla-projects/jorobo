@@ -26,16 +26,6 @@ class CopyrightHeader extends JTask implements TaskInterface
     use Generate\generateTasks;
 
     /**
-     * Initialize Build Task - Possible useless method overriding?
-     *
-     * @since  1.0
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Generate / Update copyright headers
      *
      * @return  Result

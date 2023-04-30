@@ -32,14 +32,14 @@ class Template extends Base implements TaskInterface
     /**
      * Initialize Build Task
      *
-     * @param   String  $templateName  Name of the template
-     * @param   String  $params        Optional params
+     * @param   string  $templateName  Name of the template
+     * @param   array   $params        Optional params
      *
      * @since   1.0
      */
-    public function __construct($templateName, $params)
+    public function __construct($templateName, $params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         // Reset files - > new template
         $this->resetFiles();

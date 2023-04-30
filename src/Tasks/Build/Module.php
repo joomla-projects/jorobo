@@ -32,14 +32,14 @@ class Module extends Base implements TaskInterface
     /**
      * Initialize Build Task
      *
-     * @param   String  $modName  Name of the module
-     * @param   String  $params   Optional params
+     * @param   string  $modName  Name of the module
+     * @param   array   $params   Optional params
      *
      * @since   1.0
      */
-    public function __construct($modName, $params)
+    public function __construct($modName, $params = [])
     {
-        parent::__construct();
+        parent::__construct($params);
 
         // Reset files - > new module
         $this->resetFiles();

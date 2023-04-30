@@ -34,15 +34,15 @@ class CBPlugin extends Base implements TaskInterface
     /**
      * Initialize Build Task
      *
-     * @param   String  $type    Type of the plugin
-     * @param   String  $name    Name of the plugin
-     * @param   String  $params  Optional params
+     * @param   string  $type    Type of the plugin
+     * @param   string  $name    Name of the plugin
+     * @param   array   $params  Optional params
      *
      * @since   1.0
      */
     public function __construct($type, $name, $params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         // Reset files - > new module
         $this->resetFiles();

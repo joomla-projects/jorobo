@@ -61,13 +61,13 @@ class FtpUpload extends Base implements TaskInterface
 
         // Todo Move filepath and name to config
         $this->filename = $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
-        $this->filepath = JPATH_BASE . "/dist/" . $this->filename;
+        $this->filepath = $this->params['base'] . "/dist/" . $this->filename;
 
         // Check if we have a package
         if (in_array("package", explode(" ", $this->getJConfig()->target))) {
             $this->target   = "package";
             $this->filename = "pkg-" . $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
-            $this->filepath = JPATH_BASE . "/dist/" . $this->filename;
+            $this->filepath = $this->params['base'] . "/dist/" . $this->filename;
         }
 
         try {

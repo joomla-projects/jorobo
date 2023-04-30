@@ -42,13 +42,13 @@ class Component extends Base implements TaskInterface
     /**
      * Initialize Build Task
      *
-     * @param   String  $params  The target directory
+     * @param   array  $params  The target directory
      *
      * @since   1.0
      */
     public function __construct($params)
     {
-        parent::__construct();
+        parent::__construct($params);
 
         // Reset files - > new component
         $this->resetFiles();
@@ -123,8 +123,8 @@ class Component extends Base implements TaskInterface
         }
 
         // Copy Readme
-        if (is_file(JPATH_BASE . "/docs/README.md")) {
-            $this->_copy(JPATH_BASE . "/docs/README.md", $this->getBuildFolder() . "/README");
+        if (is_file($this->params['base'] . "/docs/README.md")) {
+            $this->_copy($this->params['base'] . "/docs/README.md", $this->getBuildFolder() . "/README");
         }
 
         return Result::success($this, "Component build");
