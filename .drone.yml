@@ -22,6 +22,31 @@ steps:
       - ./vendor/bin/phpcs --extensions=php -p --standard=ruleset.xml .
       - echo $(date)
 
+  - name: clone-test-data
+    image: alpine/git
+    commands:
+      - mkdir test-weblinks
+      - cd test-weblinks
+      - git clone https://github.com/joomla-extensions/weblinks.git .
+      - git checkout 4.0-dev
+      - cd ..
+      - rm jorobo.dist.ini
+      - cp test-weblinks/jorobo.dist.ini jorobo.dist.ini
+
+  - name: composer
+    image: joomlaprojects/docker-images:php7.4
+    volumes:
+      - name: composer-cache
+        path: /tmp/composer-cache
+    commands:
+      - cd test-weblinks
+      - composer install --no-progress --no-suggest
+
+  - name: test-jorobo-php72
+    image: joomlaprojects/docker-images:php7.2
+    commands:
+      - ./vendor/bin/phpunit tests
+
 volumes:
   - name: composer-cache
     host:
@@ -29,6 +54,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 67946c090df8fe10ed30aa366bd23567034532788652a1022ea49367cbf24737
+hmac: 852f4bcbacf5987cfa2ec9eb53a85eb9a9a33dac6cc67fdffcfe5b850be24912
 
 ...

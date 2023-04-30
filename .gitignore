@@ -34,13 +34,8 @@ vendor/*
 robo.phar
 
 # Test related files
-tests/acceptance.suite.yml
-tests/*/*Tester.php
-tests/joomla-cms3*
-tests/_output*
-selenium-server-standalone.jar
-codecept.phar
-selenium.log
+test-cms
+test-weblinks
 
 # JoRobo related files
 /dist
