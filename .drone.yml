@@ -15,7 +15,6 @@ steps:
 
   - name: phpcs
     image: joomlaprojects/docker-images:php7.2
-    depends_on: [ composer ]
     commands:
       - echo $(date)
       - ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
@@ -54,6 +53,6 @@ volumes:
 
 ---
 kind: signature
-hmac: d60adef0ebee505ad1bfc16d9bcaf49d02ae0ac9037015637466eb1cb4bea3ba
+hmac: 5215fc5c66f8766b00848e80536c7be5a55bf83f62435776964cc80f042a530c
 
 ...
