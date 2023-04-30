@@ -31,9 +31,9 @@ steps:
       - git checkout 4.0-dev
       - cd ..
       - rm jorobo.dist.ini
-      - cp test-weblinks/jorobo.dist.ini jorobo.dist.ini
+      - cp test-weblinks/jorobo.dist.ini jorobo.ini
 
-  - name: composer
+  - name: weblinks-composer
     image: joomlaprojects/docker-images:php7.4
     volumes:
       - name: composer-cache
@@ -54,6 +54,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 852f4bcbacf5987cfa2ec9eb53a85eb9a9a33dac6cc67fdffcfe5b850be24912
+hmac: d60adef0ebee505ad1bfc16d9bcaf49d02ae0ac9037015637466eb1cb4bea3ba
 
 ...
