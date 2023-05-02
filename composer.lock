@@ -387,16 +387,16 @@
         },
         {
             "name": "consolidation/robo",
-            "version": "3.0.11",
+            "version": "3.0.12",
             "source": {
                 "type": "git",
                 "url": "https://github.com/consolidation/robo.git",
-                "reference": "820fa0f164f77887e268b7dbfb2283416c7334c1"
+                "reference": "0c3a5085357f46c90a0b756e3d326f44847158b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/consolidation/robo/zipball/820fa0f164f77887e268b7dbfb2283416c7334c1",
-                "reference": "820fa0f164f77887e268b7dbfb2283416c7334c1",
+                "url": "https://api.github.com/repos/consolidation/robo/zipball/0c3a5085357f46c90a0b756e3d326f44847158b8",
+                "reference": "0c3a5085357f46c90a0b756e3d326f44847158b8",
                 "shasum": ""
             },
             "require": {
@@ -480,9 +480,9 @@
             "description": "Modern task runner",
             "support": {
                 "issues": "https://github.com/consolidation/robo/issues",
-                "source": "https://github.com/consolidation/robo/tree/3.0.11"
+                "source": "https://github.com/consolidation/robo/tree/3.0.12"
             },
-            "time": "2022-12-07T15:18:26+00:00"
+            "time": "2023-04-30T21:18:09+00:00"
         },
         {
             "name": "consolidation/self-update",
