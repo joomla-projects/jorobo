@@ -490,7 +490,13 @@ class Package extends Base implements TaskInterface
         $pkg_path = $this->current . "/administrator/manifests/packages/pkg_" . $this->getExtensionName();
 
         $zip->addFile($pkg_path . ".xml", "pkg_" . $this->getExtensionName() . ".xml");
-        $zip->addFile($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() . "/script.php", "script.php");
+
+        if (is_file($this->current . "/administrator/manifests/packages/" . $this->getExtensionName() . "/script.php")) {
+            $zip->addFile(
+                $this->current . "/administrator/manifests/packages/" . $this->getExtensionName() . "/script.php",
+                "script.php"
+            );
+        }
 
         // If the package has language files, add those
         $pkg_languages_path = $pkg_path . "/language";
