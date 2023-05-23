@@ -21,7 +21,7 @@
         <exclude-pattern type="relative">src/Tasks/Build/buildTasks\.php</exclude-pattern>
         <exclude-pattern type="relative">src/Tasks/Deploy/deployTasks\.php</exclude-pattern>
         <exclude-pattern type="relative">src/Tasks/Generate/generateTasks\.php</exclude-pattern>
-        <exclude-pattern type="relative">src/Tasks/loadTasks\.php</exclude-pattern>
+        <exclude-pattern type="relative">src/Tasks/Tasks\.php</exclude-pattern>
     </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration">
