@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,7 +18,7 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class Module extends Base implements TaskInterface
+class Module extends Base
 {
     use \Robo\Task\Development\Tasks;
 

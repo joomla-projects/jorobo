@@ -9,8 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Contract\TaskInterface;
-
 /**
  * Building class for extensions
  *
@@ -18,11 +16,10 @@ use Robo\Contract\TaskInterface;
  *
  * @since    1.0
  */
-class Generate extends JTask implements TaskInterface
+class Generate extends JTask
 {
     use \Robo\Task\Development\Tasks;
-    use \Robo\Common\TaskIO;
-    use Generate\generateTasks;
+    use Generate\Tasks;
 
     /**
      * Additional params
