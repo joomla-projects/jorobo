@@ -9,7 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-trait loadTasks
+trait Tasks
 {
     /**
      * Map Task

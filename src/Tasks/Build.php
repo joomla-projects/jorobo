@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,12 +18,11 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class Build extends JTask implements TaskInterface
+class Build extends JTask
 {
     use \Robo\Task\Development\Tasks;
-    use \Robo\Common\TaskIO;
-    use Build\buildTasks;
-    use Deploy\deployTasks;
+    use Build\Tasks;
+    use Deploy\Tasks;
 
     /**
      * Build the package

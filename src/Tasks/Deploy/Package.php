@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,7 +18,7 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class Package extends Base implements TaskInterface
+class Package extends Base
 {
     /**
      * The target Zip file of the package
@@ -42,6 +41,7 @@ class Package extends Base implements TaskInterface
 
     private $hasCBPlugins = true;
 
+    protected $current;
     /**
      * Initialize Build Task
      *

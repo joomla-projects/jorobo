@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,7 +18,7 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class FtpUpload extends Base implements TaskInterface
+class FtpUpload extends Base
 {
     /**
      * Should we upload a package or a zip (defaults to zip)

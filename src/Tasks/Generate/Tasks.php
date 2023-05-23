@@ -9,7 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
-trait generateTasks
+trait Tasks
 {
     /**
      * Generate a component skeleton
@@ -23,13 +23,13 @@ trait generateTasks
      */
     protected function generateComponent($title, $params = [])
     {
-        return null;
+        return new Component($title, $params);
     }
 
     /**
      * Generate a module skeleton
      *
-     * @param   string  $title   The component name (e.g. com_component)
+     * @param   string  $title   The module name (e.g. mod_login)
      * @param   array   $params  Opt params
      *
      * @return  null
@@ -38,13 +38,28 @@ trait generateTasks
      */
     protected function generateModule($title, $params = [])
     {
-        return null;
+        return new Module($title, $params);
+    }
+
+    /**
+     * Generate a package skeleton
+     *
+     * @param   string  $title   The package name (e.g. weblinks)
+     * @param   array   $params  Opt params
+     *
+     * @return  null
+     *
+     * @since   1.0
+     */
+    protected function generatePackage($title, $params = [])
+    {
+        return new Package($title, $params);
     }
 
     /**
      * Generate a plugin skeleton
      *
-     * @param   string  $title   The component name (e.g. com_component)
+     * @param   string  $title   The plugin name (e.g. plg_system_joomla)
      * @param   array   $params  Opt params
      *
      * @return  null
@@ -53,6 +68,21 @@ trait generateTasks
      */
     protected function generatePlugin($title, $params = [])
     {
-        return null;
+        return new Plugin($title, $params);
+    }
+
+    /**
+     * Generate a template skeleton
+     *
+     * @param   string  $title   The template name (e.g. cassiopeia)
+     * @param   array   $params  Opt params
+     *
+     * @return  null
+     *
+     * @since   1.0
+     */
+    protected function generateTemplate($title, $params = [])
+    {
+        return new Template($title, $params);
     }
 }

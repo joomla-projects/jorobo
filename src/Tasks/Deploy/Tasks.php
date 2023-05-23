@@ -9,7 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
-trait deployTasks
+trait Tasks
 {
     /**
      * Build extension

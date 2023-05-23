@@ -10,7 +10,6 @@
 namespace Joomla\Jorobo\Tasks\Deploy;
 
 use Joomla\Jorobo\Tasks\JTask;
-use Robo\Contract\TaskInterface;
 
 /**
  * Deployment base - contains methods / data used in multiple build tasks
@@ -19,8 +18,7 @@ use Robo\Contract\TaskInterface;
  *
  * @since    1.0
  */
-abstract class Base extends JTask implements TaskInterface
+abstract class Base extends JTask
 {
     use \Robo\Task\Development\Tasks;
-    use \Robo\Common\TaskIO;
 }

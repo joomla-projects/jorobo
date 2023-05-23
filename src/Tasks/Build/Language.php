@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,7 +18,7 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class Language extends Base implements TaskInterface
+class Language extends Base
 {
     protected $ext = null;
 

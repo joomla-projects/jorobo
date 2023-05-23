@@ -11,7 +11,9 @@ namespace Joomla\Jorobo\Tasks;
 
 use Robo\Application;
 use Robo\Contract\TaskInterface;
+use Robo\Robo;
 use Robo\Runner;
+use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
@@ -73,19 +75,23 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
     /**
      * Construct
      *
-     * @param   array  $params  Opt params
+     * @param   array      $params  Opt params
+     * @param   ConsoleIO  $io      IO object
      *
      * @since   1.0
      */
-    public function __construct($params = [])
+    public function __construct($params = [], $io = null)
     {
         $this->params         = (array) $params;
-        $this->params['base'] = $this->params['base'] ?? JPATH_BASE;
+        $this->params['base'] = $this->params['base'] ?? \JPATH_BASE;
+
+        if (is_a($io, '\Robo\Symfony\ConsoleIO')) {
+            $this->io = $io;
+        }
 
         // Registers the application to run Robo commands
-        $runner = new Runner();
         $app    = new Application('Joomla\Jorobo\Tasks\JTask', '1.0.0');
-        $runner->registerCommandClass($app, $this);
+        Robo::register($app, $this);
 
         $this->loadConfiguration($params);
         $this->determineOperatingSystem();

@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,10 +18,9 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class BumpVersion extends JTask implements TaskInterface
+class BumpVersion extends JTask
 {
     use \Robo\Task\Development\Tasks;
-    use \Robo\Common\TaskIO;
 
     /**
      * Maps all parts of an extension into a Joomla! installation

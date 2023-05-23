@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,11 +18,10 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class CopyrightHeader extends JTask implements TaskInterface
+class CopyrightHeader extends JTask
 {
     use \Robo\Task\Development\Tasks;
-    use \Robo\Common\TaskIO;
-    use Generate\generateTasks;
+    use Generate\Tasks;
 
     /**
      * Generate / Update copyright headers

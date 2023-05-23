@@ -11,7 +11,6 @@ namespace Joomla\Jorobo\Tasks\Deploy;
 
 use Joomla\Github\Github;
 use Joomla\Registry\Registry;
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -21,8 +20,10 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class Release extends Base implements TaskInterface
+class Release extends Base
 {
+    private $allClosedPulls;
+
     /**
      * Release the build package on GitHub
      *

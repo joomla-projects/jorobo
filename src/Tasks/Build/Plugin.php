@@ -9,7 +9,6 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
-use Robo\Contract\TaskInterface;
 use Robo\Result;
 
 /**
@@ -19,9 +18,9 @@ use Robo\Result;
  *
  * @since    1.0
  */
-class Plugin extends Base implements TaskInterface
+class Plugin extends Base
 {
-    use buildTasks;
+    use Tasks;
 
     protected $plgName = null;
 
