@@ -35,7 +35,7 @@ class Library extends Base
      *
      * @param   string  $libName       Name of the library to build
      * @param   array   $params        Optional params
-     * @param   bool    $hasComponent  Has the extension a component (then we need to build differnet)
+     * @param   bool    $hasComponent  Has the extension a component (then we need to build different)
      *
      * @since   1.0
      */
