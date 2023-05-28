@@ -12,7 +12,7 @@ namespace Joomla\Jorobo\Tasks;
 use Robo\Result;
 
 /**
- * Map extension into an Joomla installation
+ * Map extension into a Joomla installation
  *
  * @package  Joomla\Jorobo\Tasks
  *
