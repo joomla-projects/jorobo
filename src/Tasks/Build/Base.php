@@ -297,7 +297,7 @@ abstract class Base extends JTask
     }
 
     /**
-     * Get the current date (formated for building)
+     * Get the current date (formatted for building)
      *
      * @return  string
      *
