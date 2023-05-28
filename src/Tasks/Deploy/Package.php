@@ -222,7 +222,7 @@ class Package extends Base
     }
 
     /**
-     * Create a installable zip file for a component
+     * Create an installable zip file for a component
      *
      * @TODO    implement possibility for multiple components (without duplicate content)
      *
