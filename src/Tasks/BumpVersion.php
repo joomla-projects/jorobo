@@ -12,7 +12,7 @@ namespace Joomla\Jorobo\Tasks;
 use Robo\Result;
 
 /**
- * Bump the version of an Joomla extension
+ * Bump the version of a Joomla extension
  *
  * @package  Joomla\Jorobo\Tasks
  *
