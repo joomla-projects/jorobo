@@ -63,7 +63,7 @@ class Build extends JTask
             }
         }
 
-        return Result::success($this, 'Build successfull');
+        return Result::success($this, 'Build successful');
     }
 
     /**
