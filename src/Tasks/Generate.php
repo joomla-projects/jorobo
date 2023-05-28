@@ -39,7 +39,7 @@ class Generate extends JTask
      */
     public function run()
     {
-        $this->prepareSouceDirectory();
+        $this->prepareSourceDirectory();
 
         $this->say('Not implemented yet');
     }
@@ -66,7 +66,7 @@ class Generate extends JTask
      *
      * @since   1.0
      */
-    private function prepareSouceDirectory()
+    private function prepareSourceDirectory()
     {
         if (!file_exists($this->sourceFolder)) {
             $this->say('Creating source folder');
