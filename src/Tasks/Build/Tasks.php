@@ -73,7 +73,7 @@ trait Tasks
      *
      * @param   String  $libName       Name of the module
      * @param   array   $params        Opt params
-     * @param   bool    $hasComponent  has the extension a component (then we need to build differnet)
+     * @param   bool    $hasComponent  has the extension a component (then we need to build different)
      *
      * @return  Library
      *
