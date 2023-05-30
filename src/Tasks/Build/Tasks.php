@@ -9,6 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Collection\CollectionBuilder;
+
 trait Tasks
 {
     /**
@@ -16,13 +18,13 @@ trait Tasks
      *
      * @param   array  $params  Opt params
      *
-     * @return  Extension
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildExtension($params = [])
     {
-        return new Extension($params);
+        return $this->task(Extension::class, $params);
     }
 
     /**
@@ -30,13 +32,13 @@ trait Tasks
      *
      * @param   array  $params  Opt params
      *
-     * @return  Component
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildComponent($params = [])
     {
-        return new Component($params);
+        return $this->task(Component::class, $params);
     }
 
     /**
@@ -45,13 +47,13 @@ trait Tasks
      * @param   string   $source   The media folder (an extension could have multiple)
      * @param   string   $extName  The extension name (e.g. mod_xy)
      *
-     * @return  Media
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildMedia($source, $extName, $params = [])
     {
-        return new Media($source, $extName, $params);
+        return $this->task(Media::class, $source, $extName, $params);
     }
 
     /**
@@ -59,13 +61,13 @@ trait Tasks
      *
      * @param   string  $extension  The extension (not the whole, but mod_xy or plg_)
      *
-     * @return  Language
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildLanguage($extension, $params = [])
     {
-        return new Language($extension, $params);
+        return $this->task(Language::class, $extension, $params);
     }
 
     /**
@@ -75,25 +77,25 @@ trait Tasks
      * @param   array   $params        Opt params
      * @param   bool    $hasComponent  has the extension a component (then we need to build different)
      *
-     * @return  Library
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildLibrary($libName, $params, $hasComponent)
     {
-        return new Library($libName, $params, $hasComponent);
+        return $this->task(Library::class, $libName, $params, $hasComponent);
     }
 
     /**
      * Build cli folder
      *
-     * @return  Cli
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildCli($params = [])
     {
-        return new Cli($params);
+        return $this->task(Cli::class, $params);
     }
 
     /**
@@ -102,13 +104,13 @@ trait Tasks
      * @param   String  $modName  Name of the module
      * @param   array   $params   Opt params
      *
-     * @return  Module
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildModule($modName, $params = [])
     {
-        return new Module($modName, $params);
+        return $this->task(Module::class, $modName, $params);
     }
 
     /**
@@ -116,13 +118,13 @@ trait Tasks
      *
      * @param   array  $params  Opt params
      *
-     * @return  Package
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildPackage($params = [])
     {
-        return new Package($params);
+        return $this->task(Package::class, $params);
     }
 
     /**
@@ -132,29 +134,28 @@ trait Tasks
      * @param   String  $name    Name of the plugin
      * @param   array   $params  Opt params
      *
-     * @return  Plugin
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildPlugin($type, $name, $params = [])
     {
-        return new Plugin($type, $name, $params);
+        return $this->task(Plugin::class, $type, $name, $params);
     }
 
     /**
-     * Build a CBPlugin
+     * Build a File extension
      *
-     * @param   String  $type    Type of the plugin
      * @param   String  $name    Name of the plugin
      * @param   array   $params  Opt params
      *
-     * @return  CBPlugin
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
-    protected function buildCBPlugin($type, $name, $params = [])
+    protected function buildFile($name, $params = [])
     {
-        return new CBPlugin($type, $name, $params);
+        return $this->task(File::class, $name, $params);
     }
 
     /**
@@ -163,12 +164,12 @@ trait Tasks
      * @param   String  $templateName  Name of the template
      * @param   array   $params        Opt params
      *
-     * @return  Template
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function buildTemplate($templateName, $params = [])
     {
-        return new Template($templateName, $params);
+        return $this->task(Template::class, $templateName, $params);
     }
 }

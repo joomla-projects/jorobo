@@ -43,7 +43,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function map($target, $params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\Map($target, $params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\Map::class, $target, $params)->run();
     }
 
     /**
@@ -55,13 +55,13 @@ class RoboFile extends \Robo\Tasks
      */
     public function build(ConsoleIO $io, $params = ['dev' => false, 'base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\Build($params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\Build::class, $params)->run();
     }
 
     /**
      * Generate an extension skeleton - not implemented yet
      *
-     * @param   array  $extensions  Extensions to build (com_xy, mod_xy)
+     * @param   array  $extensions  Extensions to build (com_xy, mod_xy, pkg_name, plg_type_name, tpl_name)
      *
      * @return  void
      */
@@ -70,19 +70,19 @@ class RoboFile extends \Robo\Tasks
         foreach ($extensions as $extension) {
             switch (substr($extension, 0, 3)) {
                 case 'com':
-                    (new \Joomla\Jorobo\Tasks\Generate\Component($extension, $params))->run();
+                    $this->task(\Joomla\Jorobo\Tasks\Generate\Component::class, $extension, $params)->run();
                     break;
                 case 'mod':
-                    (new \Joomla\Jorobo\Tasks\Generate\Module($extension, $params))->run();
+                    $this->task(\Joomla\Jorobo\Tasks\Generate\Module::class, $extension, $params)->run();
                     break;
                 case 'pkg':
-                    (new \Joomla\Jorobo\Tasks\Generate\Package($extension, $params))->run();
+                    $this->task(\Joomla\Jorobo\Tasks\Generate\Package::class, $extension, $params)->run();
                     break;
                 case 'plg':
-                    (new \Joomla\Jorobo\Tasks\Generate\Plugin($extension, $params))->run();
+                    $this->task(\Joomla\Jorobo\Tasks\Generate\Plugin::class, $extension, $params)->run();
                     break;
                 case 'tpl':
-                    (new \Joomla\Jorobo\Tasks\Generate\Template($extension, $params))->run();
+                    $this->task(\Joomla\Jorobo\Tasks\Generate\Template::class, $extension, $params)->run();
                     break;
             }
         }
@@ -97,7 +97,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function generateComponent($name, $params = ['base' => JPATH_BASE, 'site' => true, 'api' => false, 'media' => false])
     {
-        (new \Joomla\Jorobo\Tasks\Generate\Component($name, $params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\Generate\Component::class, $name, $params)->run();
     }
 
     /**
@@ -110,7 +110,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function generateView($name, $view, $params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\Generate\Component($name, $params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\Generate\Component::class, $name, $params)->run();
     }
 
     /**
@@ -129,7 +129,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function generateModule($name, $params = ['base' => JPATH_BASE, 'client' => 'site'])
     {
-        (new \Joomla\Jorobo\Tasks\Generate\Module($name, $params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\Generate\Module::class, $name, $params)->run();
     }
 
     /**
@@ -139,7 +139,7 @@ class RoboFile extends \Robo\Tasks
      */
     public function headers($params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\CopyrightHeader($params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\CopyrightHeader::class, $params)->run();
     }
 
     /**
@@ -151,6 +151,6 @@ class RoboFile extends \Robo\Tasks
      */
     public function bump($params = ['base' => JPATH_BASE])
     {
-        (new \Joomla\Jorobo\Tasks\BumpVersion($params))->run();
+        $this->task(\Joomla\Jorobo\Tasks\BumpVersion::class, $params)->run();
     }
 }

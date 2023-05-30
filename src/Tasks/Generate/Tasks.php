@@ -9,6 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
+use Robo\Collection\CollectionBuilder;
+
 trait Tasks
 {
     /**
@@ -17,13 +19,13 @@ trait Tasks
      * @param   string  $title   The component name (e.g. com_component)
      * @param   array   $params  Opt params
      *
-     * @return  null
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function generateComponent($title, $params = [])
     {
-        return new Component($title, $params);
+        return $this->task(Component::class, $title, $params);
     }
 
     /**
@@ -32,13 +34,13 @@ trait Tasks
      * @param   string  $title   The module name (e.g. mod_login)
      * @param   array   $params  Opt params
      *
-     * @return  null
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function generateModule($title, $params = [])
     {
-        return new Module($title, $params);
+        return $this->task(Module::class, $title, $params);
     }
 
     /**
@@ -47,13 +49,13 @@ trait Tasks
      * @param   string  $title   The package name (e.g. weblinks)
      * @param   array   $params  Opt params
      *
-     * @return  null
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function generatePackage($title, $params = [])
     {
-        return new Package($title, $params);
+        return $this->task(Package::class, $title, $params);
     }
 
     /**
@@ -62,13 +64,13 @@ trait Tasks
      * @param   string  $title   The plugin name (e.g. plg_system_joomla)
      * @param   array   $params  Opt params
      *
-     * @return  null
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function generatePlugin($title, $params = [])
     {
-        return new Plugin($title, $params);
+        return $this->task(Plugin::class, $title, $params);
     }
 
     /**
@@ -77,12 +79,12 @@ trait Tasks
      * @param   string  $title   The template name (e.g. cassiopeia)
      * @param   array   $params  Opt params
      *
-     * @return  null
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function generateTemplate($title, $params = [])
     {
-        return new Template($title, $params);
+        return $this->task(Template::class, $title, $params);
     }
 }

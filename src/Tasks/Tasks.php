@@ -9,6 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks;
 
+use Robo\Collection\CollectionBuilder;
+
 trait Tasks
 {
     /**
@@ -16,13 +18,13 @@ trait Tasks
      *
      * @param   String  $target  The target directory
      *
-     * @return  Map
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function taskMap($target, $params = [])
     {
-        return new Map($target, $params);
+        return $this->task(Map::class, $target, $params);
     }
 
     /**
@@ -30,13 +32,13 @@ trait Tasks
      *
      * @param   array  $params  Opt params
      *
-     * @return  Build
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function taskBuild($params = [])
     {
-        return new Build($params);
+        return $this->task(Build::class, $params);
     }
 
     /**
@@ -44,13 +46,13 @@ trait Tasks
      *
      * @param   array  $params  Opt params
      *
-     * @return  Generate
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function taskGenerate($params = [])
     {
-        return new Generate($params);
+        return $this->task(Generate::class, $params);
     }
 
     /**
@@ -58,24 +60,24 @@ trait Tasks
      *
      * @param   array  $params  Opt params
      *
-     * @return  CopyrightHeader
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function taskCopyrightHeaders($params = [])
     {
-        return new CopyrightHeader($params);
+        return $this->task(CopyrightHeader::class, $params);
     }
 
     /**
      * Bump the __DEPLOY_VERSION__ task
      *
-     * @return  BumpVersion
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function taskBumpVersion($params = [])
     {
-        return new BumpVersion($params);
+        return $this->task(BumpVersion::class, $params);
     }
 }

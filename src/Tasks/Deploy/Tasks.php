@@ -9,54 +9,56 @@
 
 namespace Joomla\Jorobo\Tasks\Deploy;
 
+use Robo\Collection\CollectionBuilder;
+
 trait Tasks
 {
     /**
      * Build extension
      *
-     * @return  Zip
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function deployZip($params = [])
     {
-        return new Zip($params);
+        return $this->task(Zip::class, $params);
     }
 
     /**
      * Build extension
      *
-     * @return  Package
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function deployPackage($params = [])
     {
-        return new Package($params);
+        return $this->task(Package::class, $params);
     }
 
     /**
      * Build extension
      *
-     * @return  Release
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function deployRelease($params = [])
     {
-        return new Release($params);
+        return $this->task(Release::class, $params);
     }
 
     /**
      * Deploy to FTP
      * (Depends on package or zip deploy task)
      *
-     * @return  FtpUpload
+     * @return  CollectionBuilder
      *
      * @since   1.0
      */
     protected function deployFtp($params = [])
     {
-        return new FtpUpload($params);
+        return $this->task(FtpUpload::class, $params);
     }
 }
