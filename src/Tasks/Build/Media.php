@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -100,6 +101,8 @@ class Media extends Base
      */
     private function prepareDirectory()
     {
-        $this->_mkdir($this->target);
+        $this->taskFilesystemStack()->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)->mkdir($this->target)->run();
+
+        //$this->_mkdir($this->target);
     }
 }

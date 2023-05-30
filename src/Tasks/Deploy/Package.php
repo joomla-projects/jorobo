@@ -39,8 +39,6 @@ class Package extends Base
 
     private $hasLibraries = true;
 
-    private $hasCBPlugins = true;
-
     protected $current;
     /**
      * Initialize Build Task
@@ -165,10 +163,6 @@ class Package extends Base
 
         if (!file_exists($this->current . "/libraries")) {
             $this->hasLibraries = false;
-        }
-
-        if (!file_exists($this->current . "/components/com_comprofiler")) {
-            $this->hasCBPlugins = false;
         }
     }
 

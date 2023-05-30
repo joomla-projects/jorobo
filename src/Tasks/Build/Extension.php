@@ -37,8 +37,6 @@ class Extension extends Base
 
     private $hasLibraries = true;
 
-    private $hasCBPlugins = true;
-
     private $hasTemplates = true;
 
     private $modules = [];
@@ -48,15 +46,6 @@ class Extension extends Base
     private $libraries = [];
 
     private $templates = [];
-
-    /**
-     * Community Builder plugins
-     *
-     * @var    array
-     *
-     * @since  1.0
-     */
-    private $cbplugins = [];
 
     /**
      * Build the package
@@ -167,47 +156,6 @@ class Extension extends Base
             closedir($hdl);
         }
 
-        if ($this->hasCBPlugins) {
-            $path = $this->getSourceFolder() . "/components/com_comprofiler/plugin";
-
-            // Get every plugin
-            $hdl = opendir($path);
-
-            while ($entry = readdir($hdl)) {
-                // Only folders
-                $p = $path . "/" . $entry;
-
-                if (substr($entry, 0, 1) == '.') {
-                    continue;
-                }
-
-                if (!is_file($p)) {
-                    // Plugin type folder
-                    $type = $entry;
-
-                    $hdl2 = opendir($p);
-
-                    while ($plugin = readdir($hdl2)) {
-                        // Only folders
-                        $p2 = $path . "/" . $entry;
-
-                        if (substr($plugin, 0, 1) == '.') {
-                            continue;
-                        }
-
-                        if (!is_file($p2)) {
-                            $this->plugins[] = "plug_" . $plugin;
-                            $this->buildCBPlugin($type, $plugin, $this->params)->run();
-                        }
-                    }
-
-                    closedir($hdl2);
-                }
-            }
-
-            closedir($hdl);
-        }
-
         // Templates
         if ($this->hasTemplates) {
             $path = $this->getSourceFolder() . "/templates";
@@ -287,10 +235,6 @@ class Extension extends Base
 
         if (!file_exists($this->getSourceFolder() . "/administrator/manifests/packages")) {
             $this->hasPackage = false;
-        }
-
-        if (!file_exists($this->getSourceFolder() . "/components/com_comprofiler")) {
-            $this->hasCBPlugins = false;
         }
     }
 }
