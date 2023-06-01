@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -62,7 +63,7 @@ class Plugin extends Base
      */
     public function run()
     {
-        $this->say('Building plugin: ' . $this->plgName . " (" . $this->plgType . ")");
+        $this->printTaskInfo('Building plugin: ' . $this->plgName . " (" . $this->plgType . ")");
 
         // Prepare directories
         $this->prepareDirectories();
@@ -71,16 +72,20 @@ class Plugin extends Base
 
         // Build media (relative path)
         $media = $this->buildMedia("media/plg_" . $this->plgType . "_" . $this->plgName, 'plg_' . $this->plgType . "_" . $this->plgName);
-        $media->run();
+        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         $this->addFiles('media', $media->getResultFiles());
 
         // Build language files
-        $language = $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName);
-        $language->run();
+        $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         // Update XML and script.php
         $this->createInstaller($files);
+
+        $this->printTaskSuccess('Finished building plugin: ' . $this->plgName . " (" . $this->plgType . ")");
 
         return Result::success($this);
     }
@@ -94,7 +99,10 @@ class Plugin extends Base
      */
     private function prepareDirectories()
     {
-        $this->_mkdir($this->target);
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->mkdir($this->target)
+            ->run();
     }
 
     /**
@@ -119,6 +127,7 @@ class Plugin extends Base
         $f = $this->generatePluginFileList($files, $this->plgName);
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##FILES##')
             ->to($f)
             ->run();
@@ -127,6 +136,7 @@ class Plugin extends Base
         $f = $this->generateLanguageFileList($this->getFiles('backendLanguage'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##LANGUAGE_FILES##')
             ->to($f)
             ->run();
@@ -135,6 +145,7 @@ class Plugin extends Base
         $f = $this->generateFileList($this->getFiles('media'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##MEDIA_FILES##')
             ->to($f)
             ->run();

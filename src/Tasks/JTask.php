@@ -11,8 +11,8 @@ namespace Joomla\Jorobo\Tasks;
 
 use Robo\Application;
 use Robo\Contract\TaskInterface;
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Robo;
-use Robo\Runner;
 use Robo\Symfony\ConsoleIO;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -23,7 +23,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
  *
  * @since    1.0
  */
-abstract class JTask extends \Robo\Tasks implements TaskInterface
+abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThresholdInterface
 {
     use \Robo\Common\TaskIO;
 
@@ -84,6 +84,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface
     {
         $this->params         = (array) $params;
         $this->params['base'] = $this->params['base'] ?? \JPATH_BASE;
+        $this->logger = Robo::logger();
 
         if (is_a($io, '\Robo\Symfony\ConsoleIO')) {
             $this->io = $io;

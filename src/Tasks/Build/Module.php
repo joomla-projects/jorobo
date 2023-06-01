@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -58,7 +59,7 @@ class Module extends Base
      */
     public function run()
     {
-        $this->say('Building module: ' . $this->modName);
+        $this->printTaskInfo('Building module: ' . $this->modName);
 
         // Prepare directories
         $this->prepareDirectories();
@@ -67,16 +68,20 @@ class Module extends Base
 
         // Build media (relative path)
         $media = $this->buildMedia("media/" . $this->modName, $this->modName);
-        $media->run();
+        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         $this->addFiles('media', $media->getResultFiles());
 
         // Build language files for the component
-        $language = $this->buildLanguage($this->modName);
-        $language->run();
+        $language = $this->buildLanguage($this->modName)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         // Update XML and script.php
         $this->createInstaller($files);
+
+        $this->printTaskSuccess('Finished building module: ' . $this->modName);
 
         return Result::success($this);
     }
@@ -90,7 +95,10 @@ class Module extends Base
      */
     private function prepareDirectories()
     {
-        $this->_mkdir($this->target);
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->mkdir($this->target)
+            ->run();
     }
 
     /**
@@ -104,7 +112,7 @@ class Module extends Base
      */
     private function createInstaller($files)
     {
-        $this->say("Creating module installer");
+        $this->printTaskInfo("Creating module installer");
 
         $xmlFile = $this->target . "/" . $this->modName . ".xml";
 
@@ -115,6 +123,7 @@ class Module extends Base
         $f = $this->generateModuleFileList($files, $this->modName);
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##MODULE_FILES##')
             ->to($f)
             ->run();
@@ -123,6 +132,7 @@ class Module extends Base
         $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##LANGUAGE_FILES##')
             ->to($f)
             ->run();
@@ -131,6 +141,7 @@ class Module extends Base
         $f = $this->generateFileList($this->getFiles('media'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##MEDIA_FILES##')
             ->to($f)
             ->run();

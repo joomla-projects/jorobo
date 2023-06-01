@@ -25,8 +25,6 @@ class Media extends Base
 
     protected $target = null;
 
-    protected $fileMap = null;
-
     protected $type = "com";
 
     protected $extName = null;
@@ -75,10 +73,10 @@ class Media extends Base
      */
     public function run()
     {
-        $this->say("Building media folder " . $this->source . " for " . $this->extName);
+        $this->printTaskInfo("Building media folder " . $this->source . " for " . $this->extName);
 
         if (!file_exists($this->source)) {
-            $this->say("Folder " . $this->source . " does not exist!");
+            $this->printTaskInfo("Folder " . $this->source . " does not exist!");
 
             return Result::success($this);
         }
@@ -88,6 +86,8 @@ class Media extends Base
         $map = $this->copyTarget($this->source, $this->target);
 
         $this->setResultFiles($map);
+
+        $this->printTaskSuccess("Finished building media folder " . $this->source . " for " . $this->extName);
 
         return Result::success($this);
     }
@@ -101,8 +101,9 @@ class Media extends Base
      */
     private function prepareDirectory()
     {
-        $this->taskFilesystemStack()->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)->mkdir($this->target)->run();
-
-        //$this->_mkdir($this->target);
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->mkdir($this->target)
+            ->run();
     }
 }

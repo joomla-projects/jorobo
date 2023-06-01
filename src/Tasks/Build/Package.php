@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -46,14 +47,17 @@ class Package extends Base
      */
     public function run()
     {
-        $this->say('Building package');
+        $this->printTaskInfo('Building package ' . $this->getExtensionName());
 
         // Build language files for the package
-        $language = $this->buildLanguage("pkg_" . $this->getExtensionName());
-        $language->run();
+        $language = $this->buildLanguage("pkg_" . $this->getExtensionName())
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         // Update XML and script.php
         $this->createInstaller();
+
+        $this->printTaskSuccess('Finished building package ' . $this->getExtensionName());
 
         return Result::success($this);
     }
@@ -67,7 +71,7 @@ class Package extends Base
      */
     private function createInstaller()
     {
-        $this->say("Creating package installer");
+        $this->printTaskInfo("Creating package installer");
 
         // Copy XML and script.php
         $sourceFolder = $this->getSourceFolder() . "/administrator/manifests/packages";
@@ -75,18 +79,26 @@ class Package extends Base
         $xmlFile      = $targetFolder . "/pkg_" . $this->getExtensionName() . ".xml";
         $scriptFile   = $targetFolder . "/" . $this->getExtensionName() . "/script.php";
 
-        $this->_copy($sourceFolder . "/pkg_" . $this->getExtensionName() . ".xml", $xmlFile);
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->copy($sourceFolder . "/pkg_" . $this->getExtensionName() . ".xml", $xmlFile)
+            ->run();
 
         // Version & Date Replace
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from(['##DATE##', '##YEAR##', '##VERSION##'])
             ->to([$this->getDate(), date('Y'), $this->getJConfig()->version])
             ->run();
 
         if (is_file($sourceFolder . "/" . $this->getExtensionName() . "/script.php")) {
-            $this->_copy($sourceFolder . "/" . $this->getExtensionName() . "/script.php", $scriptFile);
+            $this->taskFilesystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                ->copy($sourceFolder . "/" . $this->getExtensionName() . "/script.php", $scriptFile)
+                ->run();
 
             $this->taskReplaceInFile($scriptFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from(['##DATE##', '##YEAR##', '##VERSION##'])
                 ->to([$this->getDate(), date('Y'), $this->getJConfig()->version])
                 ->run();
@@ -96,6 +108,7 @@ class Package extends Base
         $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##LANGUAGE_FILES##')
             ->to($f)
             ->run();

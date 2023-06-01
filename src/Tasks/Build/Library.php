@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -62,10 +63,10 @@ class Library extends Base
      */
     public function run()
     {
-        $this->say("Building library folder " . $this->libName);
+        $this->printTaskInfo("Building library " . $this->libName);
 
         if (!file_exists($this->source)) {
-            return Result::success($this, "Folder " . $this->source . " does not exist!");
+            return Result::error($this, "Folder " . $this->source . " does not exist!");
         }
 
         $this->prepareDirectory();
@@ -88,16 +89,20 @@ class Library extends Base
 
         // Build media (relative path)
         $media = $this->buildMedia("media/" . $lib, $lib);
-        $media->run();
+        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         $this->addFiles('media', $media->getResultFiles());
 
         // Build language files for the component
-        $language = $this->buildLanguage($lib);
-        $language->run();
+        $language = $this->buildLanguage($lib)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         // Copy XML
         $this->createInstaller($files);
+
+        $this->printTaskSuccess('Finished building library ' . $this->libName);
 
         return Result::success($this, "Library build");
     }
@@ -111,7 +116,10 @@ class Library extends Base
      */
     private function prepareDirectory()
     {
-        $this->_mkdir($this->target);
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->mkdir($this->target)
+            ->run();
     }
 
     /**
@@ -125,7 +133,7 @@ class Library extends Base
      */
     private function createInstaller($files)
     {
-        $this->say("Creating library installer");
+        $this->printTaskInfo("Creating library installer");
 
         $xmlFile = $this->target . "/" . $this->libName . ".xml";
 
@@ -136,6 +144,7 @@ class Library extends Base
         $f = $this->generateFileList($files);
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##LIBRARYFILES##')
             ->to($f)
             ->run();
@@ -144,6 +153,7 @@ class Library extends Base
         $f = $this->generateLanguageFileList($this->getFiles('backendLanguage'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##BACKEND_LANGUAGE_FILES##')
             ->to($f)
             ->run();
@@ -152,6 +162,7 @@ class Library extends Base
         $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##FRONTEND_LANGUAGE_FILES##')
             ->to($f)
             ->run();
@@ -160,6 +171,7 @@ class Library extends Base
         $f = $this->generateFileList($this->getFiles('media'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##MEDIA_FILES##')
             ->to($f)
             ->run();

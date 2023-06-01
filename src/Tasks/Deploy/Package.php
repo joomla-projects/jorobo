@@ -63,7 +63,7 @@ class Package extends Base
     public function run()
     {
         // TODO improve DRY!
-        $this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
+        $this->printTaskInfo('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         // Start getting single archives
         if (file_exists($this->params['base'] . '/dist/zips')) {
@@ -97,9 +97,14 @@ class Package extends Base
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            $this->_exec('mklink /J ' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target));
+            rmdir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip");
+            $this->taskExec('mklink /J ' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target))
+                ->run();
         } else {
-            $this->_symlink($this->target, $this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+            unlink($this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+            $this->taskFilesystemStack()
+                ->symlink($this->target, $this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip")
+                ->run();
         }
 
         return Result::success($this);
@@ -145,7 +150,7 @@ class Package extends Base
             !file_exists($this->current . "/administrator/components/com_" . $this->getExtensionName())
             && !file_exists($this->current . "/components/com_" . $this->getExtensionName())
         ) {
-            $this->say("Extension has no component");
+            $this->printTaskInfo("Extension has no component");
             $this->hasComponent = false;
         }
 
@@ -297,14 +302,14 @@ class Package extends Base
             }
 
             if (!is_file($p)) {
-                $this->say("Packaging Library " . $lib);
+                $this->printTaskInfo("Packaging Library " . $lib);
 
                 // Package file
                 $zip = new \ZipArchive();
 
                 $zip->open($this->params['base'] . '/dist/zips/' . $lib . '.zip', \ZipArchive::CREATE);
 
-                $this->say("Library " . $p);
+                $this->printTaskInfo("Library " . $p);
 
                 // Process the files to zip
                 $this->addFiles($zip, $p);
@@ -340,14 +345,14 @@ class Package extends Base
             }
 
             if (!is_file($p)) {
-                $this->say("Packaging Module " . $entry);
+                $this->printTaskInfo("Packaging Module " . $entry);
 
                 // Package file
                 $zip = new \ZipArchive();
 
                 $zip->open($this->params['base'] . '/dist/zips/' . $entry . '.zip', \ZipArchive::CREATE);
 
-                $this->say("Module " . $p);
+                $this->printTaskInfo("Module " . $p);
 
                 // Process the files to zip
                 $this->addFiles($zip, $p);
@@ -399,7 +404,7 @@ class Package extends Base
                     if (!is_file($p2)) {
                         $plg = "plg_" . $type . "_" . $plugin;
 
-                        $this->say("Packaging Plugin " . $plg);
+                        $this->printTaskInfo("Packaging Plugin " . $plg);
 
                         // Package file
                         $zip = new \ZipArchive();
@@ -444,14 +449,14 @@ class Package extends Base
             }
 
             if (!is_file($p)) {
-                $this->say("Packaging Template " . $entry);
+                $this->printTaskInfo("Packaging Template " . $entry);
 
                 // Package file
                 $zip = new \ZipArchive();
 
                 $zip->open($this->params['base'] . '/dist/zips/tpl_' . $entry . '.zip', \ZipArchive::CREATE);
 
-                $this->say("Template " . $p);
+                $this->printTaskInfo("Template " . $p);
 
                 // Process the files to zip
                 $this->addFiles($zip, $p);

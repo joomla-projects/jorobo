@@ -9,6 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Psr\Log\LogLevel;
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -33,8 +35,6 @@ class Component extends Base
     protected $hasApi = true;
 
     protected $hasFront = true;
-
-    protected $hasCli = true;
 
     protected $hasMedia = false;
 
@@ -66,7 +66,7 @@ class Component extends Base
      */
     public function run()
     {
-        $this->say('Building component');
+        $this->printTaskInfo('Building com_' . $this->getExtensionName() . ' component');
 
         // Analyze extension structure
         $this->analyze();
@@ -75,56 +75,72 @@ class Component extends Base
         $this->prepareDirectories();
 
         if ($this->hasAdmin) {
+            $this->logger->log(LogLevel::INFO, 'Copy admin files', $this->getTaskContext());
             $adminFiles = $this->copyTarget($this->adminPath, $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
 
             $this->addFiles('backend', $adminFiles);
         }
 
         if ($this->hasApi) {
+            $this->logger->log(LogLevel::INFO, 'Copy API files', $this->getTaskContext());
             $apiFiles = $this->copyTarget($this->apiPath, $this->getBuildFolder() . "/api/components/com_" . $this->getExtensionName());
 
             $this->addFiles('api', $apiFiles);
         }
 
         if ($this->hasFront) {
+            $this->logger->log(LogLevel::INFO, 'Copy frontend files', $this->getTaskContext());
             $frontendFiles = $this->copyTarget($this->frontPath, $this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
 
             $this->addFiles('frontend', $frontendFiles);
         }
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/com_" . $this->getExtensionName(), 'com_' . $this->getExtensionName());
-        $media->run();
+        if ($this->hasMedia) {
+            $this->logger->log(LogLevel::INFO, 'Copy media files', $this->getTaskContext());
+            $media = $this->buildMedia("media/com_" . $this->getExtensionName(), 'com_' . $this->getExtensionName());
+            $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+                ->run();
 
-        $this->addFiles('media', $media->getResultFiles());
+            $this->addFiles('media', $media->getResultFiles());
+        }
 
         // Build language files for the component
-        $language = $this->buildLanguage("com_" . $this->getExtensionName());
+        $language = $this->buildLanguage("com_" . $this->getExtensionName())
+            ->setVerbosityThreshold(self::VERBOSITY_VERBOSE);
         $language->run();
-
-        // Cli
-        if ($this->hasCli) {
-            $this->buildCli()->run();
-        }
 
         // Update XML and script.php
         $this->createInstaller();
 
         // Copy XML and script.php to root
+        $this->logger->log(LogLevel::INFO, 'Copy manifest and (optional) script file', $this->getTaskContext());
         $adminFolder = $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName();
         $xmlFile     = $adminFolder . "/" . $this->getExtensionName() . ".xml";
         $scriptFile  = $adminFolder . "/script.php";
 
-        $this->_copy($xmlFile, $this->getBuildFolder() . "/" . $this->getExtensionName() . ".xml");
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->copy($xmlFile, $this->getBuildFolder() . "/" . $this->getExtensionName() . ".xml")
+            ->run();
 
         if (file_exists($scriptFile)) {
-            $this->_copy($scriptFile, $this->getBuildFolder() . "/script.php");
+            $this->taskFilesystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                ->copy($scriptFile, $this->getBuildFolder() . "/script.php")
+                ->run();
         }
 
         // Copy Readme
         if (is_file($this->params['base'] . "/docs/README.md")) {
-            $this->_copy($this->params['base'] . "/docs/README.md", $this->getBuildFolder() . "/README");
+            $this->logger->log(LogLevel::INFO, 'Copy README from /docs folder', $this->getTaskContext());
+            $this->taskFilesystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                ->copy($this->params['base'] . "/docs/README.md", $this->getBuildFolder() . "/README")
+                ->run();
         }
+
+        $this->printTaskSuccess('Finished building com_' . $this->getExtensionName() . ' component');
 
         return Result::success($this, "Component build");
     }
@@ -150,11 +166,7 @@ class Component extends Base
             $this->hasFront = false;
         }
 
-        if (!file_exists($this->sourceFolder . "/cli")) {
-            $this->hasCli = false;
-        }
-
-        if (file_exists($this->sourceFolder . "/media")) {
+        if (file_exists($this->sourceFolder . "/media/com_" . $this->getExtensionName())) {
             $this->hasMedia = true;
         }
     }
@@ -169,15 +181,24 @@ class Component extends Base
     private function prepareDirectories()
     {
         if ($this->hasAdmin) {
-            $this->_mkdir($this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
+            $this->taskFilesystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                ->mkdir($this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName())
+                ->run();
         }
 
         if ($this->hasApi) {
-            $this->_mkdir($this->getBuildFolder() . "/api/components/com_" . $this->getExtensionName());
+            $this->taskFilesystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                ->mkdir($this->getBuildFolder() . "/api/components/com_" . $this->getExtensionName())
+                ->run();
         }
 
         if ($this->hasFront) {
-            $this->_mkdir($this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
+            $this->taskFilesystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                ->mkdir($this->getBuildFolder() . "/components/com_" . $this->getExtensionName())
+                ->run();
         }
     }
 
@@ -190,25 +211,24 @@ class Component extends Base
      */
     private function createInstaller()
     {
-        $this->say("Creating component installer");
+        $this->printTaskInfo('Creating component installer');
 
         $adminFolder = $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName();
         $xmlFile     = $adminFolder . "/" . $this->getExtensionName() . ".xml";
         $configFile  = $adminFolder . "/config.xml";
         $scriptFile  = $adminFolder . "/script.php";
-        $helperFile  = $adminFolder . "/helpers/defines.php";
 
         // Version & Date Replace
         $this->replaceInFile($xmlFile);
         $this->replaceInFile($scriptFile);
         $this->replaceInFile($configFile);
-        $this->replaceInFile($helperFile);
 
         // Files and folders
         if ($this->hasAdmin) {
             $f = $this->generateFileList($this->getFiles('backend'));
 
             $this->taskReplaceInFile($xmlFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from('##BACKEND_COMPONENT_FILES##')
                 ->to($f)
                 ->run();
@@ -217,6 +237,7 @@ class Component extends Base
             $f = $this->generateLanguageFileList($this->getFiles('backendLanguage'));
 
             $this->taskReplaceInFile($xmlFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from('##BACKEND_LANGUAGE_FILES##')
                 ->to($f)
                 ->run();
@@ -226,6 +247,7 @@ class Component extends Base
             $f = $this->generateFileList($this->getFiles('api'));
 
             $this->taskReplaceInFile($xmlFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from('##API_COMPONENT_FILES##')
                 ->to($f)
                 ->run();
@@ -235,6 +257,7 @@ class Component extends Base
             $f = $this->generateFileList($this->getFiles('frontend'));
 
             $this->taskReplaceInFile($xmlFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from('##FRONTEND_COMPONENT_FILES##')
                 ->to($f)
                 ->run();
@@ -243,6 +266,7 @@ class Component extends Base
             $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
 
             $this->taskReplaceInFile($xmlFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from('##FRONTEND_LANGUAGE_FILES##')
                 ->to($f)
                 ->run();
@@ -253,6 +277,7 @@ class Component extends Base
             $f = $this->generateFileList($this->getFiles('media'));
 
             $this->taskReplaceInFile($xmlFile)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
                 ->from('##MEDIA_FILES##')
                 ->to($f)
                 ->run();

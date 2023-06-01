@@ -87,18 +87,6 @@ trait Tasks
     }
 
     /**
-     * Build cli folder
-     *
-     * @return  CollectionBuilder
-     *
-     * @since   1.0
-     */
-    protected function buildCli($params = [])
-    {
-        return $this->task(Cli::class, $params);
-    }
-
-    /**
      * Build a Module
      *
      * @param   String  $modName  Name of the module

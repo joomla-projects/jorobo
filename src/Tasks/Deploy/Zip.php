@@ -46,7 +46,7 @@ class Zip extends Base
      */
     public function run()
     {
-        $this->say('Zipping ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
+        $this->printTaskInfo('Zipping ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         // Instantiate the zip archive
         $this->zip->open($this->target, \ZipArchive::CREATE);

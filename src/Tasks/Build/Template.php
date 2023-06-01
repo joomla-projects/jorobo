@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks\Build;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -58,7 +59,7 @@ class Template extends Base
      */
     public function run()
     {
-        $this->say('Building template: ' . $this->templateName);
+        $this->printTaskInfo('Building template: ' . $this->templateName);
 
         // Prepare directories
         $this->prepareDirectories();
@@ -67,16 +68,20 @@ class Template extends Base
 
         // Build media (relative path)
         $media = $this->buildMedia("media/" . $this->templateName, $this->templateName);
-        $media->run();
+        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         $this->addFiles('media', $media->getResultFiles());
 
         // Build language files for the component
-        $language = $this->buildLanguage('tpl_' . $this->templateName);
-        $language->run();
+        $language = $this->buildLanguage('tpl_' . $this->templateName)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         // Update XML and script.php
         $this->createInstaller($files);
+
+        $this->printTaskSuccess('Finished building template: ' . $this->templateName);
 
         return Result::success($this, "Template build");
     }
@@ -104,7 +109,7 @@ class Template extends Base
      */
     private function createInstaller($files)
     {
-        $this->say("Creating template installer");
+        $this->printTaskInfo("Creating template installer");
 
         $xmlFile = $this->target . "/templateDetails.xml";
 
@@ -115,6 +120,7 @@ class Template extends Base
         $f = $this->generateFileList($files);
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##TEMPLATE_FILES##')
             ->to($f)
             ->run();
@@ -123,6 +129,7 @@ class Template extends Base
         $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##LANGUAGE_FILES##')
             ->to($f)
             ->run();
@@ -131,6 +138,7 @@ class Template extends Base
         $f = $this->generateFileList($this->getFiles('media'));
 
         $this->taskReplaceInFile($xmlFile)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from('##MEDIA_FILES##')
             ->to($f)
             ->run();

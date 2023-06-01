@@ -56,7 +56,7 @@ class FtpUpload extends Base
      */
     public function run()
     {
-        $this->say('Uploading ' . $this->getJConfig()->extension . $this->getJConfig()->version . " via FTP");
+        $this->printTaskInfo('Uploading ' . $this->getJConfig()->extension . $this->getJConfig()->version . " via FTP");
 
         // Todo Move filepath and name to config
         $this->filename = $this->getExtensionName() . "-" . $this->getJConfig()->version . ".zip";
@@ -87,13 +87,13 @@ class FtpUpload extends Base
 
             ftp_chdir($con, $this->getJConfig()->ftp->target);
 
-            $this->say('Uploading ' . $this->filepath);
+            $this->printTaskInfo('Uploading ' . $this->filepath);
 
             if (!ftp_put($con, $this->filename, $this->filepath, FTP_BINARY)) {
                 return Result::error($this, 'Failed uploading package');
             }
 
-            $this->say("Upload finished");
+            $this->printTaskInfo("Upload finished");
         } catch (\Exception $e) {
             return Result::error($this, 'Error: ' . $e->getMessage());
         }

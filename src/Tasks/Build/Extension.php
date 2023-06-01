@@ -31,15 +31,21 @@ class Extension extends Base
 
     private $hasModules = true;
 
+    private $hasAdminModules = false;
+
     private $hasPackage = true;
 
     private $hasPlugins = true;
 
     private $hasLibraries = true;
 
+    private $hasFile = true;
+
     private $hasTemplates = true;
 
     private $modules = [];
+
+    private $adminModules = [];
 
     private $plugins = [];
 
@@ -56,7 +62,7 @@ class Extension extends Base
      */
     public function run()
     {
-        $this->say('Building Extension package');
+        $this->printTaskInfo('Building ' . $this->getJConfig()->extension . ' extension package');
 
         $this->analyze();
 
@@ -65,7 +71,7 @@ class Extension extends Base
             $this->buildComponent($this->params)->run();
         }
 
-        // Modules
+        // Frontend Modules
         if ($this->hasModules) {
             $path = $this->getSourceFolder() . "/modules";
 
@@ -76,14 +82,41 @@ class Extension extends Base
                 // Only folders
                 $p = $path . "/" . $entry;
 
-                if (substr($entry, 0, 1) == '.') {
+                if ($entry[0] == '.') {
                     continue;
                 }
 
-                if (!is_file($p)) {
+                if (is_dir($p)) {
                     // Module folder
                     $this->modules[] = $entry;
                     $this->buildModule($entry, $this->params)->run();
+                }
+            }
+
+            closedir($hdl);
+        }
+
+        // Backend Modules
+        if ($this->hasAdminModules) {
+            $path = $this->getSourceFolder() . "/administrator/modules";
+            $params = $this->params;
+            $params['basepath'] = $path;
+
+            // Get every module
+            $hdl = opendir($path);
+
+            while ($entry = readdir($hdl)) {
+                // Only folders
+                $p = $path . "/" . $entry;
+
+                if ($entry[0] == '.') {
+                    continue;
+                }
+
+                if (is_dir($p)) {
+                    // Module folder
+                    $this->adminModules[] = $entry;
+                    $this->buildModule($entry, $params)->run();
                 }
             }
 
@@ -181,12 +214,18 @@ class Extension extends Base
             closedir($hdl);
         }
 
+        // Build file
+        if ($this->hasFile) {
+            $this->buildFile($this->params)->run();
+        }
+
         // Build component
         if ($this->hasPackage) {
             $this->buildPackage($this->params)->run();
         }
 
         // Replacements (date, version etc.) in every php file
+        $this->printTaskInfo('Doing replacements in files');
         $dir = new \RecursiveDirectoryIterator($this->getBuildFolder(), \RecursiveDirectoryIterator::SKIP_DOTS);
         $it  = new \RecursiveIteratorIterator($dir);
 
@@ -195,6 +234,8 @@ class Extension extends Base
                 $this->replaceInFile($file);
             }
         }
+
+        $this->printTaskSuccess('Finished Building ' . $this->getJConfig()->extension . ' extension package');
 
         return Result::success($this);
     }
@@ -213,8 +254,12 @@ class Extension extends Base
             !file_exists($this->getSourceFolder() . "/administrator/components/com_" . $this->getExtensionName())
             && !file_exists($this->getSourceFolder() . "/components/com_" . $this->getExtensionName())
         ) {
-            $this->say("Extension has no component");
+            $this->printTaskWarning("Extension has no component");
             $this->hasComponent = false;
+        }
+
+        if (file_exists($this->getSourceFolder() . "/administrator/modules")) {
+            $this->hasModules = true;
         }
 
         if (!file_exists($this->getSourceFolder() . "/modules")) {
@@ -231,6 +276,10 @@ class Extension extends Base
 
         if (!file_exists($this->getSourceFolder() . "/libraries")) {
             $this->hasLibraries = false;
+        }
+
+        if (!file_exists($this->getSourceFolder() . "/administrator/manifests/files")) {
+            $this->hasFile = false;
         }
 
         if (!file_exists($this->getSourceFolder() . "/administrator/manifests/packages")) {

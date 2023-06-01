@@ -39,7 +39,7 @@ class Release extends Base
         $owner      = $this->getJConfig()->github->owner;
         $repository = $this->getJConfig()->github->repository;
 
-        $this->say('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
+        $this->printTaskInfo('Creating package ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         $latest_release = $this->getLatestReleases();
         $pulls          = $this->getAllRepoPulls();
@@ -54,7 +54,7 @@ class Release extends Base
             ->push($remote, $branch)
             ->run();
 
-        $this->say("Creating github tag: $version");
+        $this->printTaskInfo("Creating github tag: $version");
 
         $this->taskGitStack()
             ->stopOnFail()
@@ -62,9 +62,9 @@ class Release extends Base
             ->push($remote, $version)
             ->run();
 
-        $this->say("Tag created: $version and published at $owner/$repository");
+        $this->printTaskInfo("Tag created: $version and published at $owner/$repository");
 
-        $this->say("Creating the release at: https://github.com/$owner/$repository/releases/tag/$version");
+        $this->printTaskInfo("Creating the release at: https://github.com/$owner/$repository/releases/tag/$version");
 
         $github           = $this->getGithub();
         $changesInRelease = "# Changelog: \n\n" . implode("\n* ", $changes);
@@ -80,7 +80,7 @@ class Release extends Base
             true
         );
 
-        $this->say(print_r($repository, true));
+        $this->printTaskInfo(print_r($repository, true));
 
         $this->uploadToGithub($version, $this->getJConfig()->github->token, $response->upload_url);
 
@@ -128,7 +128,7 @@ class Release extends Base
         $owner      = $this->getJConfig()->github->owner;
         $repository = $this->getJConfig()->github->repository;
 
-        $this->say('Get latest Release commit ' . $owner . "/" . $repository);
+        $this->printTaskInfo('Get latest Release commit ' . $owner . "/" . $repository);
 
         try {
             $latest_release = $github->repositories->releases->get(
@@ -137,7 +137,7 @@ class Release extends Base
                 'latest'
             );
         } catch (\Exception $e) {
-            $this->say($owner . "/" . $repository . " has no Release");
+            $this->printTaskInfo($owner . "/" . $repository . " has no Release");
 
             return false;
         }
@@ -244,7 +244,7 @@ class Release extends Base
 
         $filesize = filesize($zipfilepath);
 
-        $this->say('Uploading the Extension package to the Github release: ' . $version);
+        $this->printTaskInfo('Uploading the Extension package to the Github release: ' . $version);
 
         $uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
         $request   = curl_init($uploadUrl);
@@ -263,6 +263,6 @@ class Release extends Base
 
         curl_close($request);
 
-        $this->say(print_r($result, true));
+        $this->printTaskInfo(print_r($result, true));
     }
 }

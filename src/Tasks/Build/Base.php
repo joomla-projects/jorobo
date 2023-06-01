@@ -10,6 +10,7 @@
 namespace Joomla\Jorobo\Tasks\Build;
 
 use Joomla\Jorobo\Tasks\JTask;
+use Robo\Contract\VerbosityThresholdInterface;
 
 /**
  * Build base - contains methods / data used in multiple build tasks
@@ -116,7 +117,7 @@ abstract class Base extends JTask
         if (method_exists($this, $method)) {
             $this->$method($fileArray);
         } else {
-            $this->say('Missing method: ' . $method);
+            $this->printTaskError('Missing method: ' . $method);
         }
 
         return true;
@@ -139,7 +140,7 @@ abstract class Base extends JTask
             return self::${$f};
         }
 
-        $this->say('Missing Files: ' . $type);
+        $this->printTaskError('Missing Files: ' . $type);
 
         return "";
     }
@@ -257,10 +258,15 @@ abstract class Base extends JTask
 
                 if (is_file($p)) {
                     $map[] = ["file" => $entry];
-                    $this->_copy($p, $tar . "/" . $entry);
+                    $this->taskFilesystemStack()
+                        ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                        ->copy($p, $tar . "/" . $entry)
+                        ->run();
                 } else {
                     $map[] = ["folder" => $entry];
-                    $this->_copyDir($p, $tar . "/" . $entry);
+                    $this->taskCopyDir([$p => $tar . "/" . $entry])
+                        ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+                        ->run();
                 }
             }
         }
@@ -461,6 +467,7 @@ abstract class Base extends JTask
         }
 
         $this->taskReplaceInFile($file)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
             ->from(['##DATE##', '##YEAR##', '##VERSION##'])
             ->to([$this->getDate(), date('Y'), $this->getJConfig()->version])
             ->run();

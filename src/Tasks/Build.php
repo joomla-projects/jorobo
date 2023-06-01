@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -33,7 +34,7 @@ class Build extends JTask
      */
     public function run()
     {
-        $this->say('Building ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
+        $this->printTaskInfo('Building ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         if (!$this->checkFolders()) {
             return Result::error($this, 'checkFolders failed');
@@ -43,13 +44,20 @@ class Build extends JTask
         $this->prepareDistDirectory();
 
         // Build extension
-        $this->buildExtension($this->params)->run();
+        $this->buildExtension($this->params)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_DEBUG)
+            ->run();
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            $this->_exec('mklink /J ' . $this->params['base'] . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()));
+            rmdir($this->params['base'] . "\dist\current");
+            $this->taskExec('mklink /J ' . $this->params['base'] . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()))
+                ->run();
         } else {
-            $this->_symlink($this->getBuildFolder(), $this->params['base'] . "/dist/current");
+            unlink($this->params['base'] . "/dist/current");
+            $this->taskFilesystemStack()
+                ->symlink($this->getBuildFolder(), $this->params['base'] . "/dist/current")
+                ->run();
         }
 
         // Support multiple deployment methods, separated by spaces
