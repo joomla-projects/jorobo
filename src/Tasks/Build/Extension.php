@@ -98,8 +98,8 @@ class Extension extends Base
 
         // Backend Modules
         if ($this->hasAdminModules) {
-            $path = $this->getSourceFolder() . "/administrator/modules";
-            $params = $this->params;
+            $path               = $this->getSourceFolder() . "/administrator/modules";
+            $params             = $this->params;
             $params['basepath'] = $path;
 
             // Get every module

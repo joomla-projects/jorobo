@@ -84,7 +84,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
     {
         $this->params         = (array) $params;
         $this->params['base'] = $this->params['base'] ?? \JPATH_BASE;
-        $this->logger = Robo::logger();
+        $this->logger         = Robo::logger();
 
         if (is_a($io, '\Robo\Symfony\ConsoleIO')) {
             $this->io = $io;
