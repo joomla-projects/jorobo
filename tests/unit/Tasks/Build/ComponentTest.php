@@ -1,4 +1,5 @@
 <?php
+
 namespace JoRobo;
 
 use Joomla\Jorobo\Tasks\Build\buildTasks;
