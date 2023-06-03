@@ -78,9 +78,11 @@ class Plugin extends Base
         $this->addFiles('media', $media->getResultFiles());
 
         // Build language files
-        $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName)
-            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-            ->run();
+        if (is_dir($this->getBuildFolder() . '/administrator/language')) {
+            $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName)
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+                ->run();
+        }
 
         // Update XML and script.php
         $this->createInstaller($files);

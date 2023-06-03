@@ -50,9 +50,11 @@ class Package extends Base
         $this->printTaskInfo('Building package ' . $this->getExtensionName());
 
         // Build language files for the package
-        $language = $this->buildLanguage("pkg_" . $this->getExtensionName())
-            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-            ->run();
+        if (is_dir($this->getBuildFolder() . '/administrator/language')) {
+            $language = $this->buildLanguage("pkg_" . $this->getExtensionName())
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+                ->run();
+        }
 
         // Update XML and script.php
         $this->createInstaller();
