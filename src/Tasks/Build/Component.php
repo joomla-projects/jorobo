@@ -106,9 +106,11 @@ class Component extends Base
         }
 
         // Build language files for the component
-        $language = $this->buildLanguage("com_" . $this->getExtensionName())
-            ->setVerbosityThreshold(self::VERBOSITY_VERBOSE);
-        $language->run();
+        if (is_dir($this->getBuildFolder() . '/administrator/language')) {
+            $language = $this->buildLanguage("com_" . $this->getExtensionName())
+                ->setVerbosityThreshold(self::VERBOSITY_VERBOSE);
+            $language->run();
+        }
 
         // Update XML and script.php
         $this->createInstaller();
