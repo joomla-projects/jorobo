@@ -2,7 +2,7 @@
 
 namespace JoRobo;
 
-use Joomla\Jorobo\Tasks\Build\buildTasks;
+use Joomla\Jorobo\Tasks\Build\Tasks;
 use PHPUnit\Framework\TestCase;
 use Robo\Traits\TestTasksTrait;
 use Symfony\Component\Filesystem\Filesystem;
@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 class ComponentTest extends TestCase
 {
     use TestTasksTrait;
-    use buildTasks;
+    use Tasks;
 
     public function setUp(): void
     {
