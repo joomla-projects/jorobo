@@ -9,6 +9,7 @@
 
 namespace Joomla\Jorobo\Tasks;
 
+use Robo\Contract\VerbosityThresholdInterface;
 use Robo\Result;
 
 /**
@@ -63,8 +64,8 @@ class Map extends JTask
      */
     public function run()
     {
-        $this->say('Mapping ' . $this->getJConfig()->extension . " to " . $this->target);
-        $this->say('OS: ' . $this->getOs() . " | Basedir: " . $this->getSourceFolder());
+        $this->printTaskInfo('Mapping ' . $this->getJConfig()->extension . " to " . $this->target);
+        $this->printTaskInfo('OS: ' . $this->getOs() . " | Basedir: " . $this->getSourceFolder());
 
         if (!$this->checkFolders()) {
             return Result::error($this, 'checkFolders failed');
@@ -83,7 +84,7 @@ class Map extends JTask
             if (method_exists($this, $method)) {
                 $this->$method($this->getSourceFolder() . "/" . $element, $this->target);
             } else {
-                $this->say('Missing method: ' . $method);
+                $this->printTaskInfo('Missing method: ' . $method);
             }
         }
 
@@ -219,21 +220,6 @@ class Map extends JTask
     }
 
     /**
-     * Process Cli
-     *
-     * @param   String  $src    The source
-     * @param   String  $toDir  The target
-     *
-     * @return  void
-     *
-     * @since   1.0
-     */
-    private function processCli($src, $toDir)
-    {
-        $this->linkSubdirectories($src, $toDir . "/cli");
-    }
-
-    /**
      * Process Module
      *
      * @param   String  $src    The source
@@ -320,6 +306,7 @@ class Map extends JTask
 
         try {
             $this->taskFileSystemStack()
+                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
                 ->symlink($source, $target)
                 ->run();
         } catch (\Exception $e) {
