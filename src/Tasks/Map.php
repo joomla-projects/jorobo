@@ -154,7 +154,7 @@ class Map extends JTask
 
                         while (false !== ($file = readdir($langDirHandle))) {
                             if (is_file($src . '/' . $element . '/' . $file)) {
-                                $this->say($file);
+                                $this->printTaskInfo($file);
                                 $this->symlink($src . '/' . $element . '/' . $file, $toDir . '/language/' . $element . '/' . $file);
                             }
                         }
@@ -310,7 +310,7 @@ class Map extends JTask
                 ->symlink($source, $target)
                 ->run();
         } catch (\Exception $e) {
-            $this->say('Error symlinking: ' . $e->getMessage());
+            $this->printTaskError('Error symlinking: ' . $e->getMessage());
         }
     }
 }

@@ -118,7 +118,7 @@ class Plugin extends Base
      */
     private function createInstaller($files)
     {
-        $this->say("Creating plugin installer");
+        $this->printTaskInfo("Creating plugin installer");
 
         $xmlFile = $this->target . "/" . $this->plgName . ".xml";
 

@@ -31,7 +31,7 @@ class BumpVersion extends JTask
      */
     public function run()
     {
-        $this->say('Updating ' . $this->getJConfig()->extension . " to " . $this->getJConfig()->version);
+        $this->printTaskInfo('Updating ' . $this->getJConfig()->extension . " to " . $this->getJConfig()->version);
 
         // Reusing the header config here
         $excludeList = $this->getJConfig()->header->exclude;
@@ -63,7 +63,7 @@ class BumpVersion extends JTask
                 // It is possible to have multiple exclude directories
                 foreach ($exclude as $e) {
                     if (stripos($relative, $e) !== false) {
-                        $this->say("Excluding " . $filename);
+                        $this->printTaskInfo("Excluding " . $filename);
                         continue 2;
                     }
                 }
@@ -75,7 +75,7 @@ class BumpVersion extends JTask
             if (preg_match('#__DEPLOY_VERSION__#', $fileContents)) {
                 $fileContents = preg_replace('#__DEPLOY_VERSION__#', $this->getJConfig()->version, $fileContents);
 
-                $this->say('Updating file: ' . $file->getRealPath());
+                $this->printTaskInfo('Updating file: ' . $file->getRealPath());
 
                 file_put_contents($file->getRealPath(), $fileContents);
 

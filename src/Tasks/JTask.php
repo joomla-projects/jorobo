@@ -191,7 +191,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
         $this->sourceFolder = $this->params['base'] . "/" . $this->getJConfig()->source;
 
         if (!is_dir($this->sourceFolder)) {
-            $this->say('Warning - Directory: ' . $this->sourceFolder . ' is not available');
+            $this->printTaskError('Warning - Directory: ' . $this->sourceFolder . ' is not available');
         }
     }
 
@@ -231,7 +231,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
         $jConfig = json_decode(json_encode(parse_ini_file($this->params['base'] . '/jorobo.ini', true)), false);
 
         if (!$jConfig) {
-            $this->say('Error: Config file jorobo.ini not available');
+            $this->printTaskError('Error: Config file jorobo.ini not available');
 
             throw new FileNotFoundException('Config file jorobo.ini not available');
         }
@@ -243,7 +243,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
             $version = "git" . trim($res->getMessage());
 
             if ($version) {
-                $this->say("Changing version to development version " . $version);
+                $this->printTaskInfo("Changing version to development version " . $version);
                 $jConfig->version = $version;
             }
         }

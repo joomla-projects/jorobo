@@ -32,7 +32,7 @@ class CopyrightHeader extends JTask
      */
     public function run()
     {
-        $this->say("Updating / adding copyright headers");
+        $this->printTaskInfo("Updating / adding copyright headers");
         $text        = $this->replaceInText(trim($this->getJConfig()->header->text));
         $excludeList = $this->getJConfig()->header->exclude;
 
@@ -61,7 +61,7 @@ class CopyrightHeader extends JTask
                 // It is possible to have multiple exclude directories
                 foreach ($exclude as $e) {
                     if (stripos($relative, $e) !== false) {
-                        $this->say("Excluding " . $filename);
+                        $this->printTaskInfo("Excluding " . $filename);
                         continue 2;
                     }
                 }
