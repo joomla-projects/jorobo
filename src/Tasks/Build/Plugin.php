@@ -78,7 +78,7 @@ class Plugin extends Base
         $this->addFiles('media', $media->getResultFiles());
 
         // Build language files
-        if (is_dir($this->getBuildFolder() . '/administrator/language')) {
+        if (is_dir($this->getSourceFolder() . '/administrator/language')) {
             $this->buildLanguage("plg_" . $this->plgType . "_" . $this->plgName)
                 ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
                 ->run();

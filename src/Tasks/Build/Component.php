@@ -106,7 +106,7 @@ class Component extends Base
         }
 
         // Build language files for the component
-        if (is_dir($this->getBuildFolder() . '/administrator/language')) {
+        if (is_dir($this->getSourceFolder() . '/administrator/language')) {
             $language = $this->buildLanguage("com_" . $this->getExtensionName())
                 ->setVerbosityThreshold(self::VERBOSITY_VERBOSE);
             $language->run();
@@ -168,7 +168,7 @@ class Component extends Base
             $this->hasFront = false;
         }
 
-        if (file_exists($this->sourceFolder . "/media/com_" . $this->getExtensionName())) {
+        if (file_exists($this->getSourceFolder() . "/media/com_" . $this->getExtensionName())) {
             $this->hasMedia = true;
         }
     }
