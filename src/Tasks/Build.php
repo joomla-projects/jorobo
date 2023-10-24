@@ -50,11 +50,15 @@ class Build extends JTask
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            rmdir($this->params['base'] . "\dist\current");
+            if (is_dir($this->params['base'] . "\dist\current")) {
+                rmdir($this->params['base'] . "\dist\current");
+            }
             $this->taskExec('mklink /J ' . $this->params['base'] . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()))
                 ->run();
         } else {
-            unlink($this->params['base'] . "/dist/current");
+            if (is_dir($this->params['base'] . "/dist/current")) {
+                unlink($this->params['base'] . "/dist/current");
+            }
             $this->taskFilesystemStack()
                 ->symlink($this->getBuildFolder(), $this->params['base'] . "/dist/current")
                 ->run();

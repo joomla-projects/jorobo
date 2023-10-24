@@ -97,11 +97,15 @@ class Package extends Base
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            rmdir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip");
+            if (is_dir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
+                rmdir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip");
+            }
             $this->taskExec('mklink /J ' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target))
                 ->run();
         } else {
-            unlink($this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+            if (is_dir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
+                unlink($this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
+            }
             $this->taskFilesystemStack()
                 ->symlink($this->target, $this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip")
                 ->run();
