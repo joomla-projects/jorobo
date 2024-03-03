@@ -100,7 +100,7 @@ class Package extends Base
             if (is_dir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
                 rmdir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip");
             }
-            $this->taskExec('mklink /J ' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . ' ' . $this->getWindowsPath($this->target))
+            $this->taskExec('mklink /J "' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . '" "' . $this->getWindowsPath($this->target) . '"')
                 ->run();
         } else {
             if (is_dir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
