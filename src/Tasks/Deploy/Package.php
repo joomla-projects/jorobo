@@ -97,8 +97,8 @@ class Package extends Base
 
         // Create symlink to current folder
         if ($this->isWindows()) {
-            if (is_dir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
-                rmdir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip");
+            if (is_file($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
+                unlink($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip");
             }
             $this->taskExec('mklink /H"' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . '" "' . $this->getWindowsPath($this->target) . '"')
                 ->run();
