@@ -53,7 +53,7 @@ class Build extends JTask
             if (is_dir($this->params['base'] . "\dist\current")) {
                 rmdir($this->params['base'] . "\dist\current");
             }
-            $this->taskExec('mklink /J ' . $this->params['base'] . '\dist\current ' . $this->getWindowsPath($this->getBuildFolder()))
+            $this->taskExec('mklink /J "' . $this->params['base'] . '\dist\current" "' . $this->getWindowsPath($this->getBuildFolder()) . '"')
                 ->run();
         } else {
             if (is_dir($this->params['base'] . "/dist/current")) {
