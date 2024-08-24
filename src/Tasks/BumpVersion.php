@@ -69,20 +69,59 @@ class BumpVersion extends JTask
                 }
             }
 
-            // Load the file
-            $fileContents = file_get_contents($file->getRealPath());
+            if ($file->getExtension() === 'xml') {
+                if ($this->updateXML($file)) {
+                    $changedFiles++;
+                }
 
-            if (preg_match('#__DEPLOY_VERSION__#', $fileContents)) {
-                $fileContents = preg_replace('#__DEPLOY_VERSION__#', $this->getJConfig()->version, $fileContents);
+                continue;
+            }
 
-                $this->printTaskInfo('Updating file: ' . $file->getRealPath());
-
-                file_put_contents($file->getRealPath(), $fileContents);
-
+            if ($this->updatePlain($file)) {
                 $changedFiles++;
             }
         }
 
         return Result::success($this, 'Updated ' . $changedFiles . ' files');
+    }
+
+    protected function updatePlain($file) : bool
+    {
+        $fileContents = file_get_contents($file->getRealPath());
+
+        if (preg_match('#__DEPLOY_VERSION__#', $fileContents)) {
+            $fileContents = preg_replace('#__DEPLOY_VERSION__#', $this->getJConfig()->version, $fileContents);
+
+            $this->printTaskInfo('Updating file: ' . $file->getRealPath());
+
+            file_put_contents($file->getRealPath(), $fileContents);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    protected function updateXML($file) : bool
+    {
+        $xml = simplexml_load_file($file->getRealPath());
+
+        if ($xml->getName() !== 'extension') {
+            return false;
+        }
+
+        $newVersion = $this->getJConfig()->version;
+
+        if ((string)$xml->version === $newVersion) {
+            return false;
+        }
+
+        $xml->version = $newVersion;
+
+        $this->printTaskInfo('Updating file: ' . $file->getRealPath());
+
+        $xml->asXML($file->getRealPath());
+
+        return true;
     }
 }
