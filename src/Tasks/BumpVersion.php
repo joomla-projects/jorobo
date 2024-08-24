@@ -85,7 +85,7 @@ class BumpVersion extends JTask
         return Result::success($this, 'Updated ' . $changedFiles . ' files');
     }
 
-    protected function updatePlain($file) : bool
+    protected function updatePlain($file): bool
     {
         $fileContents = file_get_contents($file->getRealPath());
 
@@ -102,7 +102,7 @@ class BumpVersion extends JTask
         return false;
     }
 
-    protected function updateXML($file) : bool
+    protected function updateXML($file): bool
     {
         $xml = simplexml_load_file($file->getRealPath());
 
