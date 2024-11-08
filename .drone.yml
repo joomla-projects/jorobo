@@ -6,7 +6,7 @@ clone:
 
 steps:
   - name: composer
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.0
     volumes:
       - name: composer-cache
         path: /tmp/composer-cache
@@ -14,7 +14,7 @@ steps:
       - composer install --no-progress --no-suggest
 
   - name: phpcs
-    image: joomlaprojects/docker-images:php7.2
+    image: joomlaprojects/docker-images:php8.0
     commands:
       - echo $(date)
       - ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
@@ -33,7 +33,7 @@ steps:
       - cp test-weblinks/jorobo.dist.ini jorobo.ini
 
   - name: weblinks-composer
-    image: joomlaprojects/docker-images:php7.4
+    image: joomlaprojects/docker-images:php8.0
     volumes:
       - name: composer-cache
         path: /tmp/composer-cache
@@ -41,8 +41,8 @@ steps:
       - cd test-weblinks
       - composer install --no-progress --no-suggest
 
-  - name: test-jorobo-php72
-    image: joomlaprojects/docker-images:php7.2
+  - name: test-jorobo-php80
+    image: joomlaprojects/docker-images:php8.0
     commands:
       - ./vendor/bin/phpunit tests
 
