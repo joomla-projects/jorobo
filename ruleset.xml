@@ -25,6 +25,13 @@
     </rule>
 
     <rule ref="PSR1.Classes.ClassDeclaration">
+        <exclude-pattern type="relative">assets/init/RoboFile\.php</exclude-pattern>
         <exclude-pattern type="relative">tests/*</exclude-pattern>
     </rule>
+
+    <rule ref="PSR1.Files.SideEffects">
+        <exclude-pattern type="relative">assets/init/RoboFile\.php</exclude-pattern>
+        <exclude-pattern type="relative">tests/*</exclude-pattern>
+    </rule>
+
 </ruleset>
