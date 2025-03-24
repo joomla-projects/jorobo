@@ -40,7 +40,9 @@
       "Robo\\": "tests/src"
     }
   },
-
+  "bin": [
+    "bin/jorobo"
+  ],
   "require"    : {
     "php": "~8.2",
     "ext-simplexml": "*",
@@ -52,7 +54,7 @@
     "friendsofphp/php-cs-fixer": "^3.9.5",
     "phan/phan": "^5.4.5",
     "phpunit/phpunit": "^11.4.3",
-    "phpstan/phpstan": "^1.12.8",
-    "phpstan/phpstan-deprecation-rules": "^1.2.1"
+    "phpstan/phpstan": "^2.1.0",
+    "phpstan/phpstan-deprecation-rules": "^2.0.1"
   }
 }

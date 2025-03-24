@@ -1,0 +1,53 @@
+# Builds
+build
+releases
+dist
+
+# OSX
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# PHPStorm
+.idea/
+
+# Sublime Text
+*.sublime*
+
+# Eclipse
+.buildpath
+.project
+.settings
+
+# Temp files
+*.tmp
+*.bak
+*.swp
+*~.nib
+*~
+
+# composer
+composer.phar
+vendor
+
+# Robo
+robo.phar
+RoboFile.ini
+
+#cypress
+node_modules
+/tests/cypress/output/screenshots
+!/tests/cypress/output/screenshots/.gitkeep
+/tests/cypress/output/videos
+!/tests/cypress/output/videos/.gitkeep
+cypress.config.js
+joomla
+
+# Package building related
+jorobo.ini
+

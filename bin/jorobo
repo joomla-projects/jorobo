@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * @package    JoRobo
+ *
+ * @copyright  Copyright (C) 2005 - 2025 Open Source Matters, Inc. All rights reserved.
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ */
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+define('JPATH_ROOT', dirname(__DIR__,3));
+define('JOROBO_ROOT', dirname(__DIR__));
+
+$application = new Application();
+
+$application->add(new \Joomla\Jorobo\Command\InitCommand());
+
+$application->run();
