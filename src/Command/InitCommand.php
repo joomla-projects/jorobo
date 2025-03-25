@@ -22,6 +22,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class InitCommand extends Command
 {
     /**
+     * @var SymfonyStyle
+     */
+    protected $io;
+
+    /**
      * Configure the command.
      *
      * @return  void
@@ -50,6 +55,7 @@ class InitCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $io->title('JoRobo Init');
         $io->info('Initialising folder for a Joomla extension');
+        $this->io = $io;
 
         if (is_dir(JPATH_ROOT) && !is_file(JPATH_ROOT . '/composer.json')) {
             $io->error('The script is run from an unknown place and can\'t reliably find the root path of the repository. The discovered path was ' . JPATH_ROOT);
@@ -113,6 +119,12 @@ class InitCommand extends Command
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $src = strtr($src, '/', '\\');
             $dst = strtr($dst, '/', '\\');
+        }
+
+        if (is_file($dst)) {
+            $this->io->note('File already exists: ' . $dst);
+
+            return false;
         }
 
         return copy($src, $dst);
