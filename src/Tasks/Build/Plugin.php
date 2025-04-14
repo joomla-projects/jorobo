@@ -69,13 +69,19 @@ class Plugin extends Base
         $this->prepareDirectories();
 
         $files = $this->copyTarget($this->source, $this->target);
+        $checksumFiles = ['plugins/' . $this->plgType . '/' . $this->plgName];
 
         // Build media (relative path)
         $media = $this->buildMedia("media/plg_" . $this->plgType . "_" . $this->plgName, 'plg_' . $this->plgType . "_" . $this->plgName);
         $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
             ->run();
 
-        $this->addFiles('media', $media->getResultFiles());
+        $mediaFiles = $media->getResultFiles();
+        $this->addFiles('media', $mediaFiles);
+
+        if (count($mediaFiles) > 0) {
+            $checksumFiles[] = 'media/plg_' . $this->plgType . '_' . $this->plgName;
+        }
 
         // Build language files
         if (is_dir($this->getSourceFolder() . '/administrator/language')) {
@@ -84,8 +90,14 @@ class Plugin extends Base
                 ->run();
         }
 
+        // Add CHECKSUM file to manifest
+        $files[]      = ['file' => 'CHECKSUM'];
+
         // Update XML and script.php
         $this->createInstaller($files);
+
+        // Generate CHECKSUM file
+        $this->generateChecksum($checksumFiles, $this->target);
 
         $this->printTaskSuccess('Finished building plugin: ' . $this->plgName . " (" . $this->plgType . ")");
 

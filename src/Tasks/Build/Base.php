@@ -436,6 +436,45 @@ abstract class Base extends JTask
     }
 
     /**
+     * Create sha256 CHECKSUM file for files of an extension
+     *
+     * @param $folders string[] Array of relative folders to generate the checksums for
+     * @param $target  string   Relative path to store the CHECKSUM file at
+     *
+     * @return bool
+     */
+    public function generateChecksum($folders, $target)
+    {
+        $checksums = [];
+        $readFolders = function ($folder, $root) use (&$readFolders, $target) {
+            $files = [];
+
+            $glob = glob($folder . "/**");
+
+            foreach ($glob as $file) {
+                if (is_dir($file)) {
+                    $files = array_merge($files, $readFolders($file, $root));
+                } elseif (is_file($file)) {
+                    $files[str_replace($root . '/', '', $file)] = hash_file('sha256', $file);
+                }
+            }
+
+            return $files;
+        };
+
+        foreach ($folders as $folder) {
+            $checksums = array_merge($checksums, $readFolders($this->getBuildFolder() . '/' . $folder, $this->getBuildFolder()));
+        }
+
+        $output = [];
+        foreach ($checksums as $path => $checksum) {
+            $output[] = $checksum . '  ' . $path;
+        }
+
+        return (bool) file_put_contents($target . '/CHECKSUM', implode("\n", $output));
+    }
+
+    /**
      * Reset the files list, before build another part
      *
      * @return  void
