@@ -64,7 +64,7 @@ class Module extends Base
         // Prepare directories
         $this->prepareDirectories();
 
-        $files = $this->copyTarget($this->source, $this->target);
+        $files         = $this->copyTarget($this->source, $this->target);
         $checksumFiles = ['modules/' . $this->modName];
 
         // Build media (relative path)

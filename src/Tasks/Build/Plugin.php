@@ -68,7 +68,7 @@ class Plugin extends Base
         // Prepare directories
         $this->prepareDirectories();
 
-        $files = $this->copyTarget($this->source, $this->target);
+        $files         = $this->copyTarget($this->source, $this->target);
         $checksumFiles = ['plugins/' . $this->plgType . '/' . $this->plgName];
 
         // Build media (relative path)

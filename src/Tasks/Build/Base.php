@@ -445,7 +445,7 @@ abstract class Base extends JTask
      */
     public function generateChecksum($folders, $target)
     {
-        $checksums = [];
+        $checksums   = [];
         $readFolders = function ($folder, $root) use (&$readFolders, $target) {
             $files = [];
 
