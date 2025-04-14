@@ -76,13 +76,13 @@ class AssetJSON extends JTask
                         }
 
                         if (!$found) {
-                            $entry = new \stdClass();
+                            $entry       = new \stdClass();
                             $entry->name = $extension . '.' . $name;
                             $entry->type = $type == 'js' ? 'script' : 'style';
-                            $uri = $extension . '/' . basename($file);
+                            $uri         = $extension . '/' . basename($file);
 
                             if (!str_ends_with($entry->name, '.min.' . $type) && file_exists(substr($file, 0, -(strlen($type) + 1)) . '.min.' . $type)) {
-                                $uri = $extension . '/' . substr(basename($file),0, -(strlen($type) + 1)) . '.min.' . $type;
+                                $uri = $extension . '/' . substr(basename($file), 0, -(strlen($type) + 1)) . '.min.' . $type;
                             }
 
                             $entry->uri = $uri;
