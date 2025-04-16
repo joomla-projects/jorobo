@@ -327,13 +327,13 @@ abstract class Base extends JTask
     {
         $verbosity = $this->verbosityThreshold();
         $this->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE);
-        $type = substr($name, 0, 3);
-        $source  = $this->getSourceFolder() . '/media/' . $name;
-        $target  = $this->getBuildFolder() . '/media/' . $name;
+        $type   = substr($name, 0, 3);
+        $source = $this->getSourceFolder() . '/media/' . $name;
+        $target = $this->getBuildFolder() . '/media/' . $name;
 
         if ($type == 'lib') {
-            $source  = $this->getSourceFolder() . '/media/' . substr($name, 3);
-            $target  = $this->getBuildFolder() . '/media/' . substr($name, 3);
+            $source = $this->getSourceFolder() . '/media/' . substr($name, 3);
+            $target = $this->getBuildFolder() . '/media/' . substr($name, 3);
         }
 
         $this->printTaskInfo("Building media folder " . $source . " for " . $name);
