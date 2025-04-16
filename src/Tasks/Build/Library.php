@@ -88,11 +88,7 @@ class Library extends Base
         }
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/" . $lib, $lib);
-        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-            ->run();
-
-        $this->addFiles('media', $media->getResultFiles());
+        $this->buildMediaFiles($this->libName);
 
         // Build language files for the component
         $language = $this->buildLanguage($lib)

@@ -71,11 +71,7 @@ class Plugin extends Base
         $files = $this->copyTarget($this->source, $this->target);
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/plg_" . $this->plgType . "_" . $this->plgName, 'plg_' . $this->plgType . "_" . $this->plgName);
-        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-            ->run();
-
-        $this->addFiles('media', $media->getResultFiles());
+        $this->buildMediaFiles('plg_' . $this->plgType . '_' . $this->plgName);
 
         // Build language files
         if (is_dir($this->getSourceFolder() . '/administrator/language')) {
