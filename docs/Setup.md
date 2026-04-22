@@ -6,7 +6,7 @@ In an empty repository, run the following commands to create a composer.json, ad
 ```bash
 composer init
 composer require --dev joomla-projects/jorobo
-vendor/bin/jorobo init
+vendor/bin/robo init
 ```
 
 ### Folder structure
