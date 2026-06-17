@@ -25,7 +25,7 @@ jobs:
         run: |
           git config --global --add safe.directory $GITHUB_WORKSPACE
           composer config --global home
-          composer install --no-progress --no-suggest
+          composer install --no-progress
 
   code-style-php:
     name: Check PHP code style
@@ -72,9 +72,7 @@ jobs:
           cd test-weblinks
           git clone https://github.com/joomla-extensions/weblinks.git .
           git checkout 5.x-dev
+          composer install --no-progress
           cd ..
           rm jorobo.dist.ini
-          cd test-weblinks
-          composer install --no-progress --no-suggest
-          cd ..
-          ./vendor/bin/phpunit tests
+          vendor/bin/phpunit tests
