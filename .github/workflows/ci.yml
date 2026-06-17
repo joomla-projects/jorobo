@@ -41,7 +41,7 @@ jobs:
       - name: Check PHP code style
         env:
           PHP_CS_FIXER_IGNORE_ENV: true
-        run: ./libraries/vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
+        run: ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
 
   phpstan:
     name: Run PHPstan
@@ -57,7 +57,7 @@ jobs:
       - name: Run PHPstan
         run: |
           set -e
-          ./libraries/vendor/bin/phpstan --error-format=github
+          ./vendor/bin/phpstan --error-format=github
 
   phpunit:
     name: Run Unittests
