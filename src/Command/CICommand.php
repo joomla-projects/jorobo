@@ -95,18 +95,19 @@ class CICommand extends Command
         return copy($src, $dst);
     }
 
-    private function recurse_copy($src,$dst) {
+    private function recurse_copy($src, $dst)
+    {
         $dir = opendir($src);
         if (!is_dir($dst)) {
             mkdir($dst);
         }
 
-        while(false !== ( $file = readdir($dir)) ) {
-            if (( $file != '.' ) && ( $file != '..' )) {
-                if ( is_dir($src . '/' . $file) ) {
-                    $this->recurse_copy($src . '/' . $file,$dst . '/' . $file);
+        while (false !== ($file = readdir($dir))) {
+            if (($file != '.') && ($file != '..')) {
+                if (is_dir($src . '/' . $file)) {
+                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
                 } else {
-                    $this->copy($src . '/' . $file,$dst . '/' . $file);
+                    $this->copy($src . '/' . $file, $dst . '/' . $file);
                 }
             }
         }
