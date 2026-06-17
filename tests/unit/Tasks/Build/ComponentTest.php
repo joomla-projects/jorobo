@@ -33,9 +33,9 @@ class ComponentTest extends TestCase
         $result = $this->buildComponent('weblinks', ['base' => JPATH_BASE . '/test-weblinks'])
             ->run();
         $this->assertTrue($result->wasSuccessful(), $result->getMessage());
-        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/components/com_weblinks');
-        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/administrator/components/com_weblinks');
-        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/weblinks.xml');
-        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/script.php');
+        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/components/com_weblinks');
+        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/administrator/components/com_weblinks');
+        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/weblinks.xml');
+        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/script.php');
     }
 }

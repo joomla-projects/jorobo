@@ -33,8 +33,8 @@ class PluginTest extends TestCase
         $result = $this->buildPlugin('system', 'weblinks', ['base' => JPATH_BASE . '/test-weblinks'])
             ->run();
         $this->assertTrue($result->wasSuccessful(), $result->getMessage());
-        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/plugins/system/weblinks');
-        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/plugins/system/weblinks/weblinks.xml');
+        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/plugins/system/weblinks');
+        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/plugins/system/weblinks/weblinks.xml');
     }
 
     public function testBuildPlugins()
@@ -45,9 +45,9 @@ class PluginTest extends TestCase
         $result = $this->buildPlugin('finder', 'weblinks', ['base' => JPATH_BASE . '/test-weblinks'])
             ->run();
         $this->assertTrue($result->wasSuccessful(), $result->getMessage());
-        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/plugins/system/weblinks');
-        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/plugins/system/weblinks/weblinks.xml');
-        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/plugins/finder/weblinks');
-        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/plugins/finder/weblinks/weblinks.xml');
+        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/plugins/system/weblinks');
+        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/plugins/system/weblinks/weblinks.xml');
+        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/plugins/finder/weblinks');
+        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/plugins/finder/weblinks/weblinks.xml');
     }
 }

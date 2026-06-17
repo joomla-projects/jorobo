@@ -33,7 +33,7 @@ class ModuleTest extends TestCase
         $result = $this->buildModule('weblinks', ['base' => JPATH_BASE . '/test-weblinks'])
             ->run();
         $this->assertTrue($result->wasSuccessful(), $result->getMessage());
-        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/modules/mod_weblinks');
-        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0/modules/mod_weblinks/mod_weblinks.xml');
+        $this->assertDirectoryExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/modules/mod_weblinks');
+        $this->assertFileExists(JPATH_BASE . '/test-weblinks/dist/weblinks-5.0.0-dev/modules/mod_weblinks/mod_weblinks.xml');
     }
 }
