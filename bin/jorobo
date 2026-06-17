@@ -18,5 +18,6 @@ define('JOROBO_ROOT', dirname(__DIR__));
 $application = new Application();
 
 $application->add(new \Joomla\Jorobo\Command\InitCommand());
+$application->add(new \Joomla\Jorobo\Command\CICommand());
 
 $application->run();
