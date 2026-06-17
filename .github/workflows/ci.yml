@@ -1,0 +1,79 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  composer:
+    name: Install PHP dependencies
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/cache@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        id: cache-php
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Install PHP dependencies
+        if: steps.cache-php.outputs.cache-hit != 'true'
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          composer config --global home
+          composer install --no-progress --no-suggest
+
+  code-style-php:
+    name: Check PHP code style
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [composer]
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Check PHP code style
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: true
+        run: ./libraries/vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
+
+  phpstan:
+    name: Run PHPstan
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [code-style-php]
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Run PHPstan
+        run: |
+          set -e
+          ./libraries/vendor/bin/phpstan --error-format=github
+
+  phpunit:
+    name: Run Unittests
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.2
+    needs: [code-style-php]
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run unittests on weblinks
+        run: |
+          mkdir test-weblinks
+          cd test-weblinks
+          git clone https://github.com/joomla-extensions/weblinks.git .
+          git checkout 5.x-dev
+          cd ..
+          rm jorobo.dist.ini
+          cd test-weblinks
+          composer install --no-progress --no-suggest
+          ./vendor/bin/phpunit tests
