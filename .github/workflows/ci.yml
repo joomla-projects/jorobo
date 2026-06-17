@@ -79,4 +79,4 @@ jobs:
           composer install --no-progress
           cd ..
           rm jorobo.dist.ini
-          vendor/bin/phpunit tests
+          ./vendor/bin/phpunit tests
