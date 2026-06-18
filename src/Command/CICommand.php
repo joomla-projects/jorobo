@@ -66,7 +66,7 @@ class CICommand extends Command
         // Do we initialise with all features?
         $type = $io->choice('For which platform do you want to add a CI setup?', ['github', 'gitlab'], 'github');
 
-        $this->recurse_copy(JOROBO_ROOT . '/assets/ci/' . $type, JPATH_ROOT);
+        $this->recurseCopy(JOROBO_ROOT . '/assets/ci/' . $type, JPATH_ROOT);
 
         return Command::SUCCESS;
     }
@@ -95,7 +95,7 @@ class CICommand extends Command
         return copy($src, $dst);
     }
 
-    private function recurse_copy($src, $dst)
+    private function recurseCopy($src, $dst)
     {
         $dir = opendir($src);
         if (!is_dir($dst)) {
@@ -105,7 +105,7 @@ class CICommand extends Command
         while (false !== ($file = readdir($dir))) {
             if (($file != '.') && ($file != '..')) {
                 if (is_dir($src . '/' . $file)) {
-                    $this->recurse_copy($src . '/' . $file, $dst . '/' . $file);
+                    $this->recurseCopy($src . '/' . $file, $dst . '/' . $file);
                 } else {
                     $this->copy($src . '/' . $file, $dst . '/' . $file);
                 }
