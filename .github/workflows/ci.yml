@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  composer:
+    name: Install PHP dependencies
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/cache@v5
+        id: cache-php
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Install PHP dependencies
+        if: steps.cache-php.outputs.cache-hit != 'true'
+        run: |
+          git config --global --add safe.directory $GITHUB_WORKSPACE
+          composer config --global home
+          composer install --no-progress
+
+  code-style-php:
+    name: Check PHP code style
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [composer]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/cache/restore@v5
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Check PHP code style
+        env:
+          PHP_CS_FIXER_IGNORE_ENV: true
+        run: ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
+
+  phpstan:
+    name: Run PHPstan
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.4
+    needs: [code-style-php]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/cache/restore@v5
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Run PHPstan
+        run: |
+          set -e
+          ./vendor/bin/phpstan --error-format=github
+
+  phpunit:
+    name: Run Unittests
+    runs-on: ubuntu-latest
+    container: joomlaprojects/docker-images:php8.2
+    needs: [code-style-php]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/cache/restore@v5
+        with:
+          path: vendor
+          key: ${{ runner.os }}-composer-${{ hashFiles('composer.lock') }}
+      - name: Run unittests on weblinks
+        run: |
+          mkdir test-weblinks
+          cd test-weblinks
+          git clone https://github.com/joomla-extensions/weblinks.git .
+          git checkout 5.x-dev
+          composer install --no-progress
+          cd ..
+          rm jorobo.dist.ini
+          cp test-weblinks/jorobo.dist.ini jorobo.ini
+          ./vendor/bin/phpunit tests
