@@ -49,7 +49,7 @@ $config
             // Short array syntax
             'array_syntax'                   => ['syntax' => 'short'],
             // Lists should not have a trailing comma like list($foo, $bar,) = ...
-            'no_trailing_comma_in_list_call' => true,
+            'no_trailing_comma_in_singleline' => true,
             // Arrays on multiline should have a trailing comma
             'trailing_comma_in_multiline'    => ['elements' => ['arrays']],
             // Align elements in multiline array and variable declarations on new lines below each other
