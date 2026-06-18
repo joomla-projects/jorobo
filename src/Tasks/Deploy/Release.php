@@ -252,7 +252,7 @@ class Release extends Base
         curl_setopt($request, CURLOPT_POST, true);
         curl_setopt($request, CURLOPT_VERBOSE, true);
 
-        curl_setopt($request, CURLOPT_HTTPHEADER, ['Authorization: token ' . $githubToken,  ]);
+        curl_setopt($request, CURLOPT_HTTPHEADER, ['Authorization: token ' . $githubToken]);
 
         curl_setopt($request, CURLOPT_HTTPHEADER, ['Content-type: application/zip']);
         curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));
