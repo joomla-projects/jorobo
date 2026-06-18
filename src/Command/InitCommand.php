@@ -78,7 +78,7 @@ class InitCommand extends Command
         if ($all == 'yes' || $io->ask('Want to add codestyle checks?', 'yes') === 'yes') {
             $io->writeln('Setting up codestyle checks');
             $this->copy(JOROBO_ROOT . '/assets/init/.editorconfig', JPATH_ROOT . '/.editorconfig');
-            $this->copy(JOROBO_ROOT . '/assets/init/.php-cs-fixer.dist.php', JPATH_ROOT . '/.php-cs-dist-fixer.php');
+            $this->copy(JOROBO_ROOT . '/assets/init/.php-cs-fixer.dist.php', JPATH_ROOT . '/.php-cs-fixer.dist.php');
             $this->copy(JOROBO_ROOT . '/assets/init/ruleset.xml', JPATH_ROOT . '/ruleset.xml');
 
             exec('cd ' . JPATH_ROOT . ' && composer require --dev squizlabs/php_codesniffer friendsofphp/php-cs-fixer');
