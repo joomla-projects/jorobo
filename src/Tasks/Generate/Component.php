@@ -9,6 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
+use Robo\Result;
+
 /**
  * Generate a component skeleton
  *
@@ -19,4 +21,11 @@ namespace Joomla\Jorobo\Tasks\Generate;
 class Component extends Base
 {
     use \Robo\Task\Development\Tasks;
+
+    public function run()
+    {
+        // TODO: Implement run() method.
+
+        return Result::success($this, 'Component build');
+    }
 }

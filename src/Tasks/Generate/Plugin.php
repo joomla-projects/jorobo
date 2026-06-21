@@ -9,6 +9,8 @@
 
 namespace Joomla\Jorobo\Tasks\Generate;
 
+use Robo\Result;
+
 /**
  * Generate a plugin skeleton
  *
@@ -19,4 +21,10 @@ namespace Joomla\Jorobo\Tasks\Generate;
 class Plugin extends Base
 {
     use \Robo\Task\Development\Tasks;
+
+    public function run()
+    {
+        // TODO: Implement run() method.
+        return Result::success($this, 'Plugin build');
+    }
 }

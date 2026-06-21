@@ -183,7 +183,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
     /**
      * Set the extension name
      *
-     * @return  string
+     * @return  void
      *
      * @since   1.0
      */
