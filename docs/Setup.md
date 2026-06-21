@@ -6,7 +6,7 @@ In an empty repository, run the following commands to create a composer.json, ad
 ```bash
 composer init
 composer require --dev joomla-projects/jorobo
-vendor/bin/robo init
+vendor/bin/jorobo init
 ```
 
 ### Folder structure
@@ -45,7 +45,7 @@ You will need `composer`. In the folder of your repository run `composer require
 
 ## How-to use in your own extension
 
-Do a composer require joomla-projects/jorobo:dev
+Do a `composer require joomla-projects/jorobo:dev`
 
 Make sure your RoboFile.php loads the tasks:
 

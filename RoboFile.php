@@ -185,4 +185,42 @@ class RoboFile extends \Robo\Tasks
 
         $this->task(\Joomla\Jorobo\Tasks\Changelog::class)->run();
     }
+
+    /**
+     * Minify all JS + CSS files in the project
+     *
+     * @param   string  $path  Additional a relative path to a folder which should be searched only
+     *
+     * @return void
+     */
+    public function minify(ConsoleIO $io, $path)
+    {
+        $this->say('Starting minifiying "src/' . $path . '"');
+        $this->writeln('');
+
+        $files = $this->loadMedia('src/' . $path);
+
+        if (!empty($files['css'])) {
+
+            $filePaths = $files['css'];
+
+            foreach ($filePaths as $file) {
+
+                $this->taskMinify($file)->run();
+            }
+        }
+
+        if (!empty($files['js'])) {
+
+            $filePaths = $files['js'];
+
+            foreach ($filePaths as $file) {
+
+                $this->taskMinify($file)->run();
+            }
+        }
+
+        $this->writeln('');
+        $this->yell('Minifying done!');
+    }
 }
