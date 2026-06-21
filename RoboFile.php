@@ -170,4 +170,19 @@ class RoboFile extends \Robo\Tasks
 
         $this->task(\Joomla\Jorobo\Tasks\AssetJSON::class)->run();
     }
+
+    /**
+     * Generate/extend changelog.xml
+     *
+     * @return  void
+     * @since   __DEPLOY_VERSION__
+     */
+    public function changelog()
+    {
+        if (!file_exists('jorobo.ini')) {
+            $this->_copy('jorobo.dist.ini', 'jorobo.ini');
+        }
+
+        $this->task(\Joomla\Jorobo\Tasks\Changelog::class)->run();
+    }
 }
