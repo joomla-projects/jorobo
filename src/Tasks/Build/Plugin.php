@@ -91,7 +91,7 @@ class Plugin extends Base
         }
 
         // Add CHECKSUM file to manifest
-        $files[]      = ['file' => 'CHECKSUM'];
+        $files[]      = ['file' => 'checksums.txt'];
 
         // Update XML and script.php
         $this->createInstaller($files);

@@ -238,7 +238,7 @@ class Component extends Base
         // Files and folders
         if ($this->hasAdmin) {
             $files        = $this->getFiles('backend');
-            $checksumFile = ['file' => 'CHECKSUM'];
+            $checksumFile = ['file' => 'checksums.txt'];
             $files[]      = $checksumFile;
             $f            = $this->generateFileList($files);
 
