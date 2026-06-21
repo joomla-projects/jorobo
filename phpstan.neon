@@ -6,4 +6,13 @@ parameters:
     - src
   excludePaths:
   ignoreErrors:
+    -
+      message: '#^Constant JOROBO_ROOT not found\.$#'
+      identifier: constant.notFound
+    -
+      message: '#^Constant JPATH_ROOT not found\.$#'
+      identifier: constant.notFound
+    -
+      message: '#^Constant JPATH_BASE not found\.$#'
+      identifier: constant.notFound
   reportUnmatchedIgnoredErrors: false

@@ -75,13 +75,13 @@ class Module extends Base
         }
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/com_" . $this->getExtensionName());
-        $media->run();
+        //$media = $this->buildMedia("media/com_" . $this->getExtensionName());
+        //$media->run();
 
-        $this->addFiles('media', $media->getResultFiles());
+        //$this->addFiles('media', $media->getResultFiles());
 
-        $language = $this->buildLanguage("com_matukio");
-        $language->run();
+        //$language = $this->buildLanguage("com_matukio");
+        //$language->run();
 
         return Result::success($this, 'Module build');
     }

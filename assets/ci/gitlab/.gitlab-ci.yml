@@ -1,0 +1,100 @@
+stages:
+  - install
+  - lint
+  - prepare
+  - analyze
+
+workflow:
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"'
+
+composer:
+  stage: install
+  image: joomlaprojects/docker-images:php8.3
+  cache:
+    key: composer-cache-v1
+    paths:
+      - /tmp/composer-cache
+  script:
+    - composer install --no-progress --ignore-platform-reqs
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 day
+
+phpcs:
+  stage: lint
+  image: joomlaprojects/docker-images:php8.3
+  needs:
+    - composer
+  cache:
+    key: composer-cache-v1
+    paths:
+      - /tmp/composer-cache
+    policy: pull
+  script:
+    - ./vendor/bin/php-cs-fixer fix -vvv --dry-run --diff
+    - ./vendor/bin/phpcs --extensions=php -p --standard=ruleset.xml src/
+
+prepare_tests:
+  stage: prepare
+  image: joomlaprojects/docker-images:cypress8.3
+  needs:
+    - composer
+  parallel:
+    matrix:
+      - JOOMLA_VERSION: ['5.4', '6.0', '6.1', '6.2']
+  cache:
+    key: composer-cache-v1
+    paths:
+      - /tmp/composer-cache
+    policy: pull
+  script:
+    - |
+      URL=$(curl -s "https://api.github.com/repos/joomla/joomla-cms/releases" | \
+            grep -oP '"browser_download_url":\s*"[^"]*'"${JOOMLA_VERSION}"'[^"]*Full_Package\.zip"' | \
+            sed 's/"browser_download_url":\s*"//;s/"$//' | \
+            head -1)
+
+      if [ -z "$URL" ]; then
+        echo "ERROR: Could not find URL for version ${JOOMLA_VERSION} in joomla/joomla-cms releases."
+        exit 1
+      fi
+
+      echo "Joomla ${JOOMLA_VERSION} URL: ${URL}"
+      curl -LfsS "${URL}" -o joomla.zip
+
+      if ! unzip -t joomla.zip > /dev/null; then
+        echo "ERROR: joomla.zip is invalid or not found."
+        exit 1
+      fi
+    - vendor/bin/robo build
+  artifacts:
+    name: "build-artifacts-j${JOOMLA_VERSION}"
+    paths:
+      - dist/
+      - joomla.zip
+    expire_in: 1 day
+
+phpstan:
+  stage: analyze
+  image: joomlaprojects/docker-images:php8.3
+  parallel:
+    matrix:
+      - JOOMLA_VERSION: ['5.4', '6.0', '6.1', '6.2']
+  needs:
+    - job: prepare_tests
+      parallel:
+        matrix:
+          - JOOMLA_VERSION: $JOOMLA_VERSION
+    - job: composer
+  cache:
+    key: composer-cache-v1
+    paths:
+      - /tmp/composer-cache
+    policy: pull
+  allow_failure: true
+  script:
+    - unzip -q joomla.zip -d joomla
+    - ./vendor/bin/phpstan

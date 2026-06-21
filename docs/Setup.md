@@ -45,7 +45,7 @@ You will need `composer`. In the folder of your repository run `composer require
 
 ## How-to use in your own extension
 
-Do a composer require joomla-projects/jorobo:dev
+Do a `composer require joomla-projects/jorobo:dev`
 
 Make sure your RoboFile.php loads the tasks:
 
