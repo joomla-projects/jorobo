@@ -471,7 +471,7 @@ abstract class Base extends JTask
             $output[] = $checksum . '  ' . $path;
         }
 
-        return (bool) file_put_contents($target . '/CHECKSUM', implode("\n", $output));
+        return (bool) file_put_contents($target . '/checksums.txt', implode("\n", $output));
     }
 
     /**
