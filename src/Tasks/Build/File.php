@@ -90,12 +90,6 @@ class File extends Base
             $this->addFiles('frontend', $frontendFiles);
         }
 
-        // Build media (relative path)
-        $media = $this->buildMedia("media/com_" . $this->getExtensionName(), 'com_' . $this->getExtensionName());
-        $media->run();
-
-        $this->addFiles('media', $media->getResultFiles());
-
         // Build language files for the component
         $language = $this->buildLanguage("com_" . $this->getExtensionName());
         $language->run();

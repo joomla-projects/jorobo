@@ -315,6 +315,51 @@ abstract class Base extends JTask
     }
 
     /**
+     * Copy the media files for an extension to the build folder
+     *
+     * @param   string  $name  The name of the extension to copy media files for
+     *
+     * @return  bool
+     *
+     * @since   1.0
+     */
+    public function buildMediaFiles($name)
+    {
+        $verbosity = $this->verbosityThreshold();
+        $this->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE);
+        $type   = substr($name, 0, 3);
+        $source = $this->getSourceFolder() . '/media/' . $name;
+        $target = $this->getBuildFolder() . '/media/' . $name;
+
+        if ($type == 'lib') {
+            $source = $this->getSourceFolder() . '/media/' . substr($name, 3);
+            $target = $this->getBuildFolder() . '/media/' . substr($name, 3);
+        }
+
+        $this->printTaskInfo("Building media folder " . $source . " for " . $name);
+
+        if (!file_exists($source)) {
+            $this->printTaskInfo("Folder " . $source . " does not exist!");
+
+            return false;
+        }
+
+        $this->taskFilesystemStack()
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
+            ->mkdir($target)
+            ->run();
+
+        $map = $this->copyTarget($source, $target);
+
+        $this->addFiles('media', $map);
+
+        $this->printTaskSuccess("Finished building media folder " . $source . " for " . $name);
+        $this->setVerbosityThreshold($verbosity);
+
+        return true;
+    }
+
+    /**
      * Generate a list of files
      *
      * @param   array  $files  Files and Folders array

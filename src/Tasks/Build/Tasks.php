@@ -42,21 +42,6 @@ trait Tasks
     }
 
     /**
-     * Build media folder
-     *
-     * @param   string   $source   The media folder (an extension could have multiple)
-     * @param   string   $extName  The extension name (e.g. mod_xy)
-     *
-     * @return  CollectionBuilder
-     *
-     * @since   1.0
-     */
-    protected function buildMedia($source, $extName, $params = [])
-    {
-        return $this->task(Media::class, $source, $extName, $params);
-    }
-
-    /**
      * Build language folder
      *
      * @param   string  $extension  The extension (not the whole, but mod_xy or plg_)

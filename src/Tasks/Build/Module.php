@@ -67,11 +67,7 @@ class Module extends Base
         $files = $this->copyTarget($this->source, $this->target);
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/" . $this->modName, $this->modName);
-        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-            ->run();
-
-        $this->addFiles('media', $media->getResultFiles());
+        $this->buildMediaFiles($this->modName);
 
         // Build language files for the module
         if (is_dir($this->getSourceFolder() . '/language')) {

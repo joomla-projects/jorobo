@@ -100,11 +100,7 @@ class Component extends Base
         // Build media (relative path)
         if ($this->hasMedia) {
             $this->logger->log(LogLevel::INFO, 'Copy media files', $this->getTaskContext());
-            $media = $this->buildMedia("media/com_" . $this->getExtensionName(), 'com_' . $this->getExtensionName(), $this->params);
-            $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-                ->run();
-
-            $this->addFiles('media', $media->getResultFiles());
+            $this->buildMediaFiles('com_' . $this->getExtensionName());
         }
 
         // Build language files for the component

@@ -67,11 +67,7 @@ class Template extends Base
         $files = $this->copyTarget($this->source, $this->target);
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/" . $this->templateName, $this->templateName);
-        $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-            ->run();
-
-        $this->addFiles('media', $media->getResultFiles());
+        $this->buildMediaFiles('tpl_' . $this->templateName);
 
         // Build language files for the component
         if (is_dir($this->getSourceFolder() . '/language')) {
