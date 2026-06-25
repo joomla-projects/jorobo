@@ -57,7 +57,7 @@ class RectorCommand extends Command
         $io->info('Adding Rector to the setup including initial rector.php and Joomla-specific rules.');
         $this->io = $io;
 
-        exec('cd ' . JPATH_ROOT . ' && composer require --dev rector/rector joomla-projects/jrector joomla-projects/type-hints');
+        exec('cd ' . JPATH_ROOT . ' && composer require --dev rector/rector joomla-projects/jrector joomla-projects/typehints');
 
         if (!is_file(JPATH_ROOT . '/rector.php')) {
             $this->io->writeln('Copying default rector.php to project root.');
