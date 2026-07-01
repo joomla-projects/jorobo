@@ -64,14 +64,20 @@ class Module extends Base
         // Prepare directories
         $this->prepareDirectories();
 
-        $files = $this->copyTarget($this->source, $this->target);
+        $files         = $this->copyTarget($this->source, $this->target);
+        $checksumFiles = ['modules/' . $this->modName];
 
         // Build media (relative path)
         $media = $this->buildMedia("media/" . $this->modName, $this->modName);
         $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
             ->run();
 
-        $this->addFiles('media', $media->getResultFiles());
+        $mediaFiles = $media->getResultFiles();
+        $this->addFiles('media', $mediaFiles);
+
+        if (count($mediaFiles) > 0) {
+            $checksumFiles[] = 'media/' . $this->modName;
+        }
 
         // Build language files for the module
         if (is_dir($this->getSourceFolder() . '/language')) {
@@ -80,8 +86,14 @@ class Module extends Base
                 ->run();
         }
 
+        // Add CHECKSUM file to manifest
+        $files[]      = ['file' => 'checksums.txt'];
+
         // Update XML and script.php
         $this->createInstaller($files);
+
+        // Generate CHECKSUM file
+        $this->generateChecksum($checksumFiles, $this->target);
 
         $this->printTaskSuccess('Finished building module: ' . $this->modName);
 

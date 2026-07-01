@@ -75,12 +75,14 @@ class Component extends Base
 
         // Prepare directories
         $this->prepareDirectories();
+        $checksumFiles = [];
 
         if ($this->hasAdmin) {
             $this->logger->log(LogLevel::INFO, 'Copy admin files', $this->getTaskContext());
             $adminFiles = $this->copyTarget($this->adminPath, $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
 
             $this->addFiles('backend', $adminFiles);
+            $checksumFiles[] = "administrator/components/com_" . $this->getExtensionName();
         }
 
         if ($this->hasApi) {
@@ -88,6 +90,7 @@ class Component extends Base
             $apiFiles = $this->copyTarget($this->apiPath, $this->getBuildFolder() . "/api/components/com_" . $this->getExtensionName());
 
             $this->addFiles('api', $apiFiles);
+            $checksumFiles[] = "api/components/com_" . $this->getExtensionName();
         }
 
         if ($this->hasFront) {
@@ -95,6 +98,7 @@ class Component extends Base
             $frontendFiles = $this->copyTarget($this->frontPath, $this->getBuildFolder() . "/components/com_" . $this->getExtensionName());
 
             $this->addFiles('frontend', $frontendFiles);
+            $checksumFiles[] = "components/com_" . $this->getExtensionName();
         }
 
         // Build media (relative path)
@@ -105,6 +109,7 @@ class Component extends Base
                 ->run();
 
             $this->addFiles('media', $media->getResultFiles());
+            $checksumFiles[] = "media/com_" . $this->getExtensionName();
         }
 
         // Build language files for the component
@@ -116,6 +121,9 @@ class Component extends Base
 
         // Update XML and script.php
         $this->createInstaller();
+
+        // Create CHECKSUM file
+        $this->generateChecksum($checksumFiles, $this->getBuildFolder() . "/administrator/components/com_" . $this->getExtensionName());
 
         // Copy XML and script.php to root
         $this->logger->log(LogLevel::INFO, 'Copy manifest and (optional) script file', $this->getTaskContext());
@@ -229,7 +237,10 @@ class Component extends Base
 
         // Files and folders
         if ($this->hasAdmin) {
-            $f = $this->generateFileList($this->getFiles('backend'));
+            $files        = $this->getFiles('backend');
+            $checksumFile = ['file' => 'checksums.txt'];
+            $files[]      = $checksumFile;
+            $f            = $this->generateFileList($files);
 
             $this->taskReplaceInFile($xmlFile)
                 ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
