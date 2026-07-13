@@ -53,7 +53,7 @@ class Media extends Base
         } elseif ($this->type == 'plg') {
             $a = explode("_", $this->extName);
 
-            $target = $this->getBuildFolder() . "/plugins/" . $a[1] . "/" . $a[2] . "/" . $folder;
+            $target = $this->getBuildFolder() . "/plugins/" . $a[1] . "/" . array_slice($a, 2) . "/" . $folder;
         } elseif ($this->type == 'lib') {
             // Remove lib before - ugly hack
             $ex = str_replace("lib_", "", $this->extName);
