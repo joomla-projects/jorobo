@@ -78,7 +78,7 @@ class Language extends Base
             $dest .= "/modules/" . $this->ext;
         } elseif ($this->type == "plg") {
             $a    = explode("_", $this->ext);
-            $dest .= "/plugins/" . $a[1] . "/" . $a[2];
+            $dest .= "/plugins/" . $a[1] . "/" . array_slice($a, 2);
         } elseif ($this->type == "pkg") {
             $dest .= "/administrator/manifests/packages/" . $this->ext;
         } elseif ($this->type == "lib") {
