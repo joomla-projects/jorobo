@@ -30,10 +30,20 @@ class Module extends Base
     protected $target = null;
 
     /**
+     * Relative path (within source/build folder) the module lives under
+     *
+     * @var    string
+     *
+     * @since  1.0
+     */
+    protected $relativePath = 'modules';
+
+    /**
      * Initialize Build Task
      *
      * @param   string  $modName  Name of the module
-     * @param   array   $params   Optional params
+     * @param   array   $params   Optional params. Set 'basepath' (as done for admin
+     *                            modules in Extension::run()) to build an administrator module.
      *
      * @since   1.0
      */
@@ -46,8 +56,12 @@ class Module extends Base
 
         $this->modName = str_starts_with($modName, 'mod_') ? $modName : 'mod_' . $modName;
 
-        $this->source = $this->getSourceFolder() . "/modules/" . $this->modName;
-        $this->target = $this->getBuildFolder() . "/modules/" . $this->modName;
+        if (isset($params['basepath'])) {
+            $this->relativePath = 'administrator/modules';
+        }
+
+        $this->source = $this->getSourceFolder() . "/" . $this->relativePath . "/" . $this->modName;
+        $this->target = $this->getBuildFolder() . "/" . $this->relativePath . "/" . $this->modName;
     }
 
     /**
@@ -65,7 +79,7 @@ class Module extends Base
         $this->prepareDirectories();
 
         $files         = $this->copyTarget($this->source, $this->target);
-        $checksumFiles = ['modules/' . $this->modName];
+        $checksumFiles = [$this->relativePath . '/' . $this->modName];
 
         // Build media (relative path)
         $media = $this->buildMedia("media/" . $this->modName, $this->modName);
@@ -81,7 +95,7 @@ class Module extends Base
 
         // Build language files for the module
         if (is_dir($this->getSourceFolder() . '/language')) {
-            $language = $this->buildLanguage($this->modName)
+            $language = $this->buildLanguage($this->modName, $this->params)
                 ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
                 ->run();
         }

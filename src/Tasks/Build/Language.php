@@ -35,6 +35,15 @@ class Language extends Base
     protected $hasFrontLang = true;
 
     /**
+     * Relative path (within build folder) a module lives under; only relevant for type "mod"
+     *
+     * @var    string
+     *
+     * @since  1.0
+     */
+    protected $relativePath = 'modules';
+
+    /**
      * Initialize Build Task
      *
      * @param   String  $extension  The extension (component, module etc.)
@@ -51,6 +60,10 @@ class Language extends Base
         $this->ext = $extension;
 
         $this->type = substr($extension, 0, 3);
+
+        if ($this->type == 'mod' && isset($params['basepath'])) {
+            $this->relativePath = 'administrator/modules';
+        }
     }
 
     /**
@@ -75,7 +88,7 @@ class Language extends Base
         $dest = $this->getBuildFolder();
 
         if ($this->type == "mod") {
-            $dest .= "/modules/" . $this->ext;
+            $dest .= "/" . $this->relativePath . "/" . $this->ext;
         } elseif ($this->type == "plg") {
             $a    = explode("_", $this->ext);
             $dest .= "/plugins/" . $a[1] . "/" . $a[2];
@@ -152,7 +165,7 @@ class Language extends Base
         if ($this->type == "mod") {
             $this->taskFilesystemStack()
                 ->setVerbosityThreshold(self::VERBOSITY_VERY_VERBOSE)
-                ->mkdir($this->getBuildFolder() . "/modules/" . $this->ext . "/language")
+                ->mkdir($this->getBuildFolder() . "/" . $this->relativePath . "/" . $this->ext . "/language")
                 ->run();
         }
 
