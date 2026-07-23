@@ -33,6 +33,8 @@ class Package extends Base
 
     private $hasModules = true;
 
+    private $hasAdminModules = false;
+
     private $hasTemplates = true;
 
     private $hasPlugins = true;
@@ -79,6 +81,10 @@ class Package extends Base
 
         if ($this->hasModules) {
             $this->createModuleZips();
+        }
+
+        if ($this->hasAdminModules) {
+            $this->createModuleZips($this->current . "/administrator/modules");
         }
 
         if ($this->hasPlugins) {
@@ -158,6 +164,10 @@ class Package extends Base
 
         if (!file_exists($this->current . "/modules")) {
             $this->hasModules = false;
+        }
+
+        if (file_exists($this->current . "/administrator/modules")) {
+            $this->hasAdminModules = true;
         }
 
         if (!file_exists($this->current . "/plugins")) {
@@ -398,13 +408,18 @@ class Package extends Base
     /**
      * Create zips for modules
      *
+     * @param   ?string  $path  The folder to scan for modules (defaults to the frontend modules folder;
+     *                          pass the administrator modules folder to package admin modules instead)
+     *
      * @return  void
      *
      * @since   1.0
      */
-    public function createModuleZips()
+    public function createModuleZips($path = null)
     {
-        $path = $this->current . "/modules";
+        if ($path === null) {
+            $path = $this->current . "/modules";
+        }
 
         // Get every module
         $hdl = opendir($path);
