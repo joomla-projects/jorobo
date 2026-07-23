@@ -82,7 +82,7 @@ class Module extends Base
         $checksumFiles = [$this->relativePath . '/' . $this->modName];
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/" . $this->modName, $this->modName);
+        $media = $this->buildMedia("media/" . $this->modName, $this->modName, $this->params);
         $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
             ->run();
 
