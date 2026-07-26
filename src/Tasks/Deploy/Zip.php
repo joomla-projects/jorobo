@@ -55,6 +55,8 @@ class Zip extends Base
             \RecursiveIteratorIterator::SELF_FIRST
         );
 
+        $buildfolder = str_replace('\\', '/', $this->getBuildFolder());
+
         // Process the files to zip
         foreach ($iterator as $subfolder) {
             if ($subfolder->isFile()) {
@@ -62,7 +64,7 @@ class Zip extends Base
                 $usefolder = str_replace('\\', '/', $subfolder->getPath());
 
                 // Drop the folder part as we don't want them added to archive
-                $addpath = str_ireplace($this->getBuildFolder(), '', $usefolder);
+                $addpath = str_ireplace($buildfolder, '', $usefolder);
 
                 // Remove preceding slash
                 $findfirst = strpos($addpath, '/');
