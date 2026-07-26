@@ -264,7 +264,7 @@ class Extension extends Base
         }
 
         if (file_exists($this->getSourceFolder() . "/administrator/modules")) {
-            $this->hasModules = true;
+            $this->hasAdminModules = true;
         }
 
         if (!file_exists($this->getSourceFolder() . "/modules")) {

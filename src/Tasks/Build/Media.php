@@ -49,7 +49,9 @@ class Media extends Base
         $target = $this->getBuildFolder() . "/" . $folder;
 
         if ($this->type == 'mod') {
-            $target = $this->getBuildFolder() . "/modules/" . $extName . "/" . $folder;
+            $relativePath = isset($params['basepath']) ? 'administrator/modules' : 'modules';
+
+            $target = $this->getBuildFolder() . "/" . $relativePath . "/" . $extName . "/" . $folder;
         } elseif ($this->type == 'plg') {
             $a = explode("_", $this->extName);
 

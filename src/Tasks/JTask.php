@@ -30,7 +30,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
     /**
      * The Jorobo config object
      *
-     * @var    \stdClass
+     * @var    ?\stdClass
      *
      * @since  1.0
      */
@@ -75,7 +75,7 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
     /**
      * Name of the extension
      *
-     * @var    string
+     * @var    ?string
      *
      * @since  1.0
      */
@@ -267,10 +267,8 @@ abstract class JTask extends \Robo\Tasks implements TaskInterface, VerbosityThre
 
             $version = "git" . trim($res->getMessage());
 
-            if ($version) {
-                $this->printTaskInfo("Changing version to development version " . $version);
-                $jConfig->version = $version;
-            }
+            $this->printTaskInfo("Changing version to development version " . $version);
+            $jConfig->version = $version;
         }
 
         $jConfig->buildFolder = $this->params['base'] . $this->determineTarget($jConfig);
