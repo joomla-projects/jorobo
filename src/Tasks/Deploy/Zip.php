@@ -54,7 +54,7 @@ class Zip extends Base
         }
 
         $buildFolder = str_replace('\\', '/', realpath($this->getBuildFolder()));
-        $iterator = new \RecursiveIteratorIterator(
+        $iterator    = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($buildFolder, \FilesystemIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::LEAVES_ONLY
         );
