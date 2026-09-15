@@ -49,41 +49,26 @@ class Zip extends Base
         $this->printTaskInfo('Zipping ' . $this->getJConfig()->extension . " " . $this->getJConfig()->version);
 
         // Instantiate the zip archive
-        $this->zip->open($this->target, \ZipArchive::CREATE);
+        if ($this->zip->open($this->target, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+            return Result::error($this, 'Could not open ' . $this->target);
+        }
+
+        $buildFolder = str_replace('\\', '/', realpath($this->getBuildFolder()));
         $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($this->getBuildFolder()),
-            \RecursiveIteratorIterator::SELF_FIRST
+            new \RecursiveDirectoryIterator($buildFolder, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::LEAVES_ONLY
         );
 
-        $buildfolder = str_replace('\\', '/', $this->getBuildFolder());
-
         // Process the files to zip
-        foreach ($iterator as $subfolder) {
-            if ($subfolder->isFile()) {
-                // Set all separators to forward slashes for comparison
-                $usefolder = str_replace('\\', '/', $subfolder->getPath());
-
-                // Drop the folder part as we don't want them added to archive
-                $addpath = str_ireplace($buildfolder, '', $usefolder);
-
-                // Remove preceding slash
-                $findfirst = strpos($addpath, '/');
-
-                if ($findfirst == 0 && $findfirst !== false) {
-                    $addpath = substr($addpath, 1);
-                }
-
-                if (strlen($addpath) > 0 || empty($addpath)) {
-                    $addpath .= '/';
-                }
-
-                $options = ['add_path' => $addpath, 'remove_all_path' => true];
-                $this->zip->addGlob($usefolder . '/*.*', GLOB_BRACE, $options);
-            }
+        foreach ($iterator as $file) {
+            $path = str_replace('\\', '/', $file->getPathname());
+            $this->zip->addFile($path, substr($path, strlen($buildFolder) + 1));
         }
 
         // Close the zip archive
-        $this->zip->close();
+        if (!$this->zip->close()) {
+            return Result::error($this, 'Could not write zip: ' . $this->zip->getStatusString());
+        }
 
         return Result::success($this);
     }
