@@ -1,6 +1,6 @@
 <?php
 
-namespace JoRobo;
+namespace Joomla\Jorobo\Tests\Tasks\Build;
 
 use Joomla\Jorobo\Tasks\Build\Tasks;
 use PHPUnit\Framework\TestCase;
