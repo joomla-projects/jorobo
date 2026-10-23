@@ -53,7 +53,7 @@ class Media extends Base
 
             $target = $this->getBuildFolder() . "/" . $relativePath . "/" . $extName . "/" . $folder;
         } elseif ($this->type == 'plg') {
-            $a = explode("_", $this->extName);
+            $a = explode("_", $this->extName, 3);
 
             $target = $this->getBuildFolder() . "/plugins/" . $a[1] . "/" . $a[2] . "/" . $folder;
         } elseif ($this->type == 'lib') {
@@ -61,6 +61,8 @@ class Media extends Base
             $ex = str_replace("lib_", "", $this->extName);
 
             $target = $this->getBuildFolder() . "/libraries/" . $ex . "/" . $folder;
+        } elseif ($this->type == 'tpl') {
+            $target = $this->getBuildFolder() . "/templates/" . substr($this->extName, 4) . "/" . $folder;
         }
 
         $this->target = $target;
