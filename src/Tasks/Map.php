@@ -105,7 +105,8 @@ class Map extends JTask
         $sourceFolder = $this->getSourceFolder();
         $this->processComponents($sourceFolder . '/administrator/components', $this->target . '/administrator');
         $this->processLanguage($sourceFolder . '/administrator/language', $this->target . '/administrator');
-        $this->processModules($sourceFolder . '/administrator/modules', $this->target . '/administrator/modules');
+        $this->processModules($sourceFolder . '/administrator/modules', $this->target . '/administrator');
+        $this->processTemplates($sourceFolder . '/administrator/templates', $this->target . '/administrator');
     }
 
     /**
@@ -232,6 +233,36 @@ class Map extends JTask
     private function processModules($src, $toDir)
     {
         $this->linkSubdirectories($src, $toDir . "/modules");
+    }
+
+    /**
+     * Process Templates
+     *
+     * @param   String  $src    The source
+     * @param   String  $toDir  The target
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    private function processTemplates($src, $toDir)
+    {
+        $this->linkSubdirectories($src, $toDir . "/templates");
+    }
+
+    /**
+     * Process the API application (api/components)
+     *
+     * @param   String  $src    The source
+     * @param   String  $toDir  The target
+     *
+     * @return  void
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    private function processApi($src, $toDir)
+    {
+        $this->processComponents($src . '/components', $toDir . '/api');
     }
 
     /**
