@@ -70,22 +70,30 @@ class FtpUpload extends Base
         }
 
         try {
-            if ($this->getJConfig()->ftp->ssl == "true") {
-                $con = ftp_ssl_connect($this->getJConfig()->ftp->host);
+            $ftp  = $this->getJConfig()->ftp;
+            $port = !empty($ftp->port) ? (int) $ftp->port : 21;
+
+            // parse_ini_file() turns "true" into "1" and "false" into ""
+            if (filter_var($ftp->ssl ?? false, FILTER_VALIDATE_BOOLEAN)) {
+                $con = ftp_ssl_connect($ftp->host, $port);
             } else {
-                $con = ftp_connect($this->getJConfig()->ftp->host);
+                $con = ftp_connect($ftp->host, $port);
             }
 
-            $login_result = ftp_login($con, $this->getJConfig()->ftp->user, $this->getJConfig()->ftp->password);
+            if ($con === false) {
+                return Result::error($this, 'Could not connect to ' . $ftp->host . ':' . $port);
+            }
 
-            // Set passive ftp
-            ftp_pasv($con, true);
-
-            if (!$login_result) {
+            if (!ftp_login($con, $ftp->user, $ftp->password)) {
                 return Result::error($this, 'Failed logging in');
             }
 
-            ftp_chdir($con, $this->getJConfig()->ftp->target);
+            // Set passive ftp (only possible after login)
+            ftp_pasv($con, true);
+
+            if (!ftp_chdir($con, $ftp->target)) {
+                return Result::error($this, 'Could not change to directory ' . $ftp->target);
+            }
 
             $this->printTaskInfo('Uploading ' . $this->filepath);
 
