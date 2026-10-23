@@ -483,6 +483,7 @@ abstract class Base extends JTask
      */
     public function resetFiles()
     {
+        self::$apiFiles              = [];
         self::$backendFiles          = [];
         self::$backendLanguageFiles  = [];
         self::$frontendFiles         = [];
