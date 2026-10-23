@@ -3,7 +3,7 @@
 /**
  * @package    JoRobo
  *
- * @copyright  Copyright (C) 2005 - 2016 Open Source Matters, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2026 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -33,21 +33,29 @@ class CopyrightHeader extends JTask
     public function run()
     {
         $this->printTaskInfo("Updating / adding copyright headers");
+
+        if (!$this->checkFolders()) {
+            return Result::error($this, 'checkFolders failed');
+        }
+
         $text        = $this->replaceInText(trim($this->getJConfig()->header->text));
         $excludeList = $this->getJConfig()->header->exclude;
 
         if ($excludeList !== '') {
-            $exclude = explode(",", trim($excludeList));
+            $exclude = array_filter(array_map('trim', explode(",", $excludeList)), static function ($e) {
+                return $e !== '';
+            });
         }
 
-        $path      = realpath($this->getJConfig()->source);
-        $fileTypes = explode(",", trim($this->getJConfig()->header->files));
+        $path      = $this->getSourceFolder();
+        $fileTypes = array_map('trim', explode(",", $this->getJConfig()->header->files));
 
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename) {
-            if (substr($filename, 0, 1) == '.') {
-                continue;
-            }
+        $directory = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
+        $filter    = new \RecursiveCallbackFilterIterator($directory, function ($current) {
+            return substr($current->getFilename(), 0, 1) !== '.';
+        });
 
+        foreach (new \RecursiveIteratorIterator($filter) as $filename) {
             $file = new \SplFileInfo($filename);
 
             if (!in_array($file->getExtension(), $fileTypes)) {
@@ -109,20 +117,25 @@ class CopyrightHeader extends JTask
 
         $lines = explode(PHP_EOL, $content);
 
+        $inComment = false;
+
         foreach ($lines as $i => $l) {
             $l = trim($l);
 
-            if (strpos($l, "<?php") === 0 || $l == "") {
+            if (!$inComment && (strpos($l, "<?php") === 0 || $l == "")) {
                 continue;
             }
 
-            if (strpos($l, "/**") !== false || strpos($l, "*") !== false || strpos($l, "*/") !== false) {
-                unset($lines[$i]);
-
-                continue;
+            // Only remove comment blocks, not code which happens to contain a "*" (e.g. "import * as x from 'y'")
+            if (!$inComment && strpos($l, "/*") !== 0) {
+                break;
             }
 
-            break;
+            // The comment ends on this line, if "*/" follows (skipping the opening "/*" of a new comment)
+            $offset    = $inComment ? 0 : 2;
+            $inComment = strpos($l, "*/", min($offset, strlen($l))) === false;
+
+            unset($lines[$i]);
         }
 
         file_put_contents($file->getRealPath(), implode(PHP_EOL, $lines));
