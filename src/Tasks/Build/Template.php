@@ -67,7 +67,14 @@ class Template extends Base
         $files = $this->copyTarget($this->source, $this->target);
 
         // Build media (relative path)
-        $media = $this->buildMedia("media/" . $this->templateName, $this->templateName);
+        $mediaFolder = "media/templates/site/" . $this->templateName;
+
+        if (!is_dir($this->getSourceFolder() . "/" . $mediaFolder)) {
+            // Legacy location
+            $mediaFolder = "media/" . $this->templateName;
+        }
+
+        $media = $this->buildMedia($mediaFolder, 'tpl_' . $this->templateName);
         $media->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
             ->run();
 
