@@ -65,13 +65,19 @@ class Build extends JTask
         }
 
         // Support multiple deployment methods, separated by spaces
-        $deploy = explode(" ", $this->getJConfig()->target);
+        $deploy = array_filter(explode(" ", trim((string) ($this->getJConfig()->target ?? ''))));
 
-        if (count($deploy)) {
-            foreach ($deploy as $d) {
-                $task = 'deploy' . ucfirst($d);
+        foreach ($deploy as $d) {
+            $task = 'deploy' . ucfirst(strtolower($d));
 
-                $this->{$task}($this->params)->run();
+            if (!method_exists($this, $task)) {
+                return Result::error($this, 'Unknown deployment target: ' . $d);
+            }
+
+            $result = $this->{$task}($this->params)->run();
+
+            if (!$result->wasSuccessful()) {
+                return $result;
             }
         }
 
