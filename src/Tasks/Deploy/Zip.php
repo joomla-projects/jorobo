@@ -53,7 +53,17 @@ class Zip extends Base
             return Result::error($this, 'Could not open ' . $this->target);
         }
 
-        $buildFolder = str_replace('\\', '/', realpath($this->getBuildFolder()));
+        $buildFolder = $this->determineZipRoot(str_replace('\\', '/', realpath($this->getBuildFolder())));
+
+        if ($buildFolder === null) {
+            $this->zip->close();
+
+            return Result::error(
+                $this,
+                'The build contains several extensions but no manifest in its root. Use the "package" target instead of "zip".'
+            );
+        }
+
         $iterator    = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator($buildFolder, \FilesystemIterator::SKIP_DOTS),
             \RecursiveIteratorIterator::LEAVES_ONLY
@@ -71,5 +81,39 @@ class Zip extends Base
         }
 
         return Result::success($this);
+    }
+
+    /**
+     * Determine the folder which has to become the root of the zip file
+     *
+     * Joomla expects the manifest in the root of an installable zip. Components (and file extensions) get their
+     * manifest copied to the root of the build folder, while modules, plugins, templates and libraries are built
+     * into their Joomla folder (e.g. plugins/system/foo), which already is a self-contained installable folder.
+     *
+     * @param   string  $buildFolder  The build folder
+     *
+     * @return  ?string  The folder to zip or null if there is no single installable extension
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    private function determineZipRoot($buildFolder)
+    {
+        if (count(glob($buildFolder . '/*.xml')) > 0) {
+            return $buildFolder;
+        }
+
+        $candidates = array_merge(
+            glob($buildFolder . '/modules/*', GLOB_ONLYDIR),
+            glob($buildFolder . '/administrator/modules/*', GLOB_ONLYDIR),
+            glob($buildFolder . '/plugins/*/*', GLOB_ONLYDIR),
+            glob($buildFolder . '/templates/*', GLOB_ONLYDIR),
+            glob($buildFolder . '/libraries/*', GLOB_ONLYDIR)
+        );
+
+        if (count($candidates) !== 1) {
+            return null;
+        }
+
+        return $candidates[0];
     }
 }
