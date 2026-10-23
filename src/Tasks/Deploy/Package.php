@@ -109,7 +109,7 @@ class Package extends Base
             $this->taskExec('mklink /H "' . $this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip" . '" "' . $this->getWindowsPath($this->target) . '"')
                 ->run();
         } else {
-            if (is_dir($this->params['base'] . "\dist\pkg-" . $this->getExtensionName() . "-current.zip")) {
+            if (is_link($this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip")) {
                 unlink($this->params['base'] . "/dist/pkg-" . $this->getExtensionName() . "-current.zip");
             }
             $this->taskFilesystemStack()
@@ -568,8 +568,8 @@ class Package extends Base
     {
         $zip = new \ZipArchive();
 
-        // Instantiate the zip archive
-        $zip->open($this->target, \ZipArchive::CREATE);
+        // Instantiate the zip archive (overwrite a package of the same version built before)
+        $zip->open($this->target, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
         // Process the files to zip
         $this->addFiles($zip, $this->params['base'] . '/dist/zips/');
