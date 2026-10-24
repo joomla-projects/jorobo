@@ -33,23 +33,28 @@ class BumpVersion extends JTask
     {
         $this->printTaskInfo('Updating ' . $this->getJConfig()->extension . " to " . $this->getJConfig()->version);
 
+        if (!$this->checkFolders()) {
+            return Result::error($this, 'checkFolders failed');
+        }
+
         // Reusing the header config here
         $excludeList = $this->getJConfig()->header->exclude;
 
         if ($excludeList !== '') {
-            $exclude = explode(",", trim($excludeList));
+            $exclude = array_filter(array_map('trim', explode(",", $excludeList)));
         }
 
-        $path      = realpath($this->getJConfig()->source);
-        $fileTypes = explode(",", trim($this->getJConfig()->header->files));
+        $path      = $this->getSourceFolder();
+        $fileTypes = array_map('trim', explode(",", $this->getJConfig()->header->files));
 
         $changedFiles = 0;
 
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path)) as $filename) {
-            if (substr($filename, 0, 1) == '.') {
-                continue;
-            }
+        $directory = new \RecursiveDirectoryIterator($path, \FilesystemIterator::SKIP_DOTS);
+        $filter    = new \RecursiveCallbackFilterIterator($directory, function ($current) {
+            return substr($current->getFilename(), 0, 1) !== '.';
+        });
 
+        foreach (new \RecursiveIteratorIterator($filter) as $filename) {
             $file = new \SplFileInfo($filename);
 
             if (!in_array($file->getExtension(), $fileTypes)) {
@@ -105,6 +110,12 @@ class BumpVersion extends JTask
     protected function updateXML($file): bool
     {
         $xml = simplexml_load_file($file->getRealPath());
+
+        if ($xml === false) {
+            $this->printTaskWarning('Skipping invalid XML file: ' . $file->getRealPath());
+
+            return false;
+        }
 
         if ($xml->getName() !== 'extension') {
             return false;
