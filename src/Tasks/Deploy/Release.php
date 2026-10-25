@@ -101,14 +101,27 @@ class Release extends Base
     {
         $changes = [];
 
+        $fromPulls = $this->getJConfig()->github->changelog_source == "pr";
+
         foreach ($pulls as $pull) {
-            if (!$latest_release || strtotime($pull->merged_at) > strtotime($latest_release->published_at)) {
-                if ($this->getJConfig()->github->changelog_source == "pr") {
-                    $changes[] = $pull->title;
+            if ($fromPulls) {
+                // Closed but unmerged pull requests are not part of the release
+                if (empty($pull->merged_at)) {
+                    continue;
                 }
 
-                $message   = explode(PHP_EOL, $pull->commit->message);
-                $changes[] = $message[0];
+                $date = $pull->merged_at;
+            } else {
+                $date = $pull->commit->committer->date;
+            }
+
+            if (!$latest_release || strtotime($date) > strtotime($latest_release->published_at)) {
+                if ($fromPulls) {
+                    $changes[] = $pull->title;
+                } else {
+                    $message   = explode("\n", $pull->commit->message);
+                    $changes[] = trim($message[0]);
+                }
             }
         }
 
