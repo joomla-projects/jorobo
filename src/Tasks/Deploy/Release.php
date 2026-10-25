@@ -260,8 +260,6 @@ class Release extends Base
             'Content-Length: ' . $filesize,
         ]);
         curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));
-        curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
-        curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 0);
 
         $result = curl_exec($request);
 
