@@ -246,15 +246,19 @@ class Release extends Base
 
         $this->printTaskInfo('Uploading the Extension package to the Github release: ' . $version);
 
-        $uploadUrl = str_replace("{?name,label}", "?access_token=" . $githubToken . "&name=" . $zipfile . "&size=" . $filesize, $upload_url);
+        // GitHub no longer accepts the token as query parameter, it has to be sent in the Authorization header
+        $uploadUrl = str_replace("{?name,label}", "?name=" . rawurlencode($zipfile), $upload_url);
         $request   = curl_init($uploadUrl);
 
         curl_setopt($request, CURLOPT_POST, true);
         curl_setopt($request, CURLOPT_VERBOSE, true);
 
-        curl_setopt($request, CURLOPT_HTTPHEADER, ['Authorization: token ' . $githubToken]);
-
-        curl_setopt($request, CURLOPT_HTTPHEADER, ['Content-type: application/zip']);
+        // All headers have to be set at once, a second CURLOPT_HTTPHEADER call replaces the first one
+        curl_setopt($request, CURLOPT_HTTPHEADER, [
+            'Authorization: token ' . $githubToken,
+            'Content-Type: application/zip',
+            'Content-Length: ' . $filesize,
+        ]);
         curl_setopt($request, CURLOPT_POSTFIELDS, file_get_contents($zipfilepath));
         curl_setopt($request, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($request, CURLOPT_SSL_VERIFYPEER, 0);
