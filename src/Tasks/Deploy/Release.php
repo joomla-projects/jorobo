@@ -67,7 +67,7 @@ class Release extends Base
         $this->printTaskInfo("Creating the release at: https://github.com/$owner/$repository/releases/tag/$version");
 
         $github           = $this->getGithub();
-        $changesInRelease = "# Changelog: \n\n" . implode("\n* ", $changes);
+        $changesInRelease = "# Changelog: \n\n* " . implode("\n* ", $changes);
 
         $response = $github->repositories->releases->create(
             $owner,
