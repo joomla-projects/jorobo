@@ -94,11 +94,9 @@ class Module extends Base
         }
 
         // Build language files for the module
-        if (is_dir($this->getSourceFolder() . '/language')) {
-            $language = $this->buildLanguage($this->modName, $this->params)
-                ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
-                ->run();
-        }
+        $this->buildLanguage($this->modName, $this->params)
+            ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERBOSE)
+            ->run();
 
         // Add CHECKSUM file to manifest
         $files[]      = ['file' => 'checksums.txt'];
@@ -157,7 +155,8 @@ class Module extends Base
             ->run();
 
         // Language files
-        $f = $this->generateLanguageFileList($this->getFiles('frontendLanguage'));
+        $languageFiles = $this->relativePath == 'administrator/modules' ? 'backendLanguage' : 'frontendLanguage';
+        $f             = $this->generateLanguageFileList($this->getFiles($languageFiles));
 
         $this->taskReplaceInFile($xmlFile)
             ->setVerbosityThreshold(VerbosityThresholdInterface::VERBOSITY_VERY_VERBOSE)
