@@ -134,16 +134,15 @@ trait Tasks
     /**
      * Build a File extension
      *
-     * @param   String  $name    Name of the plugin
      * @param   array   $params  Opt params
      *
      * @return  CollectionBuilder
      *
      * @since   1.0
      */
-    protected function buildFile($name, $params = [])
+    protected function buildFile($params = [])
     {
-        return $this->task(File::class, $name, $params);
+        return $this->task(File::class, $params);
     }
 
     /**
