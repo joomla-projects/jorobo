@@ -129,7 +129,7 @@ class ChangelogTest extends TestCase
             'generic message'     => ['Codestyle',                      'Note'],
             'update message'      => ['update readme',                  'Note'],
             'fix at word end'     => ['Fixing something',               'Note'],
-            'mixed case feat'     => ['FEAT: uppercase prefix',         'Note'],
+            'mixed case feat'     => ['FEAT: uppercase prefix',         'Feature'],
         ];
     }
 
